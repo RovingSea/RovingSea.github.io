@@ -16,20 +16,41 @@
   <meta name="author" content="Masker">
   <meta name="keywords" content="Java">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://example.com/archives/2022/01/index.html">
+    <meta name="description" content="基于内存1绝大部分请求都是纯粹的内存操作。  数据结构简单1对数据操作非常简单  采用单线程1避免了多线程上下文切换和竞争产生的消耗  多路复用1使用了多路I&#x2F;O复用模型，非阻塞IO  底层模型1使用底层模型不同，它们之间底层实现方式以及与客户端之间通信的应用协议不一样，Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么Redis非常快">
+<meta property="og:url" content="http://example.com/2022/01/24/%E4%B8%BA%E4%BB%80%E4%B9%88Redis%E9%9D%9E%E5%B8%B8%E5%BF%AB/index.html">
 <meta property="og:site_name" content="Masker7&#39;s Blog">
+<meta property="og:description" content="基于内存1绝大部分请求都是纯粹的内存操作。  数据结构简单1对数据操作非常简单  采用单线程1避免了多线程上下文切换和竞争产生的消耗  多路复用1使用了多路I&#x2F;O复用模型，非阻塞IO  底层模型1使用底层模型不同，它们之间底层实现方式以及与客户端之间通信的应用协议不一样，Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
+<meta property="article:published_time" content="2022-01-23T16:07:48.016Z">
+<meta property="article:modified_time" content="2022-01-23T16:14:16.214Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
   
   
-  <title>归档 - Masker7&#39;s Blog</title>
+  <title>为什么Redis非常快 - Masker7&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -56,7 +77,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -152,14 +173,56 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://images.pexels.com/photos/235734/pexels-photo-235734.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') no-repeat center center;
+         style="background: url('/img/default.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="为什么Redis非常快">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-24 00:07" pubdate>
+        2022年1月24日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      175 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      2 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -172,100 +235,97 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 22 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2022</p>
-    
-    <a href="/2022/01/24/%E4%B8%BB%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Zookeeper主从服务器之间的数据同步</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">选举机制</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/%E8%B0%88%E8%B0%88%E5%AF%B9Zookeeper%E7%90%86%E8%A7%A3/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">谈谈对Zookeeper的理解</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">节点类型</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/ZAB%E5%8D%8F%E8%AE%AE/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">ZAB协议</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/CAP%E7%90%86%E8%AE%BA/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">CAP理论</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">主从复制原理</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/%E4%B8%BA%E4%BB%80%E4%B9%88Redis%E9%9D%9E%E5%B8%B8%E5%BF%AB/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">为什么Redis非常快</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/%E4%B9%9D%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">九大数据结构</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-    
-    <a href="/2022/01/24/%E7%BC%93%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AE%97%E6%B3%95%E5%92%8C%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">缓存淘汰算法和淘汰策略</span>
-      <time style="float: right;">01-24</time>
-    </a>
-  
-</div>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">为什么Redis非常快</h1>
+            
+            <div class="markdown-body">
+              <h1 id="基于内存"><a href="#基于内存" class="headerlink" title="基于内存"></a>基于内存</h1><figure class="highlight"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs">绝大部分请求都是纯粹的内存操作。<br></code></pre></td></tr></table></figure>
+
+<h1 id="数据结构简单"><a href="#数据结构简单" class="headerlink" title="数据结构简单"></a>数据结构简单</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">对数据操作非常简单<br></code></pre></td></tr></table></figure>
+
+<h1 id="采用单线程"><a href="#采用单线程" class="headerlink" title="采用单线程"></a>采用单线程</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">避免了多线程上下文切换和竞争产生的消耗<br></code></pre></td></tr></table></figure>
+
+<h1 id="多路复用"><a href="#多路复用" class="headerlink" title="多路复用"></a>多路复用</h1><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mathematica">使用了多路<span class="hljs-built_in">I</span><span class="hljs-operator">/</span><span class="hljs-built_in">O</span>复用模型，非阻塞<span class="hljs-variable">IO</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="底层模型"><a href="#底层模型" class="headerlink" title="底层模型"></a>底层模型</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">使用底层模型不同，它们之间底层实现方式以及与客户端之间通信的应用协议不一样，Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求<br></code></pre></td></tr></table></figure>
 
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2022/01/page/2/#board">2</a><a class="page-number" href="/archives/2022/01/page/3/#board">3</a><a class="extend next" rel="next" href="/archives/2022/01/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
-
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/24/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">主从复制原理</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/24/%E4%B9%9D%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+                        <span class="hidden-mobile">九大数据结构</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -372,6 +432,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 

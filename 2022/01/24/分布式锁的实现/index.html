@@ -16,21 +16,23 @@
   <meta name="author" content="Masker">
   <meta name="keywords" content="Java">
   
-    <meta name="description" content="一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存12345671.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压">
+    <meta name="description" content="满足的条件互斥性1任意时刻，只有一个客户端持有锁  不会发生死锁1即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  解铃还须系铃人1加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。  原子性1加锁和解锁必须具有原子性  步骤一、多个客户端申请获取锁1即执行多个setnx语句  二、获取成功1即执行setnx语句成功后的客户端，其他客户端等待重试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对象的创建过程">
-<meta property="og:url" content="http://example.com/2022/01/23/%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:title" content="分布式锁的实现">
+<meta property="og:url" content="http://example.com/2022/01/24/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Masker7&#39;s Blog">
-<meta property="og:description" content="一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存12345671.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压">
+<meta property="og:description" content="满足的条件互斥性1任意时刻，只有一个客户端持有锁  不会发生死锁1即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  解铃还须系铃人1加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。  原子性1加锁和解锁必须具有原子性  步骤一、多个客户端申请获取锁1即执行多个setnx语句  二、获取成功1即执行setnx语句成功后的客户端，其他客户端等待重试">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-23T14:52:28.842Z">
-<meta property="article:modified_time" content="2022-01-23T15:06:44.248Z">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
+<meta property="article:published_time" content="2022-01-23T16:07:48.007Z">
+<meta property="article:modified_time" content="2022-01-23T16:13:41.573Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
   
   
-  <title>对象的创建过程 - Masker7&#39;s Blog</title>
+  <title>分布式锁的实现 - Masker7&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="对象的创建过程">
+            <span class="h2" id="subtitle" title="分布式锁的实现">
               
             </span>
 
@@ -186,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-23 22:52" pubdate>
-        2022年1月23日 晚上
+      <time datetime="2022-01-24 00:07" pubdate>
+        2022年1月24日 凌晨
       </time>
     </span>
   
@@ -197,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      670 字
+      792 字
     </span>
   
 
@@ -206,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      7 分钟
     </span>
   
 
@@ -243,18 +245,40 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">对象的创建过程</h1>
+            <h1 style="display: none">分布式锁的实现</h1>
             
             <div class="markdown-body">
-              <h1 id="一、检查"><a href="#一、检查" class="headerlink" title="一、检查"></a>一、检查</h1><figure class="highlight"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs">1.检查指令的参数是否能在常量池中定位到一个类的符号引用<br></code></pre></td></tr></table></figure>
+              <h1 id="满足的条件"><a href="#满足的条件" class="headerlink" title="满足的条件"></a>满足的条件</h1><h2 id="互斥性"><a href="#互斥性" class="headerlink" title="互斥性"></a>互斥性</h2><figure class="highlight"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs">任意时刻，只有一个客户端持有锁<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">2.检查这个符号引用代表的类是否已被加载、解析和初始化过<br></code></pre></td></tr></table></figure>
+<h2 id="不会发生死锁"><a href="#不会发生死锁" class="headerlink" title="不会发生死锁"></a>不会发生死锁</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">3.类加载检查是否符合《Java虚拟机规范》的全部约束要求<br></code></pre></td></tr></table></figure>
+<h2 id="解铃还须系铃人"><a href="#解铃还须系铃人" class="headerlink" title="解铃还须系铃人"></a>解铃还须系铃人</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。<br></code></pre></td></tr></table></figure>
 
-<h1 id="二、分配内存"><a href="#二、分配内存" class="headerlink" title="二、分配内存"></a>二、分配内存</h1><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-number">1</span>.选择分配方式。<span class="hljs-keyword">Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；</span><br><span class="hljs-keyword"></span>反之采用“空闲列表”的分配方式。而<span class="hljs-keyword">Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压缩整理的能力决定。</span><br><span class="hljs-keyword"></span><br>因此使用Serial、ParNew等带压缩整理过程的收集器时，系统采用的分配算法是指针碰撞，既简单又高校。<br>使用CMS这种基于清除算法的收集器时，采用比较复杂的空闲列表来分配内存<br><br><span class="hljs-number">2</span>.因为创建对象是虚拟机中非常频繁的行为，要解决线程问题。虚拟机提供了两种解决方案，一种是采用CAS配上失败重试的方式保证更新操作的原子性；另一种是为每个线程在<span class="hljs-keyword">Java堆中预先分配一块内存，称为本地线程分配缓存(Thread </span>Local Allocation <span class="hljs-keyword">Buffer, </span>TLAB)<br></code></pre></td></tr></table></figure>
+<h2 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">加锁和解锁必须具有原子性<br></code></pre></td></tr></table></figure>
 
-<h1 id="三、初始化"><a href="#三、初始化" class="headerlink" title="三、初始化"></a>三、初始化</h1><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>.隐式初始化。虚拟机将分配到不包括对象头在内的内存空间初始化为<span class="hljs-number">0</span>，如果这分配内存时采用TLAB解决线程安全问题，那么这一步会提前至TLAB分配时顺便进行。<br><br><span class="hljs-attribute">2</span>.显示初始化。虚拟机为对象头进行必要的设置，例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。从虚拟机的视角来看，一个新的对象已经产生了。<br><br><span class="hljs-attribute">3</span>.执行&lt;init&gt;()方法，按照开发者的意愿对对象进行初始化，此时一个真正可用的对象才算完全被构造出来。<br></code></pre></td></tr></table></figure>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><h2 id="一、多个客户端申请获取锁"><a href="#一、多个客户端申请获取锁" class="headerlink" title="一、多个客户端申请获取锁"></a>一、多个客户端申请获取锁</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">即执行多个setnx语句<br></code></pre></td></tr></table></figure>
+
+<h2 id="二、获取成功"><a href="#二、获取成功" class="headerlink" title="二、获取成功"></a>二、获取成功</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">即执行setnx语句成功后的客户端，其他客户端等待重试<br></code></pre></td></tr></table></figure>
+
+<h2 id="三、执行业务逻辑"><a href="#三、执行业务逻辑" class="headerlink" title="三、执行业务逻辑"></a>三、执行业务逻辑</h2><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs excel">从<span class="hljs-built_in">db</span>获取数据，放入缓存<br></code></pre></td></tr></table></figure>
+
+<h2 id="四、释放锁"><a href="#四、释放锁" class="headerlink" title="四、释放锁"></a>四、释放锁</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">执行<span class="hljs-selector-tag">del</span>语句<br></code></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">以上步骤解决了互斥性<br></code></pre></td></tr></table></figure>
+
+<h1 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">如果业务逻辑出现异常，导致锁无法释放<br></code></pre></td></tr></table></figure>
+
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">设置锁的过期时间，解决死锁问题<br></code></pre></td></tr></table></figure>
+
+<h1 id="问题二"><a href="#问题二" class="headerlink" title="问题二"></a>问题二</h1><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gcode">在解决问题一后，可能存在释放了其他客户端上的锁，现象如下：<br><br><span class="hljs-number">1.</span> i<span class="hljs-symbol">ndex1</span>业务逻辑没执行完，<span class="hljs-number">3</span>秒后锁被自动释放。<br><span class="hljs-number">2.</span> i<span class="hljs-symbol">ndex2</span>获取到锁，执行业务逻辑，<span class="hljs-number">3</span>秒后锁被自动释放。<br><span class="hljs-number">3.</span> i<span class="hljs-symbol">ndex3</span>获取到锁，执行业务逻辑<br><span class="hljs-number">4.</span> i<span class="hljs-symbol">ndex1</span>业务逻辑执行完成，开始调用del释放锁，这时释放的是i<span class="hljs-symbol">ndex3</span>的锁，导致i<span class="hljs-symbol">ndex3</span>的业务只执行<span class="hljs-number">1</span>s就被别人释放。<br><br>最终等于没锁的情况。<br></code></pre></td></tr></table></figure>
+
+<h2 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">setnx获取锁时，设置一个指定的唯一值（例如：<span class="hljs-built_in">uuid</span>）；释放前获取这个值，判断是否自己的锁<br><br>解决了上锁和释放锁是同一个客户端<br></code></pre></td></tr></table></figure>
+
+<h1 id="问题三"><a href="#问题三" class="headerlink" title="问题三"></a>问题三</h1><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css">在解决问题二后，删除操作缺乏原子性，现象如下：<br><br>可能存在有一个客户端刚好执行到删除<span class="hljs-selector-tag">del</span>语句，而且已经完成了uuid的判断，但已经过期，此时第二个客户端开始上锁，可恰好第一个客户端开始执行<span class="hljs-selector-tag">del</span>语句，导致第二个客户端的lock被删除<br></code></pre></td></tr></table></figure>
+
+<h2 id="解决方案-2"><a href="#解决方案-2" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">LUA脚本保证删除的原子性<br><br>解决了原子性<br></code></pre></td></tr></table></figure>
+
+<h1 id="与Zookeeper分布式锁的差异"><a href="#与Zookeeper分布式锁的差异" class="headerlink" title="与Zookeeper分布式锁的差异"></a>与Zookeeper分布式锁的差异</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">Redis性能高，但是需要多重优化，而且客户端需要不断去尝试获取锁，比较耗性能<br>Zookeeper可靠性强，不需要不断主动尝试获取锁，只需要负责监听前一个节点即可，性能开销较小<br></code></pre></td></tr></table></figure>
 
 
             </div>
@@ -265,7 +289,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/JVM/">JVM</a>
+                      <a class="hover-with-bg" href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
                     
                   </div>
                 
@@ -283,9 +307,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/23/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/">
+                      <a href="/2022/01/24/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">垃圾收集</span>
+                        <span class="hidden-mobile">缓存穿透、击穿、雪崩</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -293,8 +317,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/17/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-                        <span class="hidden-mobile">Zk分布式锁的实现</span>
+                      <a href="/2022/01/24/%E6%8C%81%E4%B9%85%E5%8C%96%E6%9C%BA%E5%88%B6/">
+                        <span class="hidden-mobile">持久化机制</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

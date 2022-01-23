@@ -16,21 +16,23 @@
   <meta name="author" content="Masker">
   <meta name="keywords" content="Java">
   
-    <meta name="description" content="一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存12345671.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压">
+    <meta name="description" content="全量复制123451. 主节点通过bgsave命令fork子进程进行RDB持久化，该过程非常消耗CPU、内存（页表复制）、磁盘I&#x2F;O2. 主节点通过网络将RDB文件发送给从节点，对主节点的带框会带来很大的消耗3. 从节点清空老数据、载入新RDB文件，其过程是阻塞的，无法响应客户端命令；如果从节点执行bgrewriteaof，也会带来额外的消耗  增量复制123456781. 复制偏移量：执行复制的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对象的创建过程">
-<meta property="og:url" content="http://example.com/2022/01/23/%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:title" content="主从复制原理">
+<meta property="og:url" content="http://example.com/2022/01/24/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Masker7&#39;s Blog">
-<meta property="og:description" content="一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存12345671.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压">
+<meta property="og:description" content="全量复制123451. 主节点通过bgsave命令fork子进程进行RDB持久化，该过程非常消耗CPU、内存（页表复制）、磁盘I&#x2F;O2. 主节点通过网络将RDB文件发送给从节点，对主节点的带框会带来很大的消耗3. 从节点清空老数据、载入新RDB文件，其过程是阻塞的，无法响应客户端命令；如果从节点执行bgrewriteaof，也会带来额外的消耗  增量复制123456781. 复制偏移量：执行复制的">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-23T14:52:28.842Z">
-<meta property="article:modified_time" content="2022-01-23T15:06:44.248Z">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
+<meta property="article:published_time" content="2022-01-23T16:07:48.018Z">
+<meta property="article:modified_time" content="2022-01-23T16:14:29.149Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
   
   
-  <title>对象的创建过程 - Masker7&#39;s Blog</title>
+  <title>主从复制原理 - Masker7&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="对象的创建过程">
+            <span class="h2" id="subtitle" title="主从复制原理">
               
             </span>
 
@@ -186,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-23 22:52" pubdate>
-        2022年1月23日 晚上
+      <time datetime="2022-01-24 00:07" pubdate>
+        2022年1月24日 凌晨
       </time>
     </span>
   
@@ -197,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      670 字
+      598 字
     </span>
   
 
@@ -206,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      5 分钟
     </span>
   
 
@@ -243,19 +245,19 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">对象的创建过程</h1>
+            <h1 style="display: none">主从复制原理</h1>
             
             <div class="markdown-body">
-              <h1 id="一、检查"><a href="#一、检查" class="headerlink" title="一、检查"></a>一、检查</h1><figure class="highlight"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs">1.检查指令的参数是否能在常量池中定位到一个类的符号引用<br></code></pre></td></tr></table></figure>
+              <h1 id="全量复制"><a href="#全量复制" class="headerlink" title="全量复制"></a>全量复制</h1><figure class="highlight markdown"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 主节点通过bgsave命令fork子进程进行RDB持久化，该过程非常消耗CPU、内存（页表复制）、磁盘I/O<br><br><span class="hljs-bullet">2.</span> 主节点通过网络将RDB文件发送给从节点，对主节点的带框会带来很大的消耗<br><br><span class="hljs-bullet">3.</span> 从节点清空老数据、载入新RDB文件，其过程是阻塞的，无法响应客户端命令；如果从节点执行bgrewriteaof，也会带来额外的消耗<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">2.检查这个符号引用代表的类是否已被加载、解析和初始化过<br></code></pre></td></tr></table></figure>
+<h1 id="增量复制"><a href="#增量复制" class="headerlink" title="增量复制"></a>增量复制</h1><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-number">1.</span> 复制偏移量：执行复制的主从节点，分别会维护一个偏移量<span class="hljs-built_in">offset</span>，用来记录下一次同步从哪儿开始<br><br><span class="hljs-number">2.</span> 复制积压缓冲区：主节点内部维护了一个固定长度的、先进先出的队列作为复制积压缓冲区，当主从节点<span class="hljs-built_in">offset</span>的差距过大超过缓冲区时，将无法执行部分复制，只能执行全量复制<br>使用缓冲区可以避免从节点要去主节点的硬盘中获取数据<br><br><span class="hljs-number">3.</span> 每个Redis节点，都有其运行ID，运行ID由节点在启动时自动生成，主节点会将自己的运行ID发送给从节点，从节点会将主节点的运行ID保存起来。从节点Redis断开重连的时候，就会根据运行ID来判断同步的进度：<br>	<span class="hljs-number">3.1</span>. 如果从节点保存的运行ID与主节点的运行ID相同，说明主从节点之前同步过，主节点会继续尝试使用增量复制（到底能不能复制还得		  看<span class="hljs-built_in">offset</span>和复制积压缓冲区的情况） <br>	<span class="hljs-number">3.2</span>. 如果从节点保存的运行ID与主节点的运行ID不相同，说明从节点在断开前同步的Redis节点并不是当前的主节点，只能进行全量复制<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">3.类加载检查是否符合《Java虚拟机规范》的全部约束要求<br></code></pre></td></tr></table></figure>
 
-<h1 id="二、分配内存"><a href="#二、分配内存" class="headerlink" title="二、分配内存"></a>二、分配内存</h1><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-number">1</span>.选择分配方式。<span class="hljs-keyword">Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；</span><br><span class="hljs-keyword"></span>反之采用“空闲列表”的分配方式。而<span class="hljs-keyword">Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压缩整理的能力决定。</span><br><span class="hljs-keyword"></span><br>因此使用Serial、ParNew等带压缩整理过程的收集器时，系统采用的分配算法是指针碰撞，既简单又高校。<br>使用CMS这种基于清除算法的收集器时，采用比较复杂的空闲列表来分配内存<br><br><span class="hljs-number">2</span>.因为创建对象是虚拟机中非常频繁的行为，要解决线程问题。虚拟机提供了两种解决方案，一种是采用CAS配上失败重试的方式保证更新操作的原子性；另一种是为每个线程在<span class="hljs-keyword">Java堆中预先分配一块内存，称为本地线程分配缓存(Thread </span>Local Allocation <span class="hljs-keyword">Buffer, </span>TLAB)<br></code></pre></td></tr></table></figure>
 
-<h1 id="三、初始化"><a href="#三、初始化" class="headerlink" title="三、初始化"></a>三、初始化</h1><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>.隐式初始化。虚拟机将分配到不包括对象头在内的内存空间初始化为<span class="hljs-number">0</span>，如果这分配内存时采用TLAB解决线程安全问题，那么这一步会提前至TLAB分配时顺便进行。<br><br><span class="hljs-attribute">2</span>.显示初始化。虚拟机为对象头进行必要的设置，例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。从虚拟机的视角来看，一个新的对象已经产生了。<br><br><span class="hljs-attribute">3</span>.执行&lt;init&gt;()方法，按照开发者的意愿对对象进行初始化，此时一个真正可用的对象才算完全被构造出来。<br></code></pre></td></tr></table></figure>
 
+
+<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20220117154106931.png" srcset="/img/loading.gif" lazyload alt="image-20220117154106931"></p>
+<h1 id="故障恢复"><a href="#故障恢复" class="headerlink" title="故障恢复"></a>故障恢复</h1><p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20220117154754090.png" srcset="/img/loading.gif" lazyload alt="image-20220117154754090"></p>
 
             </div>
             <hr>
@@ -265,7 +267,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/JVM/">JVM</a>
+                      <a class="hover-with-bg" href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
                     
                   </div>
                 
@@ -283,9 +285,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/23/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/">
+                      <a href="/2022/01/24/CAP%E7%90%86%E8%AE%BA/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">垃圾收集</span>
+                        <span class="hidden-mobile">CAP理论</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -293,8 +295,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/17/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-                        <span class="hidden-mobile">Zk分布式锁的实现</span>
+                      <a href="/2022/01/24/%E4%B8%BA%E4%BB%80%E4%B9%88Redis%E9%9D%9E%E5%B8%B8%E5%BF%AB/">
+                        <span class="hidden-mobile">为什么Redis非常快</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

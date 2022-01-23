@@ -16,21 +16,23 @@
   <meta name="author" content="Masker">
   <meta name="keywords" content="Java">
   
-    <meta name="description" content="一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存12345671.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压">
+    <meta name="description" content="常用淘汰算法FIFO12First In First Out，先进先出根据缓存被存储的时间，离当前最远的数据优先被淘汰  LRU12Least Recently Used，最近最少使用。算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的几率也更高”。  实现原理1231. 新数据插到链表头部2. 每当缓存命中，则将数据移动到链表头部3. 当链表满时，将链">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对象的创建过程">
-<meta property="og:url" content="http://example.com/2022/01/23/%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/index.html">
+<meta property="og:title" content="缓存淘汰算法和淘汰策略">
+<meta property="og:url" content="http://example.com/2022/01/24/%E7%BC%93%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AE%97%E6%B3%95%E5%92%8C%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/index.html">
 <meta property="og:site_name" content="Masker7&#39;s Blog">
-<meta property="og:description" content="一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存12345671.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压">
+<meta property="og:description" content="常用淘汰算法FIFO12First In First Out，先进先出根据缓存被存储的时间，离当前最远的数据优先被淘汰  LRU12Least Recently Used，最近最少使用。算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的几率也更高”。  实现原理1231. 新数据插到链表头部2. 每当缓存命中，则将数据移动到链表头部3. 当链表满时，将链">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-23T14:52:28.842Z">
-<meta property="article:modified_time" content="2022-01-23T15:06:44.248Z">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
+<meta property="article:published_time" content="2022-01-23T16:07:48.012Z">
+<meta property="article:modified_time" content="2022-01-23T16:13:56.048Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
   
   
-  <title>对象的创建过程 - Masker7&#39;s Blog</title>
+  <title>缓存淘汰算法和淘汰策略 - Masker7&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="对象的创建过程">
+            <span class="h2" id="subtitle" title="缓存淘汰算法和淘汰策略">
               
             </span>
 
@@ -186,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-23 22:52" pubdate>
-        2022年1月23日 晚上
+      <time datetime="2022-01-24 00:07" pubdate>
+        2022年1月24日 凌晨
       </time>
     </span>
   
@@ -197,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      670 字
+      521 字
     </span>
   
 
@@ -206,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      5 分钟
     </span>
   
 
@@ -243,19 +245,28 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">对象的创建过程</h1>
+            <h1 style="display: none">缓存淘汰算法和淘汰策略</h1>
             
             <div class="markdown-body">
-              <h1 id="一、检查"><a href="#一、检查" class="headerlink" title="一、检查"></a>一、检查</h1><figure class="highlight"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs">1.检查指令的参数是否能在常量池中定位到一个类的符号引用<br></code></pre></td></tr></table></figure>
+              <h1 id="常用淘汰算法"><a href="#常用淘汰算法" class="headerlink" title="常用淘汰算法"></a>常用淘汰算法</h1><h2 id="FIFO"><a href="#FIFO" class="headerlink" title="FIFO"></a>FIFO</h2><figure class="highlight mathematica"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-built_in">First</span> <span class="hljs-built_in">In</span> <span class="hljs-built_in">First</span> <span class="hljs-built_in">Out</span>，先进先出<br>根据缓存被存储的时间，离当前最远的数据优先被淘汰<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">2.检查这个符号引用代表的类是否已被加载、解析和初始化过<br></code></pre></td></tr></table></figure>
+<h2 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Least</span> Recently Used，最近最少使用。<br>算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的几率也更高”。<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">3.类加载检查是否符合《Java虚拟机规范》的全部约束要求<br></code></pre></td></tr></table></figure>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 新数据插到链表头部<br><span class="hljs-bullet">2.</span> 每当缓存命中，则将数据移动到链表头部<br><span class="hljs-bullet">3.</span> 当链表满时，将链表尾部的数据丢弃<br></code></pre></td></tr></table></figure>
 
-<h1 id="二、分配内存"><a href="#二、分配内存" class="headerlink" title="二、分配内存"></a>二、分配内存</h1><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-number">1</span>.选择分配方式。<span class="hljs-keyword">Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；</span><br><span class="hljs-keyword"></span>反之采用“空闲列表”的分配方式。而<span class="hljs-keyword">Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压缩整理的能力决定。</span><br><span class="hljs-keyword"></span><br>因此使用Serial、ParNew等带压缩整理过程的收集器时，系统采用的分配算法是指针碰撞，既简单又高校。<br>使用CMS这种基于清除算法的收集器时，采用比较复杂的空闲列表来分配内存<br><br><span class="hljs-number">2</span>.因为创建对象是虚拟机中非常频繁的行为，要解决线程问题。虚拟机提供了两种解决方案，一种是采用CAS配上失败重试的方式保证更新操作的原子性；另一种是为每个线程在<span class="hljs-keyword">Java堆中预先分配一块内存，称为本地线程分配缓存(Thread </span>Local Allocation <span class="hljs-keyword">Buffer, </span>TLAB)<br></code></pre></td></tr></table></figure>
+<h2 id="LFU"><a href="#LFU" class="headerlink" title="LFU"></a>LFU</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Least</span> Frequently Used，最不经常使用算法，在一段时间内，数据被使用次数最少的，优先被淘汰<br></code></pre></td></tr></table></figure>
 
-<h1 id="三、初始化"><a href="#三、初始化" class="headerlink" title="三、初始化"></a>三、初始化</h1><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>.隐式初始化。虚拟机将分配到不包括对象头在内的内存空间初始化为<span class="hljs-number">0</span>，如果这分配内存时采用TLAB解决线程安全问题，那么这一步会提前至TLAB分配时顺便进行。<br><br><span class="hljs-attribute">2</span>.显示初始化。虚拟机为对象头进行必要的设置，例如这个对象是哪个类的实例、如何才能找到类的元数据信息、对象的哈希码、对象的GC分代年龄等信息。从虚拟机的视角来看，一个新的对象已经产生了。<br><br><span class="hljs-attribute">3</span>.执行&lt;init&gt;()方法，按照开发者的意愿对对象进行初始化，此时一个真正可用的对象才算完全被构造出来。<br></code></pre></td></tr></table></figure>
+<h1 id="淘汰策略"><a href="#淘汰策略" class="headerlink" title="淘汰策略"></a>淘汰策略</h1><h2 id="摆烂型"><a href="#摆烂型" class="headerlink" title="摆烂型"></a>摆烂型</h2><h3 id="noeviction"><a href="#noeviction" class="headerlink" title="noeviction"></a>noeviction</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">当内存限制达到时，谁也不删除，返回错误<br></code></pre></td></tr></table></figure>
 
+<h2 id="针对所有key"><a href="#针对所有key" class="headerlink" title="针对所有key"></a>针对所有key</h2><h3 id="allkeys-lru"><a href="#allkeys-lru" class="headerlink" title="allkeys-lru"></a>allkeys-lru</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">尝试回收最少使用的键，使得新添加的数据有空间存放<br></code></pre></td></tr></table></figure>
+
+<h3 id="allkey-random"><a href="#allkey-random" class="headerlink" title="allkey-random"></a>allkey-random</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">回收随机的键，使得新添加的数据有空间存放<br></code></pre></td></tr></table></figure>
+
+<h2 id="针对过期key"><a href="#针对过期key" class="headerlink" title="针对过期key"></a>针对过期key</h2><h3 id="volatile-lru"><a href="#volatile-lru" class="headerlink" title="volatile-lru"></a>volatile-lru</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">尝试回收最少使用的键，使得新添加的数据有空间存放，但是仅限于在过期集合的键<br></code></pre></td></tr></table></figure>
+
+<h3 id="volatile-random"><a href="#volatile-random" class="headerlink" title="volatile-random"></a>volatile-random</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">回收随机的键，使得新添加的数据有空间存放，但仅限于过期集合的键<br></code></pre></td></tr></table></figure>
+
+<h3 id="volatile-ttl"><a href="#volatile-ttl" class="headerlink" title="volatile-ttl"></a>volatile-ttl</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">回收在过期集合的键，并且优先回收过期时间较短的键，使得新添加的数据有空间存放<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -265,7 +276,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/JVM/">JVM</a>
+                      <a class="hover-with-bg" href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
                     
                   </div>
                 
@@ -283,9 +294,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/23/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86/">
+                      <a href="/2022/01/24/%E4%B9%9D%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">垃圾收集</span>
+                        <span class="hidden-mobile">九大数据结构</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -293,8 +304,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/01/17/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/">
-                        <span class="hidden-mobile">Zk分布式锁的实现</span>
+                      <a href="/2022/01/24/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/">
+                        <span class="hidden-mobile">缓存穿透、击穿、雪崩</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
