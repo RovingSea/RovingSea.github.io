@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
 <meta property="article:published_time" content="2022-01-23T16:07:48.014Z">
-<meta property="article:modified_time" content="2022-01-23T16:12:29.706Z">
+<meta property="article:modified_time" content="2022-01-23T16:35:04.798Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,12 +252,12 @@
 
 <h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs delphi">简单动态字符串(Simple <span class="hljs-keyword">Dynamic</span> <span class="hljs-keyword">String</span>,缩写SDS)，类似于Java的ArrayList<br><br>当字符串长度小于<span class="hljs-number">1</span>M时，扩容都是加倍现有的空间，如果超过<span class="hljs-number">1</span>M，扩容时一次只会多扩<span class="hljs-number">1</span>M的空间。需要注意的是字符串最大长度为<span class="hljs-number">512</span>M。<br></code></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20220117010527194.png" srcset="/img/loading.gif" lazyload alt="image-20220117010527194"></p>
+<p><img src="../image%5Cimage-20220117010527194.png" srcset="/img/loading.gif" lazyload alt="image-20220117010527194"></p>
 <h1 id="List"><a href="#List" class="headerlink" title="List"></a>List</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">列表是简单的字符串列表，按照插入顺序排序。可以添加一个元素到列表的头部（左边）或者尾部（右边）<br><br>底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。<br></code></pre></td></tr></table></figure>
 
 <h2 id="数据结构-1"><a href="#数据结构-1" class="headerlink" title="数据结构"></a>数据结构</h2><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pf">压缩链表zipList和快速链表<span class="hljs-keyword">quick</span>List<br><br>链表元素较少的情况时使用一块连续的内存存储，这个结构是zipList，它将所有的元素紧挨着一起存储，分配的是一块连续的内存。<br><br>数据量比较多的时候才会改成<span class="hljs-keyword">quick</span>List，因为普通的链表需要的附加指针空间太大，会比较浪费空间。<br><br>将链表和ziplist结合起来组成了quicklist，也就是将多个ziplist使用双向指针串起来使用。这样既满足了快速的插入删除性能，又不会出现太大的空间冗余。<br></code></pre></td></tr></table></figure>
 
-<p><img src="C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20220117010926381.png" srcset="/img/loading.gif" lazyload alt="image-20220117010926381"></p>
+<p><img src="../image%5Cimage-20220117010926381.png" srcset="/img/loading.gif" lazyload alt="image-20220117010926381"></p>
 <h1 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h1><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lasso">与<span class="hljs-built_in">list</span>类似是一个列表的功能，特殊之处在于<span class="hljs-built_in">set</span>是可以自动排重的<br><br>Redis的<span class="hljs-built_in">Set</span>是<span class="hljs-built_in">string</span>类型的无序集合。它底层其实是一个value为<span class="hljs-built_in">null</span>的hash表，所以添加，删除，查找的复杂度都是O(<span class="hljs-number">1</span>)。<br></code></pre></td></tr></table></figure>
 
 <h2 id="数据结构-2"><a href="#数据结构-2" class="headerlink" title="数据结构"></a>数据结构</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-type">Set</span>数据结构是<span class="hljs-built_in">dict</span>字典，字典是用哈希表实现的。<br><br>Java中HashSet的内部实现使用的是HashMap，只不过所有的value都指向同一个对象。<br><br>Redis的<span class="hljs-built_in">set</span>结构也是一样，它的内部也使用<span class="hljs-built_in">hash</span>结构，所有的value都指向同一个内部值。<br></code></pre></td></tr></table></figure>
