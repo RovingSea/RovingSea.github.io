@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://nyimac.gitee.io/img/netty.png">
 <meta property="article:published_time" content="2022-01-24T13:49:25.644Z">
-<meta property="article:modified_time" content="2022-01-27T09:10:23.690Z">
+<meta property="article:modified_time" content="2022-01-28T11:22:01.173Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      259 分钟
+      262 分钟
     </span>
   
 
@@ -717,6 +717,15 @@
 </ul>
 </li>
 </ul>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p>可以将各大重要组件分为三大类：</p>
+<h3 id="网络通信层"><a href="#网络通信层" class="headerlink" title="网络通信层"></a>网络通信层</h3><h4 id="BootStrap"><a href="#BootStrap" class="headerlink" title="BootStrap"></a>BootStrap</h4><p>负责客户端启动，并且去连接远程的Netty Server</p>
+<h4 id="ServerBootStrap"><a href="#ServerBootStrap" class="headerlink" title="ServerBootStrap"></a>ServerBootStrap</h4><p>负责服务端的监听，用来监听指定的一个端口</p>
+<h4 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h4><p>负责网络通信的一个载体</p>
+<h3 id="事件调度层"><a href="#事件调度层" class="headerlink" title="事件调度层"></a>事件调度层</h3><h4 id="EventLoopGroup"><a href="#EventLoopGroup" class="headerlink" title="EventLoopGroup"></a>EventLoopGroup</h4><p>本质上是一个线程池，主要去负责接收IO请求，并分配线程去执行处理请求</p>
+<h4 id="EventLoop"><a href="#EventLoop" class="headerlink" title="EventLoop"></a>EventLoop</h4><p>是<code>EventLoopGroup</code>线程池中的一个具体线程</p>
+<h3 id="服务编排层"><a href="#服务编排层" class="headerlink" title="服务编排层"></a>服务编排层</h3><h4 id="ChannelPipeLine"><a href="#ChannelPipeLine" class="headerlink" title="ChannelPipeLine"></a>ChannelPipeLine</h4><p>负责处理多个<code>ChannelHandler</code>，将多个<code>ChannelHandler</code>构成一个执行链，从而实现流水线的效果</p>
+<h4 id="ChannelHandler"><a href="#ChannelHandler" class="headerlink" title="ChannelHandler"></a>ChannelHandler</h4><p>针对 IO 数据的一个处理器，数据处理接收后通过指定的 <code>Handler</code> 进行处理</p>
+<h4 id="ChannelHandlerContext"><a href="#ChannelHandlerContext" class="headerlink" title="ChannelHandlerContext"></a>ChannelHandlerContext</h4><p>用来保存<code>ChannelHandler</code>上下文信息</p>
 
             </div>
             <hr>
