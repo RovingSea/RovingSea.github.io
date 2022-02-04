@@ -190,6 +190,52 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86/" target="_self">
+          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="主从复制原理">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86/" target="_self">
+          主从复制原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%8E%9F%E7%90%86/" target="_self">
+          
+          全量复制123451. 主节点通过bgsave命令fork子进程进行RDB持久化，该过程非常消耗CPU、内存（页表复制）、磁盘I&#x2F;O2. 主节点通过网络将RDB文件发送给从节点，对主节点的带框会带来很大的消耗3. 从节点清空老数据、载入新RDB文件，其过程是阻塞的，无法响应客户端命令；如果从节点执行bgrewriteaof，也会带来额外的消耗  增量复制123456781. 复制偏移量：执行复制的
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:07" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/01/24/%E4%B8%BA%E4%BB%80%E4%B9%88Redis%E9%9D%9E%E5%B8%B8%E5%BF%AB/" target="_self">
           <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="为什么Redis非常快">
         </a>
@@ -592,46 +638,6 @@
             <i class="iconfont icon-category"></i>
             
               <a href="/categories/MQ/">MQ</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/23/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_self">
-          内存模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/23/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_self">
-          
-          什么是JMM1JMM 即 Java Memory Model，它定义了主存（共享内存）、工作内存（线程私有）抽象概念，底层对应着 CPU 寄存器、缓存、硬件内存、 CPU 指令优化等。  JMM主要体现在以下几个方面原子性1保证指令不会受到线程上下文切换的影响  引例1234567891011121314151617181920212223242526public class Atomicity
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-23 22:52" pubdate>
-              2022-01-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/JVM/">JVM</a>
             
           </div>
         
