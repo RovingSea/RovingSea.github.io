@@ -4,6 +4,63 @@
   
   
   <entry>
+    <title>并发与并行</title>
+    <link href="/2022/02/05/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91/"/>
+    <url>/2022/02/05/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91/</url>
+    
+    <content type="html"><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>并发是一个CPU在不同的时间去不同线程中执行指令。</p><p>并行是多个CPU同时处理不同的线程。</p><p>引用 Rob Pike 的一段描述：</p><ul><li>并发（concurrent）是同一时间<strong>应对</strong>（dealing with）多件事情的能力</li><li>并行（parallel）是同一时间<strong>动手做</strong>（doing）多件事情的能力</li></ul><h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="异步调用"><a href="#异步调用" class="headerlink" title="异步调用"></a>异步调用</h2><p>以调用方角度来讲，如果</p><ul><li>需要等待结果返回，才能继续运行就是同步</li><li>不需要等待结果返回，就能继续运行就是异步</li></ul><h3 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h3><p>多线程可以让方法执行变为异步的（即不要巴巴干等着）比如说读取磁盘文件时，假设读取操作花费了 5 秒钟，如 果没有线程调度机制，这 5 秒 cpu 什么都做不了，其它代码都得暂停…</p><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><ul><li>比如在项目中，视频文件需要转换格式等操作比较费时，这时开一个新线程处理视频转换，避免阻塞主线程</li><li>tomcat 的异步 servlet 也是类似的目的，让用户线程处理耗时较长的操作，避免阻塞</li><li>tomcat 的工作线程 ui 程序中，开线程进行其他操作，避免阻塞 ui 线程</li></ul><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol><li>单核 cpu 下，多线程不能实际提高程序运行效率，只是为了能够在不同的任务之间切换，不同线程轮流使用 cpu ，不至于一个线程总占用 cpu，别的线程没法干活</li><li>多核 cpu 可以并行跑多个线程，但能否提高程序运行效率还是要分情况的<ul><li>有些任务，经过精心设计，将任务拆分，并行执行，当然可以提高程序的运行效率。但不是所有计算任 务都能拆分（参考后文的【阿姆达尔定律】）</li><li>也不是所有任务都需要拆分，任务的目的如果不同，谈拆分和效率没啥意义</li></ul></li><li>IO 操作不占用 cpu，只是我们一般拷贝文件使用的是【阻塞 IO】，这时相当于线程虽然不用 cpu，但需要一 直等待 IO 结束，没能充分利用线程。所以才有后面的【非阻塞 IO】和【异步 IO】优化</li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>操作系统</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>进程与线程的区别</title>
+    <link href="/2022/02/05/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/"/>
+    <url>/2022/02/05/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</url>
+    
+    <content type="html"><![CDATA[<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><p>程序由指令和数据组成，但这些指令要运行，数据要读写，就必须将指令加载至 CPU，数据加载至内存。</p><p>在指令运行过程中还需要用到磁盘、网络等设备。</p><p><strong>进程就是用来加载指令、管理内存、管理 IO 的。</strong></p><ul><li><p>当一个程序被运行，从磁盘加载这个程序的代码至内存，这时就开启了一个进程。</p></li><li><p>进程就可以视为程序的一个实例。大部分程序可以同时运行多个实例进程（例如记事本、画图、浏览器 等），也有的程序只能启动一个实例进程（例如网易云音乐、360 安全卫士等）</p></li></ul><h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><ul><li>一个进程之内可以分为一到多个线程。</li><li>一个线程就是一个指令流，将指令流中的一条条指令以一定的顺序交给 CPU 执行 。</li><li>Java 中，线程作为最小调度单位，进程作为资源分配的最小单位。 <strong>在 windows 中进程是不活动的，只是作为线程的容器</strong></li></ul><h1 id="二者对比"><a href="#二者对比" class="headerlink" title="二者对比"></a>二者对比</h1><ul><li>进程基本上相互独立的，而线程存在于进程内，是进程的一个子集，进程拥有共享的资源，如内存空间等，供其内部的线程共享<ul><li>进程间通信较为复杂，同一台计算机的进程通信称为 IPC（Inter-process communication）</li><li>不同计算机之间的进程通信，需要通过网络，并遵守共同的协议，例如 HTTP</li></ul></li><li>线程通信相对简单，因为它们共享进程内的内存，一个例子是多个线程可以访问同一个共享变量。<strong>线程更轻量，线程上下文切换成本一般上要比进程上下文切换低</strong></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>操作系统</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>线程的创建</title>
+    <link href="/2022/02/05/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA/"/>
+    <url>/2022/02/05/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA/</url>
+    
+    <content type="html"><![CDATA[<figure class="highlight llvm"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs llvm">本文参考了码友 Nyima 的学习笔记<br><span class="hljs-symbol">https:</span>//nyimac.gitee.io/<span class="hljs-number">2020</span>/<span class="hljs-number">06</span>/<span class="hljs-number">08</span>/<span class="hljs-variable">%E5</span><span class="hljs-variable">%B9</span><span class="hljs-variable">%B6</span><span class="hljs-variable">%E5</span><span class="hljs-variable">%8</span>F<span class="hljs-variable">%91</span><span class="hljs-variable">%E7</span><span class="hljs-variable">%BC</span><span class="hljs-variable">%96</span><span class="hljs-variable">%E7</span><span class="hljs-variable">%A8</span><span class="hljs-variable">%8</span>B/<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java 并发编程</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Netty优化学习</title>
     <link href="/2022/02/04/Netty%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
     <url>/2022/02/04/Netty%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/</url>
@@ -51,7 +108,7 @@
     
     <categories>
       
-      <category>Java 基础</category>
+      <category>Java 网络编程</category>
       
     </categories>
     
