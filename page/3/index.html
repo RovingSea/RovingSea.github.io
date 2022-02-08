@@ -511,6 +511,52 @@
   <div class="row mx-auto index-card">
     
     
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ实现分布式事务">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+          RabbitMQ实现分布式事务
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+          
+          原理采用最终一致性原理 也就是说过程中可能会产生不一致，但是最终会保持一致 要素RabbitMQ解决分布式事务需要保证以下三要素   一、确认生产者一定要将数据发送到 MQ服务器中 采用 MQ 消息确认机制 二、MQ消费者消息能够正确消费消息 采用手动 ACK 模式，同时也要注意重试幂等性问题   三、保证第一个事务先执行 采用补偿机制，创建一个消费者进行监听第一个事务，如果第一个事务没有执行成功
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:00" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/RabbitMQ/">RabbitMQ</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
@@ -563,46 +609,6 @@
         <a href="/2022/01/23/JVM/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" target="_self">
           
           程序计数器线程私有 程序计数器（Program Counter Register）是一块较小的内存空间，它可以看作是当前线程所执行的 字节码的行号指示器。 字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，它是程序控制流的指示器，分支、循环、跳转、异常处 理、线程恢复等基础功能都需要依赖这个计数器来完成。 Java虚拟机栈线程私有 虚拟机栈描述的是Java方法执行的线
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-23 22:52" pubdate>
-              2022-01-23
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/JVM/">JVM</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/23/JVM/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" target="_self">
-          类加载机制
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/23/JVM/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" target="_self">
-          
-          类加载的时机在对象的创建过程中，完成了检查阶段      加载 （Loading） 验证（Verification） 准备（Preparation） 解析（Resolution） 初始化 （Initialization） 使用（Using） 卸载（Unloading）  其中验证、准备、解析三个部分统称为连接（Linking） 其中加载、验证、准备、解析、初始化和卸载这五个阶段的顺序是确定的，类
         </a>
       </p>
 
