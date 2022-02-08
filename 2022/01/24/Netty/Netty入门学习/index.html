@@ -1,0 +1,967 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Masker">
+  <meta name="keywords" content="Java">
+  
+    <meta name="description" content="前言12本文参考了码友 Nyima 的学习笔记https:&#x2F;&#x2F;nyimac.gitee.io&#x2F;2021&#x2F;04&#x2F;25&#x2F;Netty%E5%9F%BA%E7%A1%80&#x2F;    一、概述1.  什么是Netty1234Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端Netty is an asynchronous event-driven networ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty入门学习">
+<meta property="og:url" content="http://example.com/2022/01/24/Netty/Netty%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Masker7&#39;s Blog">
+<meta property="og:description" content="前言12本文参考了码友 Nyima 的学习笔记https:&#x2F;&#x2F;nyimac.gitee.io&#x2F;2021&#x2F;04&#x2F;25&#x2F;Netty%E5%9F%BA%E7%A1%80&#x2F;    一、概述1.  什么是Netty1234Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端Netty is an asynchronous event-driven networ">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://nyimac.gitee.io/img/netty.png">
+<meta property="article:published_time" content="2022-01-24T13:49:25.644Z">
+<meta property="article:modified_time" content="2022-01-28T11:22:01.173Z">
+<meta property="article:author" content="Masker">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://nyimac.gitee.io/img/netty.png">
+  
+  
+  <title>Netty入门学习 - Masker7&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Masker</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Netty入门学习">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-24 21:49" pubdate>
+        2022年1月24日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      31k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      262 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Netty入门学习</h1>
+            
+            <div class="markdown-body">
+              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><figure class="highlight awk"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs awk">本文参考了码友 Nyima 的学习笔记<br>https:<span class="hljs-regexp">//</span>nyimac.gitee.io<span class="hljs-regexp">/2021/</span><span class="hljs-number">04</span><span class="hljs-regexp">/25/</span>Netty%E5%<span class="hljs-number">9</span>F%BA%E7%A1%<span class="hljs-number">80</span>/<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><h2 id="1-什么是Netty"><a href="#1-什么是Netty" class="headerlink" title="1.  什么是Netty"></a>1.  什么是Netty</h2><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs applescript">Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端<br><br>Netty <span class="hljs-keyword">is</span> an asynchronous event-driven network <span class="hljs-built_in">application</span> framework<br><span class="hljs-keyword">for</span> rapid development <span class="hljs-keyword">of</span> maintainable high performance protocol servers &amp; clients.<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-注意"><a href="#2-注意" class="headerlink" title="2.  注意"></a>2.  注意</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">netty的异步还是基于多路复用的，并没有实现真正意义上的异步IO<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-优势"><a href="#3-优势" class="headerlink" title="3. 优势"></a>3. 优势</h2><h3 id="传统-NIO"><a href="#传统-NIO" class="headerlink" title="传统 NIO"></a>传统 NIO</h3><ul>
+<li>工作量大</li>
+<li>bug 多</li>
+<li>需要自己构建协议</li>
+<li>解决了 TCP 传输问题，如粘包、半包</li>
+<li>因为 bug 的存在，会导致 epoll 空轮询导致 CPU 占用 100%</li>
+</ul>
+<h3 id="Netty"><a href="#Netty" class="headerlink" title="Netty"></a>Netty</h3><ul>
+<li>API 增强，易于使用，不需要做大量重复事情</li>
+<li>增强类，如：</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">FastThreadLocal</span> =&gt; ThreadLocal<br><span class="hljs-attr">ByteBuf</span> =&gt; ByteBuffer<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-为什么Netty大量使用了异步？"><a href="#4-为什么Netty大量使用了异步？" class="headerlink" title="4. 为什么Netty大量使用了异步？"></a>4. 为什么Netty大量使用了异步？</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">简而言之就是，以响应速度换取了吞吐量<br>详情看 https:<span class="hljs-regexp">//</span>www.bilibili.com<span class="hljs-regexp">/video/</span>BV1py4y1E7oA?p=<span class="hljs-number">70</span>&amp;spm_id_from=pageDriver<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-读与写"><a href="#5-读与写" class="headerlink" title="5. 读与写"></a>5. 读与写</h2><p>我最初在认识上有这样的误区，认为只有在netty，nio这样的多路复用I0模型时，读写才不会相互阻塞才可以实现高效的双向通信，</p>
+<p><strong>但实际上，Java Socket是全双工的：在任意时刻，线路上存在A到B和B到A的双向信号传输。</strong><br><strong>即使是阻塞lO，读和写是可以同时进行的，只要分别采用读线程和写线程即可，读不会阻塞写、写也不会阻塞读</strong></p>
+<h1 id="二、案例"><a href="#二、案例" class="headerlink" title="二、案例"></a>二、案例</h1><h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloServer</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-keyword">new</span> ServerBootstrap()<br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup())<br>                .channel(NioServerSocketChannel.class)<br>                .childHandler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(NioSocketChannel nioSocketChannel)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        nioSocketChannel.pipeline().addLast(<span class="hljs-keyword">new</span> StringDecoder());<br>                        nioSocketChannel.pipeline().addLast(<span class="hljs-keyword">new</span> SimpleChannelInboundHandler&lt;String&gt;() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead0</span><span class="hljs-params">(ChannelHandlerContext channelHandlerContext, String s)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                System.out.println(s);<br>                            &#125;<br>                        &#125;);<br>                    &#125;<br>                &#125;).bind(<span class="hljs-number">8080</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloClient</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>        <span class="hljs-keyword">new</span> Bootstrap()<br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup())<br>                .channel(NioSocketChannel.class)<br>                .handler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;Channel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(Channel channel)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        channel.pipeline().addLast(<span class="hljs-keyword">new</span> StringEncoder());<br>                    &#125;<br>                &#125;)<br>                .connect(<span class="hljs-keyword">new</span> InetSocketAddress(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>))<br>                .sync()<br>                .channel()<br>                .writeAndFlush(<span class="hljs-string">&quot;hello world&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="执行流程"><a href="#执行流程" class="headerlink" title="执行流程"></a>执行流程</h2><p><img src="/image/image-20220124230644911.png" srcset="/img/loading.gif" lazyload alt="image-20220124230644911"></p>
+<h1 id="三、重要组件"><a href="#三、重要组件" class="headerlink" title="三、重要组件"></a>三、重要组件</h1><h2 id="1-EventLoop-和-EventLoopGroup"><a href="#1-EventLoop-和-EventLoopGroup" class="headerlink" title="1. EventLoop 和 EventLoopGroup"></a>1. EventLoop 和 EventLoopGroup</h2><h3 id="①-EventLoopGroup"><a href="#①-EventLoopGroup" class="headerlink" title="①. EventLoopGroup"></a>①. EventLoopGroup</h3><figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs julia">事件循环组对象<br><br>本质上是一组EventLoop对象<br><span class="hljs-built_in">Channel</span> 一般会调用 EventLoopGroup 的 register 方法来绑定其中一个 EventLoop，<br>后续这个 <span class="hljs-built_in">Channel</span> 上的 <span class="hljs-built_in">IO</span> 事件都会由此 EventLoop 来处理<br>目的是为了保证 <span class="hljs-built_in">IO</span> 事件处理时的线程安全<br></code></pre></td></tr></table></figure>
+
+<h4 id="Ⅰ-继承关系"><a href="#Ⅰ-继承关系" class="headerlink" title="Ⅰ. 继承关系"></a>Ⅰ. 继承关系</h4><p><img src="/image/image-20220125003702897.png" srcset="/img/loading.gif" lazyload alt="image-20220125003702897"></p>
+<h5 id="EventExecutorGroup"><a href="#EventExecutorGroup" class="headerlink" title="EventExecutorGroup"></a>EventExecutorGroup</h5><figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs autoit">实现了 Iterable 接口提供遍历 EventLoop 的能力<br>另有 <span class="hljs-keyword">next</span> 方法获取集合中下一个 EventLoop<br></code></pre></td></tr></table></figure>
+
+<h3 id="②-EventLoop"><a href="#②-EventLoop" class="headerlink" title="②. EventLoop"></a>②. EventLoop</h3><figure class="highlight julia"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs julia">事件循环对象<br><br>本质上是一个单线程执行器（同时维护了一个 Selector），<br>里面有 run 方法处理 <span class="hljs-built_in">Channel</span> 上源源不断的 <span class="hljs-built_in">IO</span> 事件<br></code></pre></td></tr></table></figure>
+
+<h4 id="Ⅰ-继承关系-1"><a href="#Ⅰ-继承关系-1" class="headerlink" title="Ⅰ.  继承关系"></a>Ⅰ.  继承关系</h4><p><img src="/image/image-20220125002442025.png" srcset="/img/loading.gif" lazyload alt="image-20220125002442025"></p>
+<h5 id="ScheduledExecutorService"><a href="#ScheduledExecutorService" class="headerlink" title="ScheduledExecutorService"></a>ScheduledExecutorService</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">提供了线程池中的所有方法<br></code></pre></td></tr></table></figure>
+
+<h5 id="OrderedEventExecutor"><a href="#OrderedEventExecutor" class="headerlink" title="OrderedEventExecutor"></a>OrderedEventExecutor</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">提供了 <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">inEventLoop</span><span class="hljs-params">(Thread thread)</span> 方法判断一个线程是否属于 EventLoop</span><br><span class="hljs-function">提供了 parent 方法来看看自己属于哪个 EventLoopGroup</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="③-普通任务"><a href="#③-普通任务" class="headerlink" title="③. 普通任务"></a>③. 普通任务</h3><h4 id="Ⅰ-代码"><a href="#Ⅰ-代码" class="headerlink" title="Ⅰ. 代码"></a>Ⅰ. 代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DefaultTaskTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-comment">// DefaultEventLoopGroup group1 = new DefaultEventLoopGroup(); 普通，定时任务</span><br><br>        <span class="hljs-comment">// io 事件，普通，定时任务</span><br>        NioEventLoopGroup group = <span class="hljs-keyword">new</span> NioEventLoopGroup(<span class="hljs-number">2</span>);<br>        <span class="hljs-comment">// next方法实现了一个轮询，达到负载均衡效果</span><br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        <span class="hljs-comment">// 执行普通任务，异步处理，提高工作效率</span><br>        group.next().submit(() -&gt; &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                Thread.sleep(<span class="hljs-number">1000</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>            log.debug(<span class="hljs-string">&quot;ok&quot;</span>);<br>        &#125;);<br>        group.next().submit(() -&gt; &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                Thread.sleep(<span class="hljs-number">1000</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>            log.debug(<span class="hljs-string">&quot;ok&quot;</span>);<br>        &#125;);<br>        log.debug(<span class="hljs-string">&quot;main&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220125214434144.png" srcset="/img/loading.gif" lazyload alt="image-20220125214434144"></p>
+<h3 id="④-定时任务"><a href="#④-定时任务" class="headerlink" title="④. 定时任务"></a>④. 定时任务</h3><h4 id="Ⅰ-代码-1"><a href="#Ⅰ-代码-1" class="headerlink" title="Ⅰ. 代码"></a>Ⅰ. 代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TimingTaskTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-comment">// DefaultEventLoopGroup group1 = new DefaultEventLoopGroup(); 普通，定时任务</span><br><br>        <span class="hljs-comment">// io 事件，普通，定时任务</span><br>        NioEventLoopGroup group = <span class="hljs-keyword">new</span> NioEventLoopGroup(<span class="hljs-number">2</span>);<br>        <span class="hljs-comment">// next方法实现了一个轮询，达到负载均衡效果</span><br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        System.out.println(group.next());<br>        <span class="hljs-comment">// 执行定时任务，异步处理，每隔 1 秒打印一个 ok</span><br>        group.next().scheduleAtFixedRate(() -&gt; &#123;<br>            log.debug(<span class="hljs-string">&quot;ok&quot;</span>);<br>        &#125;, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, TimeUnit.SECONDS);<br>        log.debug(<span class="hljs-string">&quot;main&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220125214905102.png" srcset="/img/loading.gif" lazyload alt="image-20220125214905102"></p>
+<h3 id="⑤-IO任务"><a href="#⑤-IO任务" class="headerlink" title="⑤. IO任务"></a>⑤. IO任务</h3><h4 id="Ⅰ-客户端代码"><a href="#Ⅰ-客户端代码" class="headerlink" title="Ⅰ. 客户端代码"></a>Ⅰ. 客户端代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IOTestClientTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>        Channel channel = <span class="hljs-keyword">new</span> Bootstrap()<br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup())<br>                .channel(NioSocketChannel.class)<br>                .handler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(NioSocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        ch.pipeline().addLast(<span class="hljs-keyword">new</span> StringEncoder());<br>                    &#125;<br>                &#125;)<br>                .connect(<span class="hljs-keyword">new</span> InetSocketAddress(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>))<br>                .sync()<br>                .channel();<br>        System.out.println(channel);<br>        System.out.println(<span class="hljs-string">&quot;&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Ⅱ-服务端代码"><a href="#Ⅱ-服务端代码" class="headerlink" title="Ⅱ. 服务端代码"></a>Ⅱ. 服务端代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IOTaskServerTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-keyword">new</span> ServerBootstrap()<br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup())<br>                .channel(NioServerSocketChannel.class)<br>                .childHandler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(NioSocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        ch.pipeline().addLast(<span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                ByteBuf buf = (ByteBuf) msg;<br>                                log.debug(buf.toString(Charset.defaultCharset()));<br>                            &#125;<br>                        &#125;);<br>                    &#125;<br>                &#125;)<br>                .bind(<span class="hljs-number">8080</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220125220755942.png" srcset="/img/loading.gif" lazyload alt="image-20220125220755942"></p>
+<p><img src="/image/image-20220125220905355.png" srcset="/img/loading.gif" lazyload alt="image-20220125220905355"></p>
+<h3 id="⑥-分工细化"><a href="#⑥-分工细化" class="headerlink" title="⑥. 分工细化"></a>⑥. 分工细化</h3><h4 id="Ⅰ-服务端代码"><a href="#Ⅰ-服务端代码" class="headerlink" title="Ⅰ. 服务端代码"></a>Ⅰ. 服务端代码</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DivisionOfLaborTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-comment">// 细分2. 创建一个独立的 EventLoopGroup</span><br>        DefaultEventLoopGroup group = <span class="hljs-keyword">new</span> DefaultEventLoopGroup();<br>        <span class="hljs-keyword">new</span> ServerBootstrap()<br>                <span class="hljs-comment">//细分1.     ParentGroup 负责 accept    childrenGroup 负责 读写</span><br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup(), <span class="hljs-keyword">new</span> NioEventLoopGroup(<span class="hljs-number">2</span>))<br>                .channel(NioServerSocketChannel.class)<br>                .childHandler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(NioSocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        ch.pipeline().addLast(<span class="hljs-string">&quot;handler1&quot;</span>, <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                ByteBuf buf = (ByteBuf) msg;<br>                                log.debug(buf.toString(Charset.defaultCharset()));<br>                                ctx.fireChannelRead(msg);<br>                            &#125;<br>                            <span class="hljs-comment">// 切换为另一个 EventLoopGroup</span><br>                        &#125;).addLast(group, <span class="hljs-string">&quot;handler2&quot;</span>, <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                ByteBuf buf = (ByteBuf) msg;<br>                                log.debug(buf.toString(Charset.defaultCharset()));<br>                            &#125;<br>                        &#125;);<br>                    &#125;<br>                &#125;)<br>                .bind(<span class="hljs-number">8080</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220125223117832.png" srcset="/img/loading.gif" lazyload alt="image-20220125223117832"></p>
+<h3 id="⑦-切换线程的原理"><a href="#⑦-切换线程的原理" class="headerlink" title="⑦. 切换线程的原理"></a>⑦. 切换线程的原理</h3><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">在 ⑥. 分工细化中， 出现了 ha<span class="hljs-symbol">ndler1</span> 线程转换为 ha<span class="hljs-symbol">ndler2</span> 线程，其原理如下：<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">invokeChannelRead</span><span class="hljs-params">(<span class="hljs-keyword">final</span> AbstractChannelHandlerContext next, Object msg)</span> </span>&#123;<br>    <span class="hljs-keyword">final</span> Object m = next.pipeline.touch(ObjectUtil.checkNotNull(msg, <span class="hljs-string">&quot;msg&quot;</span>), next);<br>    <span class="hljs-comment">// 获得下一个EventLoop, excutor 即为 EventLoopGroup</span><br>    EventExecutor executor = next.executor();<br>    <br>    <span class="hljs-comment">// 如果下一个EventLoop 在当前的 EventLoopGroup中</span><br>    <span class="hljs-keyword">if</span> (executor.inEventLoop()) &#123;<br>        <span class="hljs-comment">// 使用当前 EventLoopGroup 中的 EventLoop 来处理任务</span><br>        next.invokeChannelRead(m);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 否则让另一个 EventLoopGroup 中的 EventLoop 来创建任务并执行</span><br>        executor.execute(<span class="hljs-keyword">new</span> Runnable() &#123;<br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>                next.invokeChannelRead(m);<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs aspectj">简而言之就是，如果两个 <span class="hljs-keyword">handler</span> 绑定的是同一个线程，那么就直接调用<br>否则，把要调用的代码封装为一个任务对象，由下一个 <span class="hljs-keyword">handler</span> 的线程来执行<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-Channel"><a href="#2-Channel" class="headerlink" title="2. Channel"></a>2. Channel</h2><p>Channel 的常用方法</p>
+<ul>
+<li>close() 可以用来关闭Channel</li>
+<li>closeFuture() 用来处理 Channel 的关闭<ul>
+<li>sync 方法作用是同步等待 Channel 关闭</li>
+<li>而 addListener 方法是异步等待 Channel 关闭</li>
+</ul>
+</li>
+<li>pipeline() 方法用于添加处理器</li>
+<li>write() 方法将数据写入<ul>
+<li>因为缓冲机制，数据被写入到 Channel 中以后，不会立即被发送</li>
+<li><strong>只有当缓冲满了或者调用了flush()方法后</strong>，才会将数据通过 Channel 发送出去</li>
+</ul>
+</li>
+<li>writeAndFlush() 方法将数据写入并<strong>立即发送（刷出）</strong></li>
+</ul>
+<h3 id="①-ChannelFuture"><a href="#①-ChannelFuture" class="headerlink" title="①. ChannelFuture"></a>①. ChannelFuture</h3><h4 id="Ⅰ-同步连接"><a href="#Ⅰ-同步连接" class="headerlink" title="Ⅰ. 同步连接"></a>Ⅰ. 同步连接</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SynConnectionChannelFutureTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>&#123;<br>        ChannelFuture channelFuture = <span class="hljs-keyword">new</span> Bootstrap()<br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup())<br>                .channel(NioSocketChannel.class)<br>                .handler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel socketChannel)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        socketChannel.pipeline().addLast(<span class="hljs-keyword">new</span> StringEncoder());<br>                    &#125;<br>                &#125;)<br>                <span class="hljs-comment">// 该方法为异步非阻塞方法，主线程调用后不会被阻塞，真正去执行连接操作的是NIO线程</span><br>                <span class="hljs-comment">// NIO线程：NioEventLoop 中的线程</span><br>                .connect(<span class="hljs-keyword">new</span> InetSocketAddress(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>));<br><br>        <span class="hljs-comment">// 该方法用于等待连接真正建立</span><br>        channelFuture.sync();<br><br>        <span class="hljs-comment">// 获取客户端-服务器之间的Channel对象</span><br>        Channel channel = channelFuture.channel();<br>        channel.writeAndFlush(<span class="hljs-string">&quot;hello world&quot;</span>);<br>        System.in.read();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果我们去掉<code>channelFuture.sync()</code>方法，会服务器无法收到<code>hello world</code></p>
+<p>这是因为建立连接(connect)的过程是<strong>异步非阻塞</strong>的，若不通过<code>sync()</code>方法阻塞主线程，等待连接真正建立，这时通过 channelFuture.channel() <strong>拿到的 Channel 对象，并不是真正与服务器建立好连接的 Channel</strong>，也就没法将信息正确的传输给服务器端</p>
+<p>所以需要通过<code>channelFuture.sync()</code>方法，阻塞主线程，<strong>同步处理结果</strong>，等待连接真正建立好以后，再去获得 Channel 传递数据。使用该方法，获取 Channel 和发送数据的线程<strong>都是主线程</strong></p>
+<h4 id="Ⅱ-异步连接"><a href="#Ⅱ-异步连接" class="headerlink" title="Ⅱ. 异步连接"></a>Ⅱ. 异步连接</h4><p>下面还有一种方法，用于<strong>异步</strong>获取建立连接后的 Channel 和发送数据，使得执行这些操作的线程是 NIO 线程（去执行connect操作的线程）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AsyncConnectionChannelFutureTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>&#123;<br>        ChannelFuture channelFuture = <span class="hljs-keyword">new</span> Bootstrap()<br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup())<br>                .channel(NioSocketChannel.class)<br>                .handler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel socketChannel)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        socketChannel.pipeline().addLast(<span class="hljs-keyword">new</span> StringEncoder());<br>                    &#125;<br>                &#125;)<br>                <span class="hljs-comment">// 该方法为异步非阻塞方法，主线程调用后不会被阻塞，真正去执行连接操作的是NIO线程</span><br>                <span class="hljs-comment">// NIO线程：NioEventLoop 中的线程</span><br>                .connect(<span class="hljs-keyword">new</span> InetSocketAddress(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>));<br><br>        <span class="hljs-comment">// 当connect方法执行完毕后，也就是连接真正建立后</span><br>        <span class="hljs-comment">// 会在NIO线程中调用operationComplete方法</span><br>        channelFuture.addListener(<span class="hljs-keyword">new</span> ChannelFutureListener() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">operationComplete</span><span class="hljs-params">(ChannelFuture channelFuture)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                Channel channel = channelFuture.channel();<br>                channel.writeAndFlush(<span class="hljs-string">&quot;hello world&quot;</span>);<br>            &#125;<br>        &#125;);<br>        System.in.read();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="Ⅲ-同步关闭"><a href="#Ⅲ-同步关闭" class="headerlink" title="Ⅲ. 同步关闭"></a>Ⅲ. 同步关闭</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SynCloseChannelFutureClientTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>        NioEventLoopGroup group = <span class="hljs-keyword">new</span> NioEventLoopGroup();<br>        ChannelFuture channelFuture = <span class="hljs-keyword">new</span> Bootstrap()<br>                .group(group)<br>                .channel(NioSocketChannel.class)<br>                .handler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(NioSocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        ch.pipeline().addLast(<span class="hljs-keyword">new</span> LoggingHandler(LogLevel.DEBUG));<br>                        ch.pipeline().addLast(<span class="hljs-keyword">new</span> StringEncoder());<br>                    &#125;<br>                &#125;).connect(<span class="hljs-keyword">new</span> InetSocketAddress(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>));<br>        Channel channel = channelFuture.sync().channel();<br>        <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;<br>            Scanner scanner = <span class="hljs-keyword">new</span> Scanner(System.in);<br>            <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) &#123;<br>                String line = scanner.nextLine();<br>                <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;q&quot;</span>.equals(line)) &#123;<br>                    channel.close();<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>                channel.writeAndFlush(line);<br>            &#125;<br>        &#125;, <span class="hljs-string">&quot;input&quot;</span>).start();<br>        <span class="hljs-comment">// 获取 ClosedFuture 对象</span><br>        ChannelFuture closeFuture = channel.closeFuture();<br>        System.out.println(<span class="hljs-string">&quot;等待关闭&quot;</span>);<br>        closeFuture.sync();<br>        System.out.println(<span class="hljs-string">&quot;处理关闭之后的操作&quot;</span>);<br>        <span class="hljs-comment">// 优雅的关闭 group 内的线程</span><br>        group.shutdownGracefully();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220126160840875.png" srcset="/img/loading.gif" lazyload alt="image-20220126160840875"></p>
+<h4 id="Ⅳ-异步关闭"><a href="#Ⅳ-异步关闭" class="headerlink" title="Ⅳ. 异步关闭"></a>Ⅳ. 异步关闭</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AsyncCloseChannelFutureClientTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>        NioEventLoopGroup group = <span class="hljs-keyword">new</span> NioEventLoopGroup();<br>        ChannelFuture channelFuture = <span class="hljs-keyword">new</span> Bootstrap()<br>                .group(group)<br>                .channel(NioSocketChannel.class)<br>                .handler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(NioSocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        ch.pipeline().addLast(<span class="hljs-keyword">new</span> LoggingHandler(LogLevel.DEBUG));<br>                        ch.pipeline().addLast(<span class="hljs-keyword">new</span> StringEncoder());<br>                    &#125;<br>                &#125;).connect(<span class="hljs-keyword">new</span> InetSocketAddress(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>));<br>        Channel channel = channelFuture.sync().channel();<br>        <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;<br>            Scanner scanner = <span class="hljs-keyword">new</span> Scanner(System.in);<br>            <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) &#123;<br>                String line = scanner.nextLine();<br>                <span class="hljs-keyword">if</span> (<span class="hljs-string">&quot;q&quot;</span>.equals(line)) &#123;<br>                    channel.close();<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>                channel.writeAndFlush(line);<br>            &#125;<br>        &#125;, <span class="hljs-string">&quot;input&quot;</span>).start();<br>        <span class="hljs-comment">// 获取 ClosedFuture 对象</span><br>        ChannelFuture closeFuture = channel.closeFuture();<br>        System.out.println(<span class="hljs-string">&quot;等待关闭&quot;</span>);<br>        closeFuture.addListener((ChannelFutureListener) channelFuture1 -&gt; &#123;<br>            System.out.println(<span class="hljs-string">&quot;处理关闭之后的操作&quot;</span>);<br>            <span class="hljs-comment">// 优雅的关闭 group 内的线程</span><br>            group.shutdownGracefully();<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220126161249302.png" srcset="/img/loading.gif" lazyload alt="image-20220126161249302"></p>
+<h4 id="Ⅴ-优雅地关闭"><a href="#Ⅴ-优雅地关闭" class="headerlink" title="Ⅴ. 优雅地关闭"></a>Ⅴ. 优雅地关闭</h4><p>在上述两种关闭期间 输入 <code>q</code> 后并不会使服务真正地关闭</p>
+<p>是因为 <strong>NioEventLoopGroup</strong> 仍存在线程<strong>未被关闭</strong></p>
+<p>所以可以使用 <code>shutdownGracefully()</code> 方法进行关闭</p>
+<h2 id="3-Future-和-Promise"><a href="#3-Future-和-Promise" class="headerlink" title="3. Future 和 Promise"></a>3. Future 和 Promise</h2><p>netty 中的 Future 与 jdk 中的 Future <strong>同名</strong>，但是是两个接口</p>
+<p>netty 的 Future 继承自 jdk 的 Future，而 Promise 又对 netty Future 进行了扩展</p>
+<ul>
+<li>jdk Future 只能同步等待任务结束（或成功、或失败）才能得到结果</li>
+<li>netty Future 可以同步等待任务结束得到结果，也可以异步方式得到结果，但<strong>都是要等任务结束</strong></li>
+<li>netty Promise 不仅有 netty Future 的功能，而且脱离了任务独立存在，<strong>只作为两个线程间传递结果的容器</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>功能/名称</th>
+<th>jdk Future</th>
+<th>netty Future</th>
+<th>Promise</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cancel</td>
+<td>取消任务</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>isCanceled</td>
+<td>任务是否取消</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>isDone</td>
+<td>任务是否完成，不能区分成功失败</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>get</td>
+<td>获取任务结果，阻塞等待</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>getNow</td>
+<td>-</td>
+<td>获取任务结果，非阻塞，还未产生结果时返回 null</td>
+<td>-</td>
+</tr>
+<tr>
+<td>await</td>
+<td>-</td>
+<td>等待任务结束，如果任务失败，<strong>不会抛异常</strong>，而是通过 isSuccess 判断</td>
+<td>-</td>
+</tr>
+<tr>
+<td>sync</td>
+<td>-</td>
+<td>等待任务结束，如果任务失败，抛出异常</td>
+<td>-</td>
+</tr>
+<tr>
+<td>isSuccess</td>
+<td>-</td>
+<td>判断任务是否成功</td>
+<td>-</td>
+</tr>
+<tr>
+<td>cause</td>
+<td>-</td>
+<td>获取失败信息，非阻塞，如果没有失败，返回null</td>
+<td>-</td>
+</tr>
+<tr>
+<td>addLinstener</td>
+<td>-</td>
+<td>添加回调，异步接收结果</td>
+<td>-</td>
+</tr>
+<tr>
+<td>setSuccess</td>
+<td>-</td>
+<td>-</td>
+<td>设置成功结果</td>
+</tr>
+<tr>
+<td>setFailure</td>
+<td>-</td>
+<td>-</td>
+<td>设置失败结果</td>
+</tr>
+</tbody></table>
+<h3 id="①-JDK-的-Future"><a href="#①-JDK-的-Future" class="headerlink" title="①. JDK 的 Future"></a>①. JDK 的 Future</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">JDKFutureTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ExecutionException, InterruptedException </span>&#123;<br>        <span class="hljs-comment">// 1.线程池</span><br>        ExecutorService executorService = Executors.newFixedThreadPool(<span class="hljs-number">2</span>);<br>        <span class="hljs-comment">// 2.提交任务</span><br>        Future&lt;Integer&gt; future = executorService.submit(() -&gt; &#123;<br>            System.out.println(<span class="hljs-string">&quot;执行计算&quot;</span>);<br>            Thread.sleep(<span class="hljs-number">1000</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">50</span>;<br>        &#125;);<br>        <span class="hljs-comment">// 3.主线程通过 future 来获取结果</span><br>        System.out.println(<span class="hljs-string">&quot;等待结果&quot;</span>);<br>        System.out.println(<span class="hljs-string">&quot;结果是：&quot;</span> + future.get());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220126205254634.png" srcset="/img/loading.gif" lazyload alt="image-20220126205254634"></p>
+<h3 id="②-Netty-的-Future"><a href="#②-Netty-的-Future" class="headerlink" title="②. Netty 的 Future"></a>②. Netty 的 Future</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NettyFutureTest</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        async();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sync</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> ExecutionException, InterruptedException </span>&#123;<br>        NioEventLoopGroup group = <span class="hljs-keyword">new</span> NioEventLoopGroup();<br>        EventLoop eventLoop = group.next();<br>        Future&lt;Integer&gt; future = eventLoop.submit(() -&gt; &#123;<br>            System.out.println(<span class="hljs-string">&quot;执行计算&quot;</span>);<br>            Thread.sleep(<span class="hljs-number">1000</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">70</span>;<br>        &#125;);<br>        System.out.println(<span class="hljs-string">&quot;等待结果&quot;</span>);<br>        System.out.println(<span class="hljs-string">&quot;结果是：&quot;</span> + future.get());<br>    &#125;<br><br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">async</span><span class="hljs-params">()</span> </span>&#123;<br>        NioEventLoopGroup group = <span class="hljs-keyword">new</span> NioEventLoopGroup();<br>        EventLoop eventLoop = group.next();<br>        Future&lt;Integer&gt; future = eventLoop.submit(() -&gt; &#123;<br>            log.debug(<span class="hljs-string">&quot;执行计算&quot;</span>);<br>            Thread.sleep(<span class="hljs-number">1000</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">70</span>;<br>        &#125;);<br>        future.addListener(<span class="hljs-keyword">new</span> GenericFutureListener&lt;Future&lt;? <span class="hljs-keyword">super</span> Integer&gt;&gt;() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">operationComplete</span><span class="hljs-params">(Future&lt;? <span class="hljs-keyword">super</span> Integer&gt; future)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                log.debug(<span class="hljs-string">&quot;结果是：&quot;</span> + future.get());<br>            &#125;<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="③-Netty-的-Promise"><a href="#③-Netty-的-Promise" class="headerlink" title="③. Netty 的 Promise"></a>③. Netty 的 Promise</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NettyPromiseTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ExecutionException, InterruptedException </span>&#123;<br>        <span class="hljs-comment">// 1. 准备 EventLoop 对象</span><br>        EventLoop eventLoop = <span class="hljs-keyword">new</span> NioEventLoopGroup().next();<br>        <span class="hljs-comment">// 2. 可以主动创建 promise 结果容器对象</span><br>        DefaultPromise&lt;Integer&gt; promise = <span class="hljs-keyword">new</span> DefaultPromise&lt;&gt;(eventLoop);<br>        <span class="hljs-comment">// 3. 启动一个线程执行计算，计算完毕后向 promise 中填入结果</span><br>        <span class="hljs-keyword">new</span> Thread(() -&gt; &#123;<br>            log.debug(<span class="hljs-string">&quot;开始计算&quot;</span>);<br>            <span class="hljs-keyword">try</span> &#123;<br>                Thread.sleep(<span class="hljs-number">1000</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br>            promise.setSuccess(<span class="hljs-number">80</span>);<br>        &#125;).start();<br>        <span class="hljs-comment">// 4. 接收结果的线程</span><br>        log.debug(<span class="hljs-string">&quot;等待结果&quot;</span>);<br>        log.debug(<span class="hljs-string">&quot;结果是：&#123;&#125;&quot;</span>, promise.get());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-PipeLine-和-Handler"><a href="#4-PipeLine-和-Handler" class="headerlink" title="4. PipeLine 和 Handler"></a>4. PipeLine 和 Handler</h2><p><code>ChannelHandler</code> 用来处理 <code>Channel</code> 上的各种事件，分为<strong>入站、出站</strong>两种。</p>
+<p>所有 <code>ChannelHandler</code> 被连成—串，就是 Pipeline</p>
+<ul>
+<li>入站处理器通常是 <code>ChannellnboundHandlerAdapter</code> 的子类，主要用来读取客户端数据，写回结果</li>
+<li>出站处理器通常是 <code>ChannelOutboundHandlerAdapter</code> 的子类，主要对写回结果进行加工</li>
+</ul>
+<p>打个比喻，每个 <code>Channel</code> 是一个产品的加工车间，管道是车间中的流水线，<code>ChanneHandler</code> 就是流水线上的各道工序，而后面要讲的 <code>ByteBuf</code> 是原材料，经过很多工序的加工:先经过一道道入站工序，再经过一道道出站工序最终变成产品</p>
+<h3 id="①-Pipeline"><a href="#①-Pipeline" class="headerlink" title="①. Pipeline"></a>①. Pipeline</h3><p>通过channel.pipeline().addLast(name, handler)添加handler时，<strong>记得给handler取名字</strong>。</p>
+<p>这样可以调用pipeline的<strong>addAfter、addBefore等方法更灵活地向pipeline中添加handler</strong></p>
+<p>handler需要放入通道的pipeline中，才能根据放入顺序来使用handler</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PipelineTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-keyword">new</span> ServerBootstrap()<br>                .group(<span class="hljs-keyword">new</span> NioEventLoopGroup())<br>                .channel(NioServerSocketChannel.class)<br>                .childHandler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(NioSocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        <span class="hljs-comment">// 1. 通过 Channel 拿到 pipeline</span><br>                        ChannelPipeline pipeline = ch.pipeline();<br>                        <span class="hljs-comment">// 2. 为 pipeline 添加 处理器     head -&gt; h1 -&gt; tail</span><br>                        pipeline.addLast(<span class="hljs-string">&quot;h1&quot;</span>, <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                log.debug(<span class="hljs-string">&quot;1&quot;</span>);<br>                                <span class="hljs-keyword">super</span>.channelRead(ctx, msg);<br>                            &#125;<br>                        &#125;);<br>                        <span class="hljs-comment">// head -&gt; h1 -&gt; h2 -&gt; tail</span><br>                        pipeline.addLast(<span class="hljs-string">&quot;h2&quot;</span>, <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                log.debug(<span class="hljs-string">&quot;2&quot;</span>);<br>                                <span class="hljs-keyword">super</span>.channelRead(ctx, msg);<br>                            &#125;<br>                        &#125;);<br>                        <span class="hljs-comment">// head -&gt; h1 -&gt; h2 -&gt; h3 -&gt; tail</span><br>                        pipeline.addLast(<span class="hljs-string">&quot;h3&quot;</span>, <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                log.debug(<span class="hljs-string">&quot;3&quot;</span>);<br>                                <span class="hljs-keyword">super</span>.channelRead(ctx, msg);<br>                                <span class="hljs-comment">// 3. 触发写事件</span><br>                                ch.writeAndFlush(ctx.alloc().buffer().writeBytes(<span class="hljs-string">&quot;server&quot;</span>.getBytes()));<br>                            &#125;<br>                        &#125;);<br>                        <span class="hljs-comment">// head -&gt; h1 -&gt; h2 -&gt; h3 -&gt; h4 -&gt; tail</span><br>                        pipeline.addLast(<span class="hljs-string">&quot;h4&quot;</span>, <span class="hljs-keyword">new</span> ChannelOutboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                log.debug(<span class="hljs-string">&quot;4&quot;</span>);<br>                                <span class="hljs-keyword">super</span>.write(ctx, msg, promise);<br>                            &#125;<br>                        &#125;);<br>                        <span class="hljs-comment">// head -&gt; h1 -&gt; h2 -&gt; h3 -&gt; h4 -&gt; h5 -&gt; tail</span><br>                        pipeline.addLast(<span class="hljs-string">&quot;h5&quot;</span>, <span class="hljs-keyword">new</span> ChannelOutboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                log.debug(<span class="hljs-string">&quot;5&quot;</span>);<br>                                <span class="hljs-keyword">super</span>.write(ctx, msg, promise);<br>                            &#125;<br>                        &#125;);<br>                        <span class="hljs-comment">// head -&gt; h1 -&gt; h2 -&gt; h3 -&gt; h4 -&gt; h5 -&gt; h6 -&gt; tail</span><br>                        pipeline.addLast(<span class="hljs-string">&quot;h6&quot;</span>, <span class="hljs-keyword">new</span> ChannelOutboundHandlerAdapter() &#123;<br>                            <span class="hljs-meta">@Override</span><br>                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                                log.debug(<span class="hljs-string">&quot;6&quot;</span>);<br>                                <span class="hljs-keyword">super</span>.write(ctx, msg, promise);<br>                            &#125;<br>                        &#125;);<br>                    &#125;<br>                &#125;)<br>                .bind(<span class="hljs-number">8080</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/image/image-20220126220718364.png" srcset="/img/loading.gif" lazyload alt="image-20220126220718364"></p>
+<h4 id="Ⅰ-结构"><a href="#Ⅰ-结构" class="headerlink" title="Ⅰ. 结构"></a>Ⅰ. 结构</h4><ul>
+<li>pipeline是结构是一个带有head与tail指针的双向链表，其中的节点为handler<ul>
+<li>要通过ctx.fireChannelRead(msg)等方法，<strong>将当前handler的处理结果传递给下一个handler</strong></li>
+</ul>
+</li>
+<li>当有<strong>入站</strong>（Inbound）操作时，会<strong>从head开始向后</strong>调用handler，直到handler不是处理Inbound操作为止</li>
+<li>当有<strong>出站</strong>（Outbound）操作时，会<strong>从tail开始向前</strong>调用handler，直到handler不是处理Outbound操作为止</li>
+</ul>
+<p><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20210423102354.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="Ⅱ-调用顺序"><a href="#Ⅱ-调用顺序" class="headerlink" title="Ⅱ. 调用顺序"></a>Ⅱ. 调用顺序</h4><p><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20210423105200.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="②-Handler"><a href="#②-Handler" class="headerlink" title="②. Handler"></a>②. Handler</h3><h4 id="Ⅰ-OutboundHandler"><a href="#Ⅰ-OutboundHandler" class="headerlink" title="Ⅰ. OutboundHandler"></a>Ⅰ. OutboundHandler</h4><p><code>socketChannel.writeAndFlush()</code></p>
+<p>当handler中调用该方法进行写操作时，会触发Outbound操作，<strong>此时是从tail向前寻找OutboundHandler</strong></p>
+<p><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20210423122010.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p><code>ctx.writeAndFlush()</code></p>
+<p>当handler中调用该方法进行写操作时，会触发Outbound操作，<strong>此时是从当前handler向前寻找OutboundHandler</strong></p>
+<p><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20210423122050.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h4 id="Ⅱ-EmbeddedChannel"><a href="#Ⅱ-EmbeddedChannel" class="headerlink" title="Ⅱ. EmbeddedChannel"></a>Ⅱ. EmbeddedChannel</h4><p>EmbeddedChannel可以用于测试各个handler，通过其构造函数按顺序传入需要测试handler，然后调用对应的Inbound和Outbound方法即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EmbeddedChannelTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        ChannelInboundHandlerAdapter h1 = <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;1&quot;</span>);<br>                <span class="hljs-keyword">super</span>.channelRead(ctx, msg);<br>            &#125;<br>        &#125;;<br><br>        ChannelInboundHandlerAdapter h2 = <span class="hljs-keyword">new</span> ChannelInboundHandlerAdapter() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">channelRead</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;2&quot;</span>);<br>                <span class="hljs-keyword">super</span>.channelRead(ctx, msg);<br>            &#125;<br>        &#125;;<br><br>        ChannelOutboundHandlerAdapter h3 = <span class="hljs-keyword">new</span> ChannelOutboundHandlerAdapter() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;3&quot;</span>);<br>                <span class="hljs-keyword">super</span>.write(ctx, msg, promise);<br>            &#125;<br>        &#125;;<br><br>        ChannelOutboundHandlerAdapter h4 = <span class="hljs-keyword">new</span> ChannelOutboundHandlerAdapter() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                System.out.println(<span class="hljs-string">&quot;4&quot;</span>);<br>                <span class="hljs-keyword">super</span>.write(ctx, msg, promise);<br>            &#125;<br>        &#125;;<br><br>        <span class="hljs-comment">// 用于测试Handler的Channel</span><br>        EmbeddedChannel channel = <span class="hljs-keyword">new</span> EmbeddedChannel(h1, h2, h3, h4);<br><br>        <span class="hljs-comment">// 执行Inbound操作</span><br>        channel.writeInbound(ByteBufAllocator.DEFAULT.buffer().writeBytes(<span class="hljs-string">&quot;hello&quot;</span>.getBytes(StandardCharsets.UTF_8)));<br>        <span class="hljs-comment">// 执行Outbound操作</span><br>        channel.writeOutbound(ByteBufAllocator.DEFAULT.buffer().writeBytes(<span class="hljs-string">&quot;hello&quot;</span>.getBytes(StandardCharsets.UTF_8)));<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-ByteBuf"><a href="#5-ByteBuf" class="headerlink" title="5. ByteBuf"></a>5. ByteBuf</h2><h3 id="①-创建"><a href="#①-创建" class="headerlink" title="①. 创建"></a>①. 创建</h3><p><strong>ButyBuf空间日志打印工具类</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">该方法可以帮助我们更为详细地查看ByteBuf中的内容<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteBufLogUtil</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">log</span><span class="hljs-params">(ByteBuf buffer)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> length = buffer.readableBytes();<br>        <span class="hljs-keyword">int</span> rows = length / <span class="hljs-number">16</span> + (length % <span class="hljs-number">15</span> == <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>) + <span class="hljs-number">4</span>;<br>        StringBuilder buf = <span class="hljs-keyword">new</span> StringBuilder(rows * <span class="hljs-number">80</span> * <span class="hljs-number">2</span>)<br>                .append(<span class="hljs-string">&quot;read index:&quot;</span>).append(buffer.readerIndex())<br>                .append(<span class="hljs-string">&quot; write index:&quot;</span>).append(buffer.writerIndex())<br>                .append(<span class="hljs-string">&quot; capacity:&quot;</span>).append(buffer.capacity())<br>                .append(NEWLINE);<br>        appendPrettyHexDump(buf, buffer);<br>        System.out.println(buf.toString());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>测试代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteBufAllocatorTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer();<br>        log(buffer);<br>        StringBuilder stringBuilder = <span class="hljs-keyword">new</span> StringBuilder();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">32</span>; i++) &#123;<br>            stringBuilder.append(<span class="hljs-string">&quot;a&quot;</span>);<br>        &#125;<br>        buffer.writeBytes(stringBuilder.toString().getBytes());<br>        log(buffer);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="②-直接内存和堆内存"><a href="#②-直接内存和堆内存" class="headerlink" title="②. 直接内存和堆内存"></a>②. 直接内存和堆内存</h3><p>通过该方法创建的ByteBuf，使用的是<strong>基于直接内存</strong>的ByteBuf</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(<span class="hljs-number">16</span>);<br></code></pre></td></tr></table></figure>
+
+<p>可以使用下面的代码来创建池化<strong>基于堆</strong>的 ByteBuf</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">ByteBuf buffer = ByteBufAllocator.DEFAULT.heapBuffer(<span class="hljs-number">16</span>);<br></code></pre></td></tr></table></figure>
+
+<p>也可以使用下面的代码来创建池化<strong>基于直接内存</strong>的 ByteBuf</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">ByteBuf buffer = ByteBufAllocator.DEFAULT.directBuffer(<span class="hljs-number">16</span>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>直接内存创建和销毁的代价昂贵，但读写性能高（少一次内存复制），适合配合池化功能一起用</li>
+<li>直接内存对 GC 压力小，因为这部分内存不受 JVM 垃圾回收的管理，但也要注意及时主动释放</li>
+</ul>
+<p><strong>测试代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">HeapAndDirectTest</span><span class="hljs-params">()</span></span>&#123;<br>    ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(<span class="hljs-number">16</span>);<br>    System.out.println(buffer.getClass());<br><br>    buffer = ByteBufAllocator.DEFAULT.heapBuffer(<span class="hljs-number">16</span>);<br>    System.out.println(buffer.getClass());<br><br>    buffer = ByteBufAllocator.DEFAULT.directBuffer(<span class="hljs-number">16</span>);<br>    System.out.println(buffer.getClass());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用池化的直接内存</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">io</span>.<span class="hljs-title">netty</span>.<span class="hljs-title">buffer</span>.<span class="hljs-title">PooledUnsafeDirectByteBuf</span></span><br><span class="hljs-class">    </span><br><span class="hljs-class">// 使用池化的堆内存    </span><br><span class="hljs-class"><span class="hljs-title">class</span> <span class="hljs-title">io</span>.<span class="hljs-title">netty</span>.<span class="hljs-title">buffer</span>.<span class="hljs-title">PooledUnsafeHeapByteBuf</span></span><br><span class="hljs-class">    </span><br><span class="hljs-class">// 使用池化的直接内存    </span><br><span class="hljs-class"><span class="hljs-title">class</span> <span class="hljs-title">io</span>.<span class="hljs-title">netty</span>.<span class="hljs-title">buffer</span>.<span class="hljs-title">PooledUnsafeDirectByteBuf</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="③-池化与非池化"><a href="#③-池化与非池化" class="headerlink" title="③. 池化与非池化"></a>③. 池化与非池化</h3><p>池化的最大意义在于可以<strong>重用</strong> ByteBuf，优点有</p>
+<ul>
+<li>没有池化，则每次都得创建新的 ByteBuf 实例，这个操作对直接内存代价昂贵，就算是堆内存，也会增加 GC 压力</li>
+<li>有了池化，则可以重用池中 ByteBuf 实例，并且采用了与 jemalloc 类似的内存分配算法提升分配效率</li>
+<li>高并发时，池化功能更节约内存，减少内存溢出的可能</li>
+</ul>
+<p>池化功能是否开启，可以通过下面的系统环境变量来设置</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elm">-<span class="hljs-type">Dio</span>.netty.allocator.<span class="hljs-keyword">type</span>=&#123;unpooled|pooled&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>4.1 以后，<strong>非 Android 平台默认启用池化实现</strong>，Android 平台启用非池化实现</li>
+<li>4.1 之前，池化功能还不成熟，默认是非池化实现</li>
+</ul>
+<h3 id="④-组成"><a href="#④-组成" class="headerlink" title="④. 组成"></a>④. 组成</h3><p>ByteBuf 主要有以下几个组成部分</p>
+<ul>
+<li><p>最大容量与当前容量</p>
+<ul>
+<li>在构造 ByteBuf 时，可传入两个参数，分别代表初始容量和最大容量，若未传入第二个参数（最大容量），最大容量默认为<code>Integer.MAX_VALUE</code></li>
+<li>当ByteBuf容量无法容纳所有数据时，会进行扩容操作，若<strong>超出最大容量</strong>，会抛出<code>java.lang.IndexOutOfBoundsException</code>异常</li>
+</ul>
+</li>
+<li><p>读写操作不同于 ByteBuffer 只用 position 进行控制，</p>
+<p>ByteBuf分别由<strong>读指针</strong>和<strong>写指针</strong>两个指针控制</p>
+<p>。进行读写操作时，<strong>无需进行模式的切换</strong></p>
+<ul>
+<li>读指针前的部分被称为废弃部分，是已经读过的内容</li>
+<li>读指针与写指针之间的空间称为可读部分</li>
+<li>写指针与当前容量之间的空间称为可写部分</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20210423143030.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h3 id="⑤-写入"><a href="#⑤-写入" class="headerlink" title="⑤. 写入"></a>⑤. 写入</h3><p>常用方法如下</p>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>含义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>writeBoolean(boolean value)</td>
+<td>写入 boolean 值</td>
+<td><strong>用一字节 01|00 代表 true|false</strong></td>
+</tr>
+<tr>
+<td>writeByte(int value)</td>
+<td>写入 byte 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeShort(int value)</td>
+<td>写入 short 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeInt(int value)</td>
+<td>写入 int 值</td>
+<td><strong>Big Endian（大端写入）</strong>，即 0x250，写入后 00 00 02 50</td>
+</tr>
+<tr>
+<td>writeIntLE(int value)</td>
+<td>写入 int 值</td>
+<td><strong>Little Endian（小端写入）</strong>，即 0x250，写入后 50 02 00 00</td>
+</tr>
+<tr>
+<td>writeLong(long value)</td>
+<td>写入 long 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeChar(int value)</td>
+<td>写入 char 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeFloat(float value)</td>
+<td>写入 float 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeDouble(double value)</td>
+<td>写入 double 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeBytes(ByteBuf src)</td>
+<td>写入 netty 的 ByteBuf</td>
+<td></td>
+</tr>
+<tr>
+<td>writeBytes(byte[] src)</td>
+<td>写入 byte[]</td>
+<td></td>
+</tr>
+<tr>
+<td>writeBytes(ByteBuffer src)</td>
+<td>写入 nio 的 <strong>ByteBuffer</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>int writeCharSequence(CharSequence sequence, Charset charset)</td>
+<td>写入字符串</td>
+<td>CharSequence为字符串类的父类，第二个参数为对应的字符集</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意</p>
+<ul>
+<li>这些方法的未指明返回值的，其返回值都是 ByteBuf，意味着可以链式调用来写入不同的数据</li>
+<li>网络传输中，<strong>默认习惯是 Big Endian</strong>，使用 writeInt(int value)</li>
+</ul>
+</blockquote>
+<p><strong>使用方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteBufStudy</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-comment">// 创建ByteBuf</span><br>        ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(<span class="hljs-number">16</span>, <span class="hljs-number">20</span>);<br>        ByteBufUtil.log(buffer);<br><br>        <span class="hljs-comment">// 向buffer中写入数据，默认是 Big Endian 从高位开始写</span><br>        buffer.writeBytes(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[]&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>&#125;);<br>        ByteBufUtil.log(buffer);<br><br>        buffer.writeInt(<span class="hljs-number">5</span>);<br>        ByteBufUtil.log(buffer);<br><br>        buffer.writeIntLE(<span class="hljs-number">6</span>);<br>        ByteBufUtil.log(buffer);<br><br>        buffer.writeLong(<span class="hljs-number">7</span>);<br>        ByteBufUtil.log(buffer);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>运行结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs java">read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">0</span> capacity:<span class="hljs-number">16</span><br><br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">4</span> capacity:<span class="hljs-number">16</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">01</span> <span class="hljs-number">02</span> <span class="hljs-number">03</span> <span class="hljs-number">04</span>                                     |....            |<br>+--------+-------------------------------------------------+----------------+<br><br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">8</span> capacity:<span class="hljs-number">16</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">01</span> <span class="hljs-number">02</span> <span class="hljs-number">03</span> <span class="hljs-number">04</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">05</span>                         |........        |<br>+--------+-------------------------------------------------+----------------+<br><br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">12</span> capacity:<span class="hljs-number">16</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">01</span> <span class="hljs-number">02</span> <span class="hljs-number">03</span> <span class="hljs-number">04</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">05</span> <span class="hljs-number">06</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span>             |............    |<br>+--------+-------------------------------------------------+----------------+<br><br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">20</span> capacity:<span class="hljs-number">20</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">01</span> <span class="hljs-number">02</span> <span class="hljs-number">03</span> <span class="hljs-number">04</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">05</span> <span class="hljs-number">06</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> |................|<br>|<span class="hljs-number">00000010</span>| <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">07</span>                                     |....            |<br>+--------+-------------------------------------------------+----------------+<br></code></pre></td></tr></table></figure>
+
+<p>还有一类方法是 <strong>set 开头</strong>的一系列方法，也<strong>可以写入数据，但不会改变写指针位置</strong></p>
+<h3 id="⑥-扩容"><a href="#⑥-扩容" class="headerlink" title="⑥. 扩容"></a>⑥. 扩容</h3><p>当ByteBuf中的容量无法容纳写入的数据时，会进行扩容操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java">buffer.writeLong(<span class="hljs-number">7</span>);<br>ByteBufUtil.log(buffer);<br><span class="hljs-comment">// 扩容前</span><br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">12</span> capacity:<span class="hljs-number">16</span><br>...<br><br><span class="hljs-comment">// 扩容后</span><br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">20</span> capacity:<span class="hljs-number">20</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">01</span> <span class="hljs-number">02</span> <span class="hljs-number">03</span> <span class="hljs-number">04</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">05</span> <span class="hljs-number">06</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> |................|<br>|<span class="hljs-number">00000010</span>| <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">07</span>                                     |....            |<br>+--------+-------------------------------------------------+----------------+<br></code></pre></td></tr></table></figure>
+
+<h4 id="扩容规则"><a href="#扩容规则" class="headerlink" title="扩容规则"></a>扩容规则</h4><ul>
+<li>如何写入后数据大小未超过 512 字节，则选择下一个 16 的整数倍进行扩容<ul>
+<li>例如写入后大小为 12 字节，则扩容后 capacity 是 16 字节</li>
+</ul>
+</li>
+<li>如果写入后数据大小超过 512 字节，则选择下一个 2^n<ul>
+<li>例如写入后大小为 513 字节，则扩容后 capacity 是 2^10=1024 字节（2^9=512 已经不够了）</li>
+</ul>
+</li>
+<li>扩容<strong>不能超过</strong> maxCapacity，否则会抛出<code>java.lang.IndexOutOfBoundsException</code>异常</li>
+</ul>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">Exception <span class="hljs-keyword">in</span> thread <span class="hljs-string">&quot;main&quot;</span> java.lang.IndexOutOfBoundsException: writer<span class="hljs-constructor">Index(20)</span> + min<span class="hljs-constructor">WritableBytes(8)</span> exceeds max<span class="hljs-constructor">Capacity(20)</span>: <span class="hljs-constructor">PooledUnsafeDirectByteBuf(<span class="hljs-params">ridx</span>: 0, <span class="hljs-params">widx</span>: 20, <span class="hljs-params">cap</span>: 20<span class="hljs-operator">/</span>20)</span><br>...<br></code></pre></td></tr></table></figure>
+
+<h3 id="⑦-读取"><a href="#⑦-读取" class="headerlink" title="⑦. 读取"></a>⑦. 读取</h3><p>读取主要是通过一系列 read 方法进行读取，读取时会根据读取数据的字节数移动读指针</p>
+<p>如果需要<strong>重复读取</strong>，需要调用<code>buffer.markReaderIndex()</code>对读指针进行标记，并通过<code>buffer.resetReaderIndex()</code>将读指针恢复到mark标记的位置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteBufStudy</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-comment">// 创建ByteBuf</span><br>        ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(<span class="hljs-number">16</span>, <span class="hljs-number">20</span>);<br><br>        <span class="hljs-comment">// 向buffer中写入数据</span><br>        buffer.writeBytes(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[]&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>&#125;);<br>        buffer.writeInt(<span class="hljs-number">5</span>);<br><br>        <span class="hljs-comment">// 读取4个字节</span><br>        System.out.println(buffer.readByte());<br>        System.out.println(buffer.readByte());<br>        System.out.println(buffer.readByte());<br>        System.out.println(buffer.readByte());<br>        ByteBufUtil.log(buffer);<br><br>        <span class="hljs-comment">// 通过mark与reset实现重复读取</span><br>        buffer.markReaderIndex();<br>        System.out.println(buffer.readInt());<br>        ByteBufUtil.log(buffer);<br><br>        <span class="hljs-comment">// 恢复到mark标记处</span><br>        buffer.resetReaderIndex();<br>        ByteBufUtil.log(buffer);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-number">1</span><br><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br><span class="hljs-number">4</span><br>read index:<span class="hljs-number">4</span> write index:<span class="hljs-number">8</span> capacity:<span class="hljs-number">16</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">05</span>                                     |....            |<br>+--------+-------------------------------------------------+----------------+<br><span class="hljs-number">5</span><br>read index:<span class="hljs-number">8</span> write index:<span class="hljs-number">8</span> capacity:<span class="hljs-number">16</span><br><br>read index:<span class="hljs-number">4</span> write index:<span class="hljs-number">8</span> capacity:<span class="hljs-number">16</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">00</span> <span class="hljs-number">05</span>                                     |....            |<br>+--------+-------------------------------------------------+----------------+<br></code></pre></td></tr></table></figure>
+
+<p>还有以 get 开头的一系列方法，这些<strong>方法不会改变读指针的位置</strong></p>
+<h3 id="⑧-释放"><a href="#⑧-释放" class="headerlink" title="⑧. 释放"></a>⑧. 释放</h3><p>由于 Netty 中有堆外内存（直接内存）的 ByteBuf 实现，<strong>堆外内存最好是手动来释放</strong>，而不是等 GC 垃圾回收。</p>
+<ul>
+<li>Unpooled<strong>Heap</strong>ByteBuf 使用的是 <strong>JVM</strong> 内存，只需等 GC 回收内存即可</li>
+<li>Unpooled<strong>Direct</strong>ByteBuf 使用的就是<strong>直接内存</strong>了，需要特殊的方法来回收内存</li>
+<li><strong>Pooled</strong>ByteBuf 和它的子类使用了<strong>池化机制</strong>，需要更复杂的规则来回收内存</li>
+</ul>
+<p>Netty 这里采用了引用计数法来控制回收内存，每个 ByteBuf 都实现了 ReferenceCounted 接口</p>
+<ul>
+<li>每个 ByteBuf 对象的初始计数为 1</li>
+<li>调用 release 方法计数减 1，如果计数为 0，ByteBuf 内存被回收</li>
+<li>调用 retain 方法计数加 1，表示调用者没用完之前，其它 handler 即使调用了 release 也不会造成回收</li>
+<li>当计数为 0 时，底层内存会被回收，这时即使 ByteBuf 对象还在，其各个方法均无法正常使用</li>
+</ul>
+<h4 id="释放规则"><a href="#释放规则" class="headerlink" title="释放规则"></a>释放规则</h4><p>因为 pipeline 的存在，一般需要将 ByteBuf 传递给下一个 ChannelHandler，<strong>如果在每个 ChannelHandler 中都去调用 release ，就失去了传递性</strong>（如果在这个 ChannelHandler 内这个 ByteBuf 已完成了它的使命，那么便无须再传递）</p>
+<p><strong>基本规则是，谁是最后使用者，谁负责 release</strong></p>
+<ul>
+<li><p>起点，对于 NIO 实现来讲，在 io.netty.channel.nio.AbstractNioByteChannel.NioByteUnsafe.read 方法中首次创建 ByteBuf 放入 pipeline（line 163 pipeline.fireChannelRead(byteBuf)）</p>
+</li>
+<li><p>入站 ByteBuf 处理原则</p>
+<ul>
+<li>对原始 ByteBuf 不做处理，调用 ctx.fireChannelRead(msg) 向后传递，这时无须 release</li>
+<li><strong>将原始 ByteBuf 转换为其它类型的 Java 对象，这时 ByteBuf 就没用了，必须 release</strong></li>
+<li><strong>如果不调用 ctx.fireChannelRead(msg) 向后传递，那么也必须 release</strong></li>
+<li><strong>注意各种异常，如果 ByteBuf 没有成功传递到下一个 ChannelHandler，必须 release</strong></li>
+<li>假设消息<strong>一直向后传</strong>，那么 TailContext 会负责释放未处理消息（原始的 ByteBuf）</li>
+</ul>
+</li>
+<li><p>出站 ByteBuf 处理原则</p>
+<ul>
+<li><strong>出站消息最终都会转为 ByteBuf 输出，一直向前传，由 HeadContext flush 后 release</strong></li>
+</ul>
+</li>
+<li><p>异常处理原则</p>
+<ul>
+<li><p>有时候不清楚 ByteBuf 被引用了多少次，但又必须彻底释放，可以<strong>循环调用 release 直到返回 true</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">while</span> (!buffer.release()) &#123;&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>当ByteBuf<strong>被传到了pipeline的head与tail时</strong>，ByteBuf会被其中的方法彻底释放，但<strong>前提是ByteBuf被传递到了head与tail中</strong></p>
+<p><strong>TailConext中释放ByteBuf的源码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onUnhandledInboundMessage</span><span class="hljs-params">(Object msg)</span> </span>&#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        logger.debug(<span class="hljs-string">&quot;Discarded inbound message &#123;&#125; that reached at the tail of the pipeline. Please check your pipeline configuration.&quot;</span>, msg);<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-comment">// 具体的释放方法</span><br>        ReferenceCountUtil.release(msg);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>判断传过来的是否为ByteBuf，是的话才需要释放</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">release</span><span class="hljs-params">(Object msg)</span> </span>&#123;<br>	<span class="hljs-keyword">return</span> msg <span class="hljs-keyword">instanceof</span> ReferenceCounted ? ((ReferenceCounted)msg).release() : <span class="hljs-keyword">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="⑨-切片"><a href="#⑨-切片" class="headerlink" title="⑨. 切片"></a>⑨. 切片</h3><h4 id="Ⅰ-slice"><a href="#Ⅰ-slice" class="headerlink" title="Ⅰ. slice"></a>Ⅰ. slice</h4><p>ByteBuf切片是【零拷贝】的体现之一，对原始 ByteBuf 进行切片成多个 ByteBuf，<strong>切片后的 ByteBuf 并没有发生内存复制，还是使用原始 ByteBuf 的内存</strong>，切片后的 ByteBuf 维护独立的 read，write 指针</p>
+<p>得到分片后的buffer后，要调用其retain方法，使其内部的引用计数加一。避免原ByteBuf释放，导致切片buffer无法使用</p>
+<p>修改原ByteBuf中的值，也会影响切片后得到的ByteBuf</p>
+<p><a target="_blank" rel="noopener" href="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20210423154059.png"><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20210423154059.png" srcset="/img/loading.gif" lazyload alt="img"></a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteBufSliceTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-comment">// 创建ByteBuf</span><br>        ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(<span class="hljs-number">16</span>, <span class="hljs-number">20</span>);<br><br>        <span class="hljs-comment">// 向buffer中写入数据</span><br>        buffer.writeBytes(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[]&#123;<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;g&#x27;</span>, <span class="hljs-string">&#x27;h&#x27;</span>, <span class="hljs-string">&#x27;i&#x27;</span>, <span class="hljs-string">&#x27;j&#x27;</span>&#125;);<br><br>        <span class="hljs-comment">// 将buffer分成两部分</span><br>        ByteBuf slice1 = buffer.slice(<span class="hljs-number">0</span>, <span class="hljs-number">5</span>);<br>        ByteBuf slice2 = buffer.slice(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>);<br><br>        <span class="hljs-comment">// 需要让分片的buffer引用计数加一</span><br>        <span class="hljs-comment">// 避免原Buffer释放导致分片buffer无法使用</span><br>        slice1.retain();<br>        slice2.retain();<br><br>        log(slice1);<br>        log(slice2);<br><br>        <span class="hljs-comment">// 更改原始buffer中的值</span><br>        System.out.println(<span class="hljs-string">&quot;===========修改原buffer中的值===========&quot;</span>);<br>        buffer.setByte(<span class="hljs-number">0</span>,<span class="hljs-string">&#x27;b&#x27;</span>);<br><br>        System.out.println(<span class="hljs-string">&quot;===========打印slice1===========&quot;</span>);<br>        log(slice1);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java">read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">5</span> capacity:<span class="hljs-number">5</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">61</span> <span class="hljs-number">62</span> <span class="hljs-number">63</span> <span class="hljs-number">64</span> <span class="hljs-number">65</span>                                  |abcde           |<br>+--------+-------------------------------------------------+----------------+<br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">5</span> capacity:<span class="hljs-number">5</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">66</span> <span class="hljs-number">67</span> <span class="hljs-number">68</span> <span class="hljs-number">69</span> 6a                                  |fghij           |<br>+--------+-------------------------------------------------+----------------+<br>===========修改原buffer中的值===========<br>===========打印slice1===========<br>read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">5</span> capacity:<span class="hljs-number">5</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">62</span> <span class="hljs-number">62</span> <span class="hljs-number">63</span> <span class="hljs-number">64</span> <span class="hljs-number">65</span>                                  |bbcde           |<br>+--------+-------------------------------------------------+----------------+<br><br>Process finished with exit code <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Ⅱ-duplicate"><a href="#Ⅱ-duplicate" class="headerlink" title="Ⅱ. duplicate"></a>Ⅱ. duplicate</h4><p>【零拷贝】的体现之一，就好比截取了原始 ByteBuf 所有内容，并且没有 max capacity 的限制，也是与原始 ByteBuf 使用同一块底层内存，只是读写指针是独立的</p>
+<p><img src="/image/image-20220127165007710.png" srcset="/img/loading.gif" lazyload alt="image-20220127165007710"></p>
+<h4 id="Ⅲ-copy"><a href="#Ⅲ-copy" class="headerlink" title="Ⅲ. copy"></a>Ⅲ. copy</h4><p>会将底层内存数据进行深拷贝，因此无论读写，都与原始 ByteBuf 无关</p>
+<h3 id="⑩-合成"><a href="#⑩-合成" class="headerlink" title="⑩. 合成"></a>⑩. 合成</h3><p>与切片是相反操作，<strong>是将多个 ByteBuf 碎片，合成为一个ByteBuf</strong>，同时在合成过程中也<strong>不会发生数据的拷贝</strong></p>
+<h4 id="Ⅰ-composite"><a href="#Ⅰ-composite" class="headerlink" title="Ⅰ. composite"></a>Ⅰ. composite</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ByteBufCompositeTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        ByteBuf buf1 = ByteBufAllocator.DEFAULT.buffer();<br>        buf1.writeBytes(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[]&#123;<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>&#125;);<br>        ByteBuf buf2 = ByteBufAllocator.DEFAULT.buffer();<br>        buf1.writeBytes(<span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[]&#123;<span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;g&#x27;</span>, <span class="hljs-string">&#x27;h&#x27;</span>, <span class="hljs-string">&#x27;i&#x27;</span>, <span class="hljs-string">&#x27;j&#x27;</span>&#125;);<br><br>        CompositeByteBuf buffs = ByteBufAllocator.DEFAULT.compositeBuffer();<br>        buffs.addComponents(<span class="hljs-keyword">true</span>, buf1, buf2);<br>        log(buffs);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>运行结果</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">read index:<span class="hljs-number">0</span> write index:<span class="hljs-number">10</span> capacity:<span class="hljs-number">10</span><br>         +-------------------------------------------------+<br>         |  <span class="hljs-number">0</span>  <span class="hljs-number">1</span>  <span class="hljs-number">2</span>  <span class="hljs-number">3</span>  <span class="hljs-number">4</span>  <span class="hljs-number">5</span>  <span class="hljs-number">6</span>  <span class="hljs-number">7</span>  <span class="hljs-number">8</span>  <span class="hljs-number">9</span>  a  b  c  d  e  f |<br>+--------+-------------------------------------------------+----------------+<br>|<span class="hljs-number">00000000</span>| <span class="hljs-number">61</span> <span class="hljs-number">62</span> <span class="hljs-number">63</span> <span class="hljs-number">64</span> <span class="hljs-number">65</span> <span class="hljs-number">66</span> <span class="hljs-number">67</span> <span class="hljs-number">68</span> <span class="hljs-number">69</span> 6a                   |abcdefghij      |<br>+--------+-------------------------------------------------+----------------+<br></code></pre></td></tr></table></figure>
+
+<h3 id="⑪-优势"><a href="#⑪-优势" class="headerlink" title="⑪. 优势"></a>⑪. 优势</h3><ul>
+<li>池化思想 - 可以重用池中 ByteBuf 实例，更节约内存，减少内存溢出的可能</li>
+<li><strong>读写指针分离</strong>，不需要像 ByteBuffer 一样切换读写模式</li>
+<li>可以<strong>自动扩容</strong></li>
+<li>支持链式调用，使用更流畅</li>
+<li>很多地方体现零拷贝，例如<ul>
+<li>slice、duplicate、CompositeByteBuf</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p>可以将各大重要组件分为三大类：</p>
+<h3 id="网络通信层"><a href="#网络通信层" class="headerlink" title="网络通信层"></a>网络通信层</h3><h4 id="BootStrap"><a href="#BootStrap" class="headerlink" title="BootStrap"></a>BootStrap</h4><p>负责客户端启动，并且去连接远程的Netty Server</p>
+<h4 id="ServerBootStrap"><a href="#ServerBootStrap" class="headerlink" title="ServerBootStrap"></a>ServerBootStrap</h4><p>负责服务端的监听，用来监听指定的一个端口</p>
+<h4 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h4><p>负责网络通信的一个载体</p>
+<h3 id="事件调度层"><a href="#事件调度层" class="headerlink" title="事件调度层"></a>事件调度层</h3><h4 id="EventLoopGroup"><a href="#EventLoopGroup" class="headerlink" title="EventLoopGroup"></a>EventLoopGroup</h4><p>本质上是一个线程池，主要去负责接收IO请求，并分配线程去执行处理请求</p>
+<h4 id="EventLoop"><a href="#EventLoop" class="headerlink" title="EventLoop"></a>EventLoop</h4><p>是<code>EventLoopGroup</code>线程池中的一个具体线程</p>
+<h3 id="服务编排层"><a href="#服务编排层" class="headerlink" title="服务编排层"></a>服务编排层</h3><h4 id="ChannelPipeLine"><a href="#ChannelPipeLine" class="headerlink" title="ChannelPipeLine"></a>ChannelPipeLine</h4><p>负责处理多个<code>ChannelHandler</code>，将多个<code>ChannelHandler</code>构成一个执行链，从而实现流水线的效果</p>
+<h4 id="ChannelHandler"><a href="#ChannelHandler" class="headerlink" title="ChannelHandler"></a>ChannelHandler</h4><p>针对 IO 数据的一个处理器，数据处理接收后通过指定的 <code>Handler</code> 进行处理</p>
+<h4 id="ChannelHandlerContext"><a href="#ChannelHandlerContext" class="headerlink" title="ChannelHandlerContext"></a>ChannelHandlerContext</h4><p>用来保存<code>ChannelHandler</code>上下文信息</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Netty/">Netty</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/26/Java%20%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/NIO%E5%9F%BA%E7%A1%80/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">NIO学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/24/Zookeeper%E5%8E%9F%E7%90%86/%E4%B8%BB%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5/">
+                        <span class="hidden-mobile">主从服务器之间的数据同步</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
