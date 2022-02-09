@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif">
 <meta property="article:published_time" content="2022-01-23T16:07:48.014Z">
-<meta property="article:modified_time" content="2022-01-23T16:52:20.083Z">
+<meta property="article:modified_time" content="2022-02-09T08:09:32.840Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -270,7 +270,7 @@
 
 <h2 id="数据结构-4"><a href="#数据结构-4" class="headerlink" title="数据结构"></a>数据结构</h2><figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gml">Hash和跳跃表skipList<br><br>hash的作用就是关联元素value和权重<span class="hljs-symbol">score</span>，保障元素value的唯一性，可以通过元素value找到相应的<span class="hljs-symbol">score</span>值。<br><br>跳跃表，跳跃表的目的在于给元素value排序，根据<span class="hljs-symbol">score</span>的范围获取元素列表。<br></code></pre></td></tr></table></figure>
 
-<h2 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h2><p><img src="https://upload-images.jianshu.io/upload_images/23305082-255a27dd65397139.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1061/format/webp" srcset="/img/loading.gif" lazyload alt="img"></p>
+<h2 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h2><p><img src="/image/webp.webp" srcset="/img/loading.gif" lazyload alt="img"></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">从高层索引寻找，如果发现小于则跳跃，如果发现大于则向低一层索引查找，直到查找到为止。<br></code></pre></td></tr></table></figure>
 
 <h1 id="BitMaps"><a href="#BitMaps" class="headerlink" title="BitMaps"></a>BitMaps</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">用于布隆过滤器<br></code></pre></td></tr></table></figure>

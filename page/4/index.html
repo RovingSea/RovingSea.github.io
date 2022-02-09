@@ -192,6 +192,86 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2022/01/23/JVM/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_self">
+          内存模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/23/JVM/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_self">
+          
+          什么是JMM1234JMM 即 Java Memory Model，它定义了主存（共享内存）、工作内存（线程私有）抽象概念，底层对应着 CPU 寄存器、缓存、硬件内存、 CPU 指令优化等。  JMM主要体现在以下几个方面原子性1保证指令不会受到线程上下文切换的影响  引例1234567891011121314151617181920212223242526public class Atomici
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-23 22:52" pubdate>
+              2022-01-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/JVM/">JVM</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/23/JVM/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" target="_self">
+          内存结构
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/23/JVM/%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/" target="_self">
+          
+          程序计数器线程私有 程序计数器（Program Counter Register）是一块较小的内存空间，它可以看作是当前线程所执行的 字节码的行号指示器。 字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，它是程序控制流的指示器，分支、循环、跳转、异常处 理、线程恢复等基础功能都需要依赖这个计数器来完成。 Java虚拟机栈线程私有 虚拟机栈描述的是Java方法执行的线
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-23 22:52" pubdate>
+              2022-01-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/JVM/">JVM</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2022/01/23/JVM/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" target="_self">
           类加载机制
         </a>
@@ -280,7 +360,7 @@
       <p class="index-excerpt">
         <a href="/2022/01/23/JVM/%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/" target="_self">
           
-          一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存12345671.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集器是否带有空间压
+          一、检查11.检查指令的参数是否能在常量池中定位到一个类的符号引用  12.检查这个符号引用代表的类是否已被加载、解析和初始化过  13.类加载检查是否符合《Java虚拟机规范》的全部约束要求  二、分配内存1234567891011121.选择分配方式。Java堆中的内存如果是绝对规整的，将会采用“指针碰撞”的分配方式；反之采用“空闲列表”的分配方式。而Java堆中的内存是否规整又采用的垃圾收集
         </a>
       </p>
 
@@ -326,7 +406,7 @@
       <p class="index-excerpt">
         <a href="/2022/01/17/Zookeeper%E5%8E%9F%E7%90%86/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
           
-          第一种方法1类似于Redis的setnx实现机制，但容易引起羊群效应  第二种方法 读写锁1因为读读之间是不需要排他的，所以基于Curator的ReentrantReadWriteLock可以实现读写锁提高性能  原理1231. 写入锁判断自己前面还有没有节点，如果没有就可以获取到锁，如果有就等待前面的节点释放锁。2. 判断自己前面还有没有写入锁的节点，也就是前面的节点是否包含WRIT，如果有那么
+          第一种方法1类似于Redis的setnx实现机制，但容易引起羊群效应  第二种方法 读写锁1因为读读之间是不需要排他的，所以基于Curator的ReentrantReadWriteLock可以实现读写锁提高性能  原理1231. 写入锁判断自己前面还有没有节点，如果没有就可以获取到锁，如果有就等待前面的节点释放锁。2. 读锁判断自己前面还有没有写入锁的节点，也就是前面的节点是否包含WRIT，如果有
         </a>
       </p>
 
