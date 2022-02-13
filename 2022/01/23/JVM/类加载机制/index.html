@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200611205050.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20201217213314510.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NvZGV5YW5iYW8=,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2022-01-23T14:52:28.850Z">
-<meta property="article:modified_time" content="2022-01-23T16:52:20.002Z">
+<meta property="article:modified_time" content="2022-02-10T07:16:20.099Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.1k 字
+      3.2k 字
     </span>
   
 
@@ -291,8 +291,8 @@
 
 <p>那变量value在准备阶段过后的初始值为0而不是123，因为这时尚未开始执行任何Java方法，而把 value赋值为123的 putstatic 指令是程序被编译后，存放于类构造器<clinit>()方法之中，所以把value赋值 为123的动作要到<strong>类的初始化阶段</strong>才会被执行</p>
 <h2 id="第四个阶段——解析"><a href="#第四个阶段——解析" class="headerlink" title="第四个阶段——解析"></a>第四个阶段——解析</h2><p>解析阶段是Java虚拟机将<strong>常量池内的符号引用</strong>替换为<strong>直接引用</strong>的过程</p>
-<h2 id="第五个阶段——初始化"><a href="#第五个阶段——初始化" class="headerlink" title="第五个阶段——初始化"></a>第五个阶段——初始化</h2><p>类的初始化阶段是类加载过程的最后一个步骤，初始化阶段就是执行类构造器<clinit>()方法的过程</p>
-<p><clinit>()方法是由编译器自动收集类中的<strong>所有类变量的赋值动作</strong>和<strong>静态语句块（static{}块）中的语句</strong>合并产生的</p>
+<h2 id="第五个阶段——初始化"><a href="#第五个阶段——初始化" class="headerlink" title="第五个阶段——初始化"></a>第五个阶段——初始化</h2><p>类的初始化阶段是类加载过程的最后一个步骤，初始化阶段就是执行类构造器<code>&lt;clinit&gt;()</code>方法的过程</p>
+<p><code>&lt;clinit&gt;()</code>方法是由编译器自动收集类中的<strong>所有类变量的赋值动作</strong>和<strong>静态语句块（static{}块）中的语句</strong>合并产生的</p>
 <h1 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h1><p>在类加载阶段中的“通过一个类的全限定名来获取描述该类的二进制字节流”这个动作放到Java虚拟机外部去实现，以便让应用程序自己决定如何去获取所需的类。</p>
 <p>而实现这个动作的代码被称为“类加载器”（Class Loader）</p>
 <h2 id="类与类加载器"><a href="#类与类加载器" class="headerlink" title="类与类加载器"></a>类与类加载器</h2><p>类加载器虽然只用于实现类的加载动作，但它在Java程序中起到的作用却<strong>远超类加载阶段</strong>。</p>
