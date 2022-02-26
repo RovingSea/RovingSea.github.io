@@ -16,23 +16,23 @@
   <meta name="author" content="Masker">
   <meta name="keywords" content="Java">
   
-    <meta name="description" content="第一种方法1类似于Redis的setnx实现机制，但容易引起羊群效应  第二种方法 读写锁1因为读读之间是不需要排他的，所以基于Curator的ReentrantReadWriteLock可以实现读写锁提高性能  原理1231. 写入锁判断自己前面还有没有节点，如果没有就可以获取到锁，如果有就等待前面的节点释放锁。2. 读锁判断自己前面还有没有写入锁的节点，也就是前面的节点是否包含WRIT，如果有">
+    <meta name="description" content="一、概念  二、特征        三、运行机制1. 指令就是处理器（CPU）能识别、执行的最基本命令  2. 处理器状态 3. 程序 4. 总结 操作系统中的哪些功能应该由内核程序实现呢？ 四、体系结构 1. 内核   五、中断和异常1. 中断    2. 总结 六、系统调用1. 分类 2. 与库函数的区别 3. 调用细节 4. 总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Zk分布式锁的实现">
-<meta property="og:url" content="http://example.com/2022/01/17/Zookeeper%E5%8E%9F%E7%90%86/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:title" content="操作系统概述">
+<meta property="og:url" content="http://example.com/2021/05/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/index.html">
 <meta property="og:site_name" content="Masker7&#39;s Blog">
-<meta property="og:description" content="第一种方法1类似于Redis的setnx实现机制，但容易引起羊群效应  第二种方法 读写锁1因为读读之间是不需要排他的，所以基于Curator的ReentrantReadWriteLock可以实现读写锁提高性能  原理1231. 写入锁判断自己前面还有没有节点，如果没有就可以获取到锁，如果有就等待前面的节点释放锁。2. 读锁判断自己前面还有没有写入锁的节点，也就是前面的节点是否包含WRIT，如果有">
+<meta property="og:description" content="一、概念  二、特征        三、运行机制1. 指令就是处理器（CPU）能识别、执行的最基本命令  2. 处理器状态 3. 程序 4. 总结 操作系统中的哪些功能应该由内核程序实现呢？ 四、体系结构 1. 内核   五、中断和异常1. 中断    2. 总结 六、系统调用1. 分类 2. 与库函数的区别 3. 调用细节 4. 总结">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2020/09/fVKeBy0dUyfT5xJX.jpg">
-<meta property="article:published_time" content="2022-01-17T15:41:23.550Z">
-<meta property="article:modified_time" content="2022-02-09T08:23:32.416Z">
+<meta property="og:image" content="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg">
+<meta property="article:published_time" content="2021-05-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-26T13:53:34.556Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.runoob.com/wp-content/uploads/2020/09/fVKeBy0dUyfT5xJX.jpg">
+<meta name="twitter:image" content="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg">
   
   
-  <title>Zk分布式锁的实现 - Masker7&#39;s Blog</title>
+  <title>操作系统概述 - Masker7&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -178,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Zk分布式锁的实现">
+            <span class="h2" id="subtitle" title="操作系统概述">
               
             </span>
 
@@ -188,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-17 23:41" pubdate>
-        2022年1月17日 晚上
+      <time datetime="2021-05-21 00:00" pubdate>
+        2021年5月21日 凌晨
       </time>
     </span>
   
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      447 字
+      130 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      2 分钟
     </span>
   
 
@@ -245,18 +245,38 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Zk分布式锁的实现</h1>
+            <h1 style="display: none">操作系统概述</h1>
             
             <div class="markdown-body">
-              <h1 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h1><figure class="highlight"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs">类似于Redis的setnx实现机制，但容易引起羊群效应<br></code></pre></td></tr></table></figure>
-
-<h1 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h1><p><img src="/image/image-20220118000142610.png" srcset="/img/loading.gif" lazyload alt="image-20220118000142610"></p>
-<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">因为读读之间是不需要排他的，所以基于Curator的ReentrantReadWriteLock可以实现读写锁提高性能<br></code></pre></td></tr></table></figure>
-
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">1.</span> 写入锁判断自己前面还有没有节点，如果没有就可以获取到锁，如果有就等待前面的节点释放锁。<br><br><span class="hljs-bullet">2.</span> 读锁判断自己前面还有没有写入锁的节点，也就是前面的节点是否包含WRIT，如果有那么等待前面的节点释放锁。<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sqf">写入锁在申请锁时写入的节点名称是这样的   xxxx-<span class="hljs-variable">__WRIT__00000000xxx</span> <br>例如：   <span class="hljs-variable">_c_9b6e456b</span>-<span class="hljs-number">94</span>fe-<span class="hljs-number">47</span>e7-b968-<span class="hljs-number">34027</span>c094b7d-<span class="hljs-variable">__WRIT__0000000006</span><br><br>读取锁在申请锁时写入的节点名称是这样的  xxxx-<span class="hljs-variable">__READ__00000000xxx</span> <br>例如：    <span class="hljs-variable">_c_9b6e456b90</span>-<span class="hljs-number">9</span>c33-<span class="hljs-number">6294665</span>cf525--b6448-<span class="hljs-variable">__READ__0000000005</span><br><br>区别就是写入锁的字符串包含WRIT，读取所包含READ<br></code></pre></td></tr></table></figure>
-
+              <h1 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h1><p><img src="/image/image-20220226202437943.png" srcset="/img/loading.gif" lazyload alt="操作系统的概念"></p>
+<p><img src="/image/image-20220226202523955.png" srcset="/img/loading.gif" lazyload alt="概念、概念和目标总结"></p>
+<h1 id="二、特征"><a href="#二、特征" class="headerlink" title="二、特征"></a>二、特征</h1><p><img src="/image/image-20220226203458845.png" srcset="/img/loading.gif" lazyload alt="并发"></p>
+<p><img src="/image/image-20220226203624139.png" srcset="/img/loading.gif" lazyload alt="共享"></p>
+<p><img src="/image/image-20220226203717880.png" srcset="/img/loading.gif" lazyload alt="并发和共享的关系"></p>
+<p><img src="/image/image-20220226203748897.png" srcset="/img/loading.gif" lazyload alt="虚拟——空分复用技术"></p>
+<p><img src="/image/image-20220226203821720.png" srcset="/img/loading.gif" lazyload alt="虚拟——时分复用技术"></p>
+<p><img src="/image/image-20220226203417747.png" srcset="/img/loading.gif" lazyload alt="虚拟"></p>
+<p><img src="/image/image-20220226204106654.png" srcset="/img/loading.gif" lazyload alt="异步"></p>
+<p><img src="/image/image-20220226204154159.png" srcset="/img/loading.gif" lazyload alt="操作系统的特征总结"></p>
+<h1 id="三、运行机制"><a href="#三、运行机制" class="headerlink" title="三、运行机制"></a>三、运行机制</h1><h2 id="1-指令"><a href="#1-指令" class="headerlink" title="1. 指令"></a>1. 指令</h2><p>就是<strong>处理器（CPU）</strong>能识别、执行的最基本命令</p>
+<p><img src="/image/image-20220226210415389.png" srcset="/img/loading.gif" lazyload alt="特权指令和非特权指令"></p>
+<h2 id="2-处理器状态"><a href="#2-处理器状态" class="headerlink" title="2. 处理器状态"></a>2. 处理器状态</h2><p><img src="/image%5Cimage-20220226210705928.png" srcset="/img/loading.gif" lazyload alt="用户态（目态）和核心态（管态）"></p>
+<h2 id="3-程序"><a href="#3-程序" class="headerlink" title="3. 程序"></a>3. 程序</h2><p><img src="/image/image-20220226210746776.png" srcset="/img/loading.gif" lazyload alt="内核程序和应用程序"></p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><img src="/image/image-20220226205038994.png" srcset="/img/loading.gif" lazyload alt="运行机制总结"></p>
+<p><strong>操作系统中的哪些功能应该由内核程序实现呢？</strong></p>
+<h1 id="四、体系结构"><a href="#四、体系结构" class="headerlink" title="四、体系结构"></a>四、体系结构</h1><p><img src="/image/image-20220226211111221.png" srcset="/img/loading.gif" lazyload alt="计算机系统的层次结构"></p>
+<h2 id="1-内核"><a href="#1-内核" class="headerlink" title="1. 内核"></a>1. 内核</h2><p><img src="/image/image-20220226211732408.png" srcset="/img/loading.gif" lazyload alt="操作系统内核"></p>
+<p><img src="/image/image-20220226212018421.png" srcset="/img/loading.gif" lazyload alt="大内核和微内核"></p>
+<p><img src="/image/image-20220226212139023.png" srcset="/img/loading.gif" lazyload alt="运行机制和体系结构总结"></p>
+<h1 id="五、中断和异常"><a href="#五、中断和异常" class="headerlink" title="五、中断和异常"></a>五、中断和异常</h1><h2 id="1-中断"><a href="#1-中断" class="headerlink" title="1. 中断"></a>1. 中断</h2><p><img src="/image/image-20220226213110628.png" srcset="/img/loading.gif" lazyload alt="中断的概念和作用"></p>
+<p><img src="/image/image-20220226213302982.png" srcset="/img/loading.gif" lazyload alt="中断的分类（第一种分类方式）"></p>
+<p><img src="/image/image-20220226213400165.png" srcset="/img/loading.gif" lazyload alt="中断的分类（第二种分类方式）"></p>
+<p><img src="/image/image-20220226213600825.png" srcset="/img/loading.gif" lazyload alt="外中断的处理过程"></p>
+<h2 id="2-总结"><a href="#2-总结" class="headerlink" title="2. 总结"></a>2. 总结</h2><p><img src="/image/image-20220226213728869.png" srcset="/img/loading.gif" lazyload alt="中断和异常总结"></p>
+<h1 id="六、系统调用"><a href="#六、系统调用" class="headerlink" title="六、系统调用"></a>六、系统调用</h1><h2 id="1-分类"><a href="#1-分类" class="headerlink" title="1. 分类"></a>1. 分类</h2><p><img src="/image/image-20220226214534856.png" srcset="/img/loading.gif" lazyload alt="系统调用按功能分类"></p>
+<h2 id="2-与库函数的区别"><a href="#2-与库函数的区别" class="headerlink" title="2. 与库函数的区别"></a>2. 与库函数的区别</h2><p><img src="/image/image-20220226214502407.png" srcset="/img/loading.gif" lazyload alt="系统调用和库函数的区别"></p>
+<h2 id="3-调用细节"><a href="#3-调用细节" class="headerlink" title="3. 调用细节"></a>3. 调用细节</h2><p><img src="/image/image-20220226215027712.png" srcset="/img/loading.gif" lazyload alt="系统调用背后的过程"></p>
+<h2 id="4-总结-1"><a href="#4-总结-1" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><img src="/image/image-20220226215159460.png" srcset="/img/loading.gif" lazyload alt="系统调用总结"></p>
 
             </div>
             <hr>
@@ -266,7 +286,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Zookeeper%E5%8E%9F%E7%90%86/">Zookeeper原理</a>
+                      <a class="hover-with-bg" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
                     
                   </div>
                 
@@ -284,21 +304,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/01/23/JVM/%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/">
+                      <a href="/2022/01/17/Zookeeper%E5%8E%9F%E7%90%86/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">对象的创建过程</span>
+                        <span class="hidden-mobile">Zk分布式锁的实现</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2021/05/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">
-                        <span class="hidden-mobile">操作系统概述</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
