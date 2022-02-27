@@ -688,6 +688,25 @@
   
   
   <entry>
+    <title>进程管理</title>
+    <link href="/2021/05/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
+    <url>/2021/05/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[<h1 id="一、进程的组成、组织、特征"><a href="#一、进程的组成、组织、特征" class="headerlink" title="一、进程的组成、组织、特征"></a>一、进程的组成、组织、特征</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><p><img src="/image/image-20220227201454439.png" alt="进程的定义"></p><h2 id="2-组成"><a href="#2-组成" class="headerlink" title="2. 组成"></a>2. 组成</h2><p><img src="/image/image-20220227201626910.png" alt="进程的组成1"></p><p><img src="/image/image-20220227201812879.png" alt="进程的组成2"></p><h2 id="3-组织"><a href="#3-组织" class="headerlink" title="3. 组织"></a>3. 组织</h2><p><img src="/image/image-20220227201901221.png" alt="进程的组织"></p><h2 id="4-特征"><a href="#4-特征" class="headerlink" title="4. 特征"></a>4. 特征</h2><p><img src="/image/image-20220227202152797.png" alt="进程的特征"></p><h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h2><p><img src="/image/image-20220227202259530.png" alt="进程的组成、组织、特征总结"></p><h1 id="二、进程的状态与转换"><a href="#二、进程的状态与转换" class="headerlink" title="二、进程的状态与转换"></a>二、进程的状态与转换</h1><h2 id="1-状态"><a href="#1-状态" class="headerlink" title="1. 状态"></a>1. 状态</h2><p><img src="/image/image-20220227202532797.png" alt="进程的三种基本状态"></p><p><img src="/image/image-20220227202732550.png" alt="进程的另外两种状态"></p><h2 id="2-转换"><a href="#2-转换" class="headerlink" title="2. 转换"></a>2. 转换</h2><p><img src="/image/image-20220227202942560.png" alt="进程状态的转换"></p><h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><p><img src="/image/image-20220227203111324.png" alt="进程的状态与转换总结"></p><h1 id="三、进程控制"><a href="#三、进程控制" class="headerlink" title="三、进程控制"></a>三、进程控制</h1><h2 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h2><p><img src="/image/image-20220227203231325.png" alt="什么是进程控制"></p><p><strong>简而言之，就是上图中的绿色箭头部分</strong></p><h2 id="2-实现"><a href="#2-实现" class="headerlink" title="2. 实现"></a>2. 实现</h2><p><img src="/image/image-20220227203447962.png" alt="如何实现进程控制"></p><p><img src="/image/image-20220227203641995.png" alt="原语"></p><p><img src="/image/image-20220227203823359.png" alt="进程控制相关的原语"></p><h2 id="3-总结-1"><a href="#3-总结-1" class="headerlink" title="3. 总结"></a>3. 总结</h2><p><img src="/image/image-20220227204047031.png" alt="进程控制总结"></p><h1 id="四、进程通信"><a href="#四、进程通信" class="headerlink" title="四、进程通信"></a>四、进程通信</h1><h2 id="1-概念-1"><a href="#1-概念-1" class="headerlink" title="1. 概念"></a>1. 概念</h2><p><img src="/image/image-20220227204232904.png" alt="什么是进程通信"></p><h2 id="2-方式一-共享存储"><a href="#2-方式一-共享存储" class="headerlink" title="2. 方式一 - 共享存储"></a>2. 方式一 - 共享存储</h2><p><img src="/image/image-20220227204451838.png" alt="方式一、共享存储"></p><h2 id="3-方式二-管道通信"><a href="#3-方式二-管道通信" class="headerlink" title="3. 方式二 - 管道通信"></a>3. 方式二 - 管道通信</h2><p><img src="/image/image-20220227204706093.png" alt="方式二、管道通信"></p><h2 id="4-方式三-消息传递"><a href="#4-方式三-消息传递" class="headerlink" title="4. 方式三 - 消息传递"></a>4. 方式三 - 消息传递</h2><p><img src="/image/image-20220227204914943.png" alt="方式三、消息传递"></p><h2 id="5-总结-1"><a href="#5-总结-1" class="headerlink" title="5. 总结"></a>5. 总结</h2><p><img src="/image/image-20220227204954027.png" alt="进程通信总结"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>操作系统</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>操作系统概述</title>
     <link href="/2021/05/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/"/>
     <url>/2021/05/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</url>
