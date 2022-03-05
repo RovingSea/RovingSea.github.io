@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2014/03/mysql.jpg">
 <meta property="article:published_time" content="2021-07-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-05T06:01:04.705Z">
+<meta property="article:modified_time" content="2022-03-05T08:18:27.698Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      139 分钟
+      142 分钟
     </span>
   
 
@@ -412,8 +412,26 @@
 <p>直接在索引列上进行聚合函数的操作，没有进行任何的表的操作</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">EXPLAIN <span class="hljs-keyword">select</span> <span class="hljs-built_in">min</span>(id) <span class="hljs-keyword">from</span> tb_book<br></code></pre></td></tr></table></figure>
 
-
-
+<h2 id="13-应用场景总结"><a href="#13-应用场景总结" class="headerlink" title="13.应用场景总结"></a>13.应用场景总结</h2><ul>
+<li><p><strong>符合最左前缀法制</strong></p>
+</li>
+<li><p><strong>不能在索引上做计算、函数、类型转换，不然会变成全表扫描，如果是对日期查找，尽量通过范围查找进行优化</strong></p>
+</li>
+<li><p><strong>尽量使用覆盖索引</strong></p>
+</li>
+<li><p><strong>使用了不等于（!= 或者 &lt;&gt;）会导致全表扫描</strong></p>
+</li>
+<li><p><strong>使用 <code>is null</code> 、 <code>is not null</code> 会导致全表扫描，所以尽量让属性非空</strong></p>
+</li>
+<li><p><strong>使用 <code>like</code> 以通配符开头<code>(&#39;%abc...&#39;)</code> 会导致全表扫描</strong></p>
+</li>
+<li><p><strong>字符串不加单引号会导致全表扫描</strong></p>
+</li>
+<li><p><strong>少用 <code>or</code> 或 <code>in</code> ，MySQL 内部优化器可能会不走索引</strong></p>
+</li>
+<li><p><strong>范围查询优化</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">比如在</span> <span class="hljs-string">age</span> <span class="hljs-string">&gt;=</span> <span class="hljs-number">1</span> <span class="hljs-string">and</span> <span class="hljs-string">age</span> <span class="hljs-string">&lt;=</span> <span class="hljs-number">2000000</span> <span class="hljs-string">的情况下</span><br><span class="hljs-string">可以在应用层优化为多线程执行，可采用工具类</span> <span class="hljs-string">CountDownLatch</span><br><span class="hljs-string">age</span> <span class="hljs-string">&gt;=</span> <span class="hljs-number">1</span> <span class="hljs-string">and</span> <span class="hljs-string">age</span> <span class="hljs-string">&lt;=</span> <span class="hljs-number">1000</span><br><span class="hljs-string">age</span> <span class="hljs-string">&gt;=</span> <span class="hljs-number">1001 </span><span class="hljs-string">and</span> <span class="hljs-string">age</span> <span class="hljs-string">&lt;=</span> <span class="hljs-number">2000</span><br><span class="hljs-string">age</span> <span class="hljs-string">&gt;=</span> <span class="hljs-number">3001 </span><span class="hljs-string">and</span> <span class="hljs-string">age</span> <span class="hljs-string">&lt;=</span> <span class="hljs-number">3000</span><br><span class="hljs-string">······</span><br></code></pre></td></tr></table></figure></li>
+</ul>
 <h1 id="二、Trace工具"><a href="#二、Trace工具" class="headerlink" title="二、Trace工具"></a>二、Trace工具</h1><p>在执行计划中我们发现有的sql会走索引，有的sql即使明确使用了索引也不会走索引。这是因为mysql的内部优化器任务走索引的性能比不走索引全表扫描的性能要差，因此mysql内部优化器选择了使用全表扫描。依据来自于trace工具的结论。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">set</span> session optimizer_trace<span class="hljs-operator">=</span>&quot;enabled=on&quot;, end_markers_in_json<span class="hljs-operator">=</span><span class="hljs-keyword">on</span>; <span class="hljs-comment">-- 开启trace</span><br> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employees <span class="hljs-keyword">where</span> name <span class="hljs-operator">&gt;</span> <span class="hljs-string">&#x27;a&#x27;</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> position; <span class="hljs-comment">-- 执行查询</span><br> <span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> information_schema.OPTIMIZER_TRACE; <span class="hljs-comment">-- 获得trace的分析结果</span><br></code></pre></td></tr></table></figure>
 
