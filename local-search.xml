@@ -4,6 +4,90 @@
   
   
   <entry>
+    <title>面向对象设计原则</title>
+    <link href="/2022/05/14/Java%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/"/>
+    <url>/2022/05/14/Java%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</url>
+    
+    <content type="html"><![CDATA[<p><a name="a11edfd6"></a></p><h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>简而言之就是讲究两点：</p><ul><li><strong>可维护性（Maintainability）</strong></li><li><strong>可复用性（Reusability）</strong></li></ul><p>常用的面向对象设计原则有七种：</p><table><thead><tr><th><strong>设计原则名称</strong></th><th><strong>定义</strong></th><th><strong>使用频率</strong></th></tr></thead><tbody><tr><td>单一职责原则<br />（Single Responsibility Principle，SRP）</td><td>一个对象应该只包含单一的职责，并且该职责被完整地封装在一个类中</td><td>⭐⭐⭐⭐</td></tr><tr><td>开闭原则<br />（Open-Closed Principle，OCP）</td><td>软件实体应当对扩展开放，对修改关闭</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td>里氏代换原则<br />（Liskov Substitution Principle，LSP）</td><td>所有引用基类的地方必须能透明地使用其子类的对象</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td>依赖倒转原则<br />（Dependence Inversion Principle，DIP）</td><td>高层模块不应该依赖低层模块，它们都应该依赖抽象。抽象不应该依赖于细节，细节应该依赖于抽象</td><td>⭐⭐⭐⭐⭐</td></tr><tr><td>接口隔离原则<br />（Interface Segregation Principal，ISP）</td><td>客户端不应该依赖那些它不需要的接口</td><td>⭐⭐</td></tr><tr><td>合成复用原则<br />（Composite Reuse Principal，CRP）</td><td>优先使用对象组合，而不是通过继承来达到复用的目的</td><td>⭐⭐⭐⭐</td></tr><tr><td>迪米特法则<br />（Law of Demeter，LoD）</td><td>每一个软件单位对其他单位都只有最少的知识，而且局限于那些本单位密切相关的软件单位</td><td>⭐⭐⭐</td></tr></tbody></table><p><a name="zwHLn"></a></p><h1 id="二、面向对象设计原则"><a href="#二、面向对象设计原则" class="headerlink" title="二、面向对象设计原则"></a>二、面向对象设计原则</h1><p><a name="CpQIu"></a></p><h2 id="1-单一职责原则"><a href="#1-单一职责原则" class="headerlink" title="1. 单一职责原则"></a>1. 单一职责原则</h2><p>简而言之就是控制类的粒度大小<br />如下图类：</p><table><thead><tr><th><strong>CustomerDataChart</strong></th></tr></thead><tbody><tr><td></td></tr><tr><td>+ getConnection() : Connection<br />+ findCustomers() : List<br />+ createChart() : void<br />+ displayChart() : void</td></tr></tbody></table><p>使用单一职责原则对其重构后需要3个类：</p><ul><li>DbUtil：负责连接数据库，其中包含方法 getConnection()</li><li>CustomerDao：负责操作数据库中的 Customer 表，包括增删改查操作，例如 findCustomers()</li><li>CustomerDataChart：负责图表的生成和显示，包括 createCharte() 和 displayChart() 方法</li></ul><p><a name="otwSh"></a></p><h2 id="2-开闭原则"><a href="#2-开闭原则" class="headerlink" title="2. 开闭原则"></a>2. 开闭原则</h2><p>就是指软件实体应尽量在不修改原有代码的情况下进行扩展<br />为了满足开闭原则，需要对系统进行<strong>抽象化设计，抽象化是开闭原则的关键</strong><br />在 Java 中，可以为系统定义一个相对稳定的抽象层，而将不同的实现行为移至具体的实现层中完成<br />例如，<strong>接口、抽象类等机制，可以通过它们定义抽象层，再通过具体类进行扩展</strong><br />因此，如果需要修改系统的行为，无须对抽象层进行修改，只需增加新的具体类来实现新的业务功能即可</p><p><a name="nQ0rX"></a></p><h2 id="3-里氏代换原则"><a href="#3-里氏代换原则" class="headerlink" title="3. 里氏代换原则"></a>3. 里氏代换原则</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java 设计模式</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/"/>
+    <url>/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/</url>
+    
+    <content type="html"><![CDATA[<h1 id="一、调度算法的评价指标"><a href="#一、调度算法的评价指标" class="headerlink" title="一、调度算法的评价指标"></a>一、调度算法的评价指标</h1><p><img src="....%5Cimage%5Cimage-20220404230911592.png" alt="image-20220404230911592"></p><h2 id="1-CPU-利用率"><a href="#1-CPU-利用率" class="headerlink" title="1. CPU 利用率"></a>1. CPU 利用率</h2><p><img src="....%5Cimage%5Cimage-20220404231107986.png" alt="image-20220404231107986"></p><h2 id="2-系统吞吐量"><a href="#2-系统吞吐量" class="headerlink" title="2. 系统吞吐量"></a>2. 系统吞吐量</h2><p><img src="....%5Cimage%5Cimage-20220404231216684.png" alt="image-20220404231216684"></p><h2 id="3-周转时间"><a href="#3-周转时间" class="headerlink" title="3. 周转时间"></a>3. 周转时间</h2><p><img src="....%5Cimage%5Cimage-20220404231717341.png" alt="image-20220404231717341"></p><p><img src="....%5Cimage%5Cimage-20220404231806882.png" alt="image-20220404231806882"></p><h2 id="4-等待时间"><a href="#4-等待时间" class="headerlink" title="4. 等待时间"></a>4. 等待时间</h2><p><img src="....%5Cimage%5Cimage-20220404231905790.png" alt="image-20220404231905790"></p><h2 id="5-响应时间"><a href="#5-响应时间" class="headerlink" title="5. 响应时间"></a>5. 响应时间</h2><p><img src="....%5Cimage%5Cimage-20220404231934537.png" alt="image-20220404231934537"></p><h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p><img src="....%5Cimage%5Cimage-20220404232018018.png" alt="image-20220404232018018"></p><h1 id="二、调度算法"><a href="#二、调度算法" class="headerlink" title="二、调度算法"></a>二、调度算法</h1><h2 id="1-先来先服务-FCFS"><a href="#1-先来先服务-FCFS" class="headerlink" title="1. 先来先服务 FCFS"></a>1. 先来先服务 FCFS</h2><p><img src="....%5Cimage%5Cimage-20220404233209135.png" alt="image-20220404233209135"></p><p><img src="....%5Cimage%5Cimage-20220404233446041.png" alt="image-20220404233446041"></p><h2 id="2-短作业优先-SJF"><a href="#2-短作业优先-SJF" class="headerlink" title="2. 短作业优先 SJF"></a>2. 短作业优先 SJF</h2><p><img src="....%5Cimage%5Cimage-20220404234530360.png" alt="image-20220404234530360"></p><h3 id="非抢占式"><a href="#非抢占式" class="headerlink" title="非抢占式"></a>非抢占式</h3><p><img src="....%5Cimage%5Cimage-20220404233653049.png" alt="image-20220404233653049"></p><h3 id="抢占式"><a href="#抢占式" class="headerlink" title="抢占式"></a>抢占式</h3><p><img src="....%5Cimage%5Cimage-20220404234057118.png" alt="image-20220404234057118"></p><h2 id="3-高响应比优先-HRRN"><a href="#3-高响应比优先-HRRN" class="headerlink" title="3. 高响应比优先 HRRN"></a>3. 高响应比优先 HRRN</h2><p><img src="....%5Cimage%5Cimage-20220404235026765.png" alt="image-20220404235026765"></p><p><img src="....%5Cimage%5Cimage-20220404235152192.png" alt="image-20220404235152192"></p><h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><img src="....%5Cimage%5Cimage-20220404235303408.png" alt="image-20220404235303408"></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2022/03/23/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/AQS%E5%8E%9F%E7%90%86/"/>
+    <url>/2022/03/23/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/AQS%E5%8E%9F%E7%90%86/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2022/03/22/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Synchronized/"/>
+    <url>/2022/03/22/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Synchronized/</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2022/03/22/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Monitor/"/>
+    <url>/2022/03/22/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Monitor/</url>
+    
+    <content type="html"><![CDATA[<h1 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h1><p>Monitor 被翻译为 <strong>监视器</strong> 或 <strong>管程</strong></p><p>每个 <code>Java</code>  对象都可以关联一个 <code>Monitor</code> 对象，如果 <code>synchronized</code> 给对象上锁（重量级）之后，</p><p>该对象头的 <code>Mark Word</code> 就被设置指向 <code>Monitor</code> 对象的指针</p><h1 id="二、结构"><a href="#二、结构" class="headerlink" title="二、结构"></a>二、结构</h1><img src="https://nyimapicture.oss-cn-beijing.aliyuncs.com/img/20200608144917.png" alt="img" style="zoom:67%;" /><ul><li>当线程执行到临界区代码时，如果使用了<code>synchronized</code>，会先查询<code>synchronized</code>中所指定的对象(obj)**是否绑定了<code>Monitor</code>**。<ul><li>如果<strong>没有绑定</strong>，则会先去去与<code>Monitor</code>绑定，并且将<code>Owner</code>设为当前线程。</li><li>如果<strong>已经绑定</strong>，则会去查询该<code>Monitor</code>是否已经有了<code>Owner</code><ul><li>如果没有，则<code>Owner</code>与将当前线程绑定</li><li>如果有，则放入<code>EntryList</code>，进入阻塞状态(blocked)</li></ul></li></ul></li><li>当Monitor的Owner将临界区中代码执行完毕后，Owner便会被清空，此时<code>EntryList</code>中处于<strong>阻塞</strong>状态的线程会被<strong>叫醒并竞争</strong>，此时的竞争是<strong>非公平的</strong></li><li><strong>注意</strong>：<ul><li><code>Monitor</code> 是由操作系统提供</li><li>对象在使用了<code>synchronized</code>后与<code>Monitor</code>绑定时，会将对象头中的**<code>Mark Word</code>**置为<code>Monitor</code>指针。</li><li>每个对象都会绑定一个<strong>唯一的Monitor</strong>，如果synchronized中所指定的对象(obj)<strong>不同</strong>，则会绑定<strong>不同</strong>的<code>Monitor</code></li></ul></li></ul>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/2022/03/09/ElasticSearch/ElasticSearch%E5%AD%A6%E4%B9%A0/"/>
+    <url>/2022/03/09/ElasticSearch/ElasticSearch%E5%AD%A6%E4%B9%A0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在互联网中，我们查询的信息主要包括文章、视频、图片、网站信息等等</p><p>根据数据的格式，我们会将数据分为三大类：</p><ul><li><p><strong>结构化数据</strong>，通常表现为二维的表结构，例如<code>MySQL</code>、<code>Oracle</code> 中的表结构数据</p><ul><li>优点：方便管理，方便查询</li><li>缺点：扩张结构较难</li></ul></li><li><p><strong>非结构化数据</strong>，无法用二维表表示的数据，例如服务器日志、通讯记录、工作文档、报表等，这些数据维度管，数据量大，数据的存储、查询成本大，往往需要专业的人员和统计模型进行处理，通常会将这些数据保存到 <code>NoSQL</code> 数据库中去，例如 <code>Redis</code> 、 <code>MongoDB</code>，通常是以 <code>key - value</code> 键值对</p><ul><li>优点：查询快</li><li>缺点：由于他们的非特征性和歧义性，会更难理解</li></ul></li><li><p><strong>半结构化数据</strong>，将数据结构和内容混在一起，没有明显的区分，例如存储员工的简历，通常装载在<code>XML</code>、<code>Html</code>等中 ，保存在 <code>MongoDB</code>、<code>Redis</code> 、<code>HBase</code> 中</p><ul><li>优点：能够灵活的扩展</li><li>缺点：查询内容不易</li></ul></li></ul><p>如何快速、准确地查询结构化数据、非结构化数据当中的内容，<code>ElasticSearch</code> 就是为此诞生的</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Netty优化学习</title>
     <link href="/2022/02/04/Netty/Netty%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/"/>
     <url>/2022/02/04/Netty/Netty%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/</url>

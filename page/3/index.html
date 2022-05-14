@@ -190,6 +190,282 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/" target="_self">
+          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="缓存穿透、击穿、雪崩">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/" target="_self">
+          缓存穿透、击穿、雪崩
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/" target="_self">
+          
+          缓存穿透123key对应的数据在数据源中并不存在，每次针对此key的请求从缓存中获取不到，请求都会压到数据源，从而可能压垮数据源。比如用一个不存在的用户id获取用户信息，不论缓存还是数据库都没有，若黑客利用此漏洞进行攻击可能压垮数据库。   解决方案12341.对空值缓存2.设置白名单3.采用布隆过滤器4.进行实时监控  缓存击穿1key对应的数据存在，但在redis中过期，此时又有大量的并发请求
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:07" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
+          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="分布式锁的实现">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
+          分布式锁的实现
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
+          
+          满足的条件互斥性1任意时刻，只有一个客户端持有锁  不会发生死锁1即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  解铃还须系铃人1加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。  原子性1加锁和解锁必须具有原子性  步骤一、多个客户端申请获取锁1即执行多个setnx语句  二、获取成功1即执行setnx语句成功后的客户端，其他客户端等待重试
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:07" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E6%8C%81%E4%B9%85%E5%8C%96%E6%9C%BA%E5%88%B6/" target="_self">
+          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="持久化机制">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E6%8C%81%E4%B9%85%E5%8C%96%E6%9C%BA%E5%88%B6/" target="_self">
+          持久化机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E6%8C%81%E4%B9%85%E5%8C%96%E6%9C%BA%E5%88%B6/" target="_self">
+          
+          持久化Redis是基于内存运行的，将redis数据写入到硬盘这一过程就叫持久化 RDB全称Redis Database 在指定的时间间隔内将某一时刻的内存快照（Snapshot），以二进制的方式写入磁盘 触发 持久化流程Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入到 一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。 整个过程中，主进程是不进行
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:07" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" target="_self">
+          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="布隆过滤器">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" target="_self">
+          布隆过滤器
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" target="_self">
+          
+          位图位图中的每一个槽只占1 bit的内存，所以即便面对10亿数据也只占用119多M的内存 适用场景1在面临大数据的情况下，判断一个数是否存在  原理12将判断的值分多个hash函数进行计算，如果其中有一个hash函数的值不等于1，则可以判定这个数不存在；反之大概率存在    优点 占用内存小  增加和查询的时间复杂度为：O(K)，K为哈希函数的个数  哈希函数相互之间没有关系，方便硬件并行运算
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:07" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/MySQL/MySQL%E5%8E%9F%E7%90%86/" target="_self">
+          <img src="https://www.runoob.com/wp-content/uploads/2014/03/mysql.jpg" srcset="/img/loading.gif" lazyload alt="MySQL原理">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/MySQL/MySQL%E5%8E%9F%E7%90%86/" target="_self">
+          MySQL原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/MySQL/MySQL%E5%8E%9F%E7%90%86/" target="_self">
+          
+          一、概论使用索引查找数据性能很快，避免了全表扫描时的多次磁盘IO。 但是，使用索引实际上也需要在索引中查找数据，而且数据量和表中的是一样的 那为什么索引就能快呢？ 这就跟索引使用了哪些数据结构有关 而索引是帮助Mysql高效获取数据的 排好序 的 数据结构 二、索引分类主键索引主键自带索引效果，也就意味着通过主键来查询表中的记录，性能是非常好的 普通索引为普通的列创建索引 1234# 格式crea
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:07" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/MySQL/">MySQL</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AD%A6%E4%B9%A0/" target="_self">
+          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ学习">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AD%A6%E4%B9%A0/" target="_self">
+          RabbitMQ学习
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AD%A6%E4%B9%A0/" target="_self">
+          
+          MQ（Message Queue）是什么？作用实现系统间的解耦 原理通过利用高效的消息传递机制进行平台无关的数据交流，并基于数据通信进行分布式系统的集成 模型  生成者：不断向消息队列中生产消息 消费者：不断向队列中获取消息 消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入，轻松地实现系统间解耦  1因此跨系统通讯时，首选消息队列  消息中间件如何实现，就用到了消息中间件
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:04" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/RabbitMQ/">RabbitMQ</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/01/24/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA/" target="_self">
           <img src="https://imgsa.baidu.com/forum/pic/item/a9d3fd1f4134970a9b762c7c94cad1c8a7865d5f.jpg" srcset="/img/loading.gif" lazyload alt="线程的创建">
         </a>
@@ -370,287 +646,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" target="_self">
-          <img src="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg" srcset="/img/loading.gif" lazyload alt="进程与线程的区别">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" target="_self">
-          进程与线程的区别
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" target="_self">
-          
-          进程程序由指令和数据组成，但这些指令要运行，数据要读写，就必须将指令加载至 CPU，数据加载至内存。 在指令运行过程中还需要用到磁盘、网络等设备。 进程就是用来加载指令、管理内存、管理 IO 的。  当一个程序被运行，从磁盘加载这个程序的代码至内存，这时就开启了一个进程。  进程就可以视为程序的一个实例。大部分程序可以同时运行多个实例进程（例如记事本、画图、浏览器 等），也有的程序只能启动一个实例
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:00" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
-          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ消息幂等性问题">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
-          RabbitMQ消息幂等性问题
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
-          
-          什么是幂等性在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同 HTTP方法的幂等性是指一次和多次请求某一个资源应该具有同样的副作用。幂等性属于语义范畴，正如编译器只能帮助检查语法错误一样，HTTP规范也没有办法通过消息格式等语法手段来定义它。 简之：一个请求，不管重复来多少次，结果是不会改变的。 消费者在消费 MQ 中的消息时，MQ 已把消息发送给消费者，消费者在给 M
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:00" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/RabbitMQ/">RabbitMQ</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E8%A1%A5%E5%81%BF%E6%9C%BA%E5%88%B6%E4%B8%8E@RabbitListener%E6%B3%A8%E8%A7%A3%E5%8E%9F%E7%90%86/" target="_self">
-          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ补偿机制与@RabbitListener注解原理">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E8%A1%A5%E5%81%BF%E6%9C%BA%E5%88%B6%E4%B8%8E@RabbitListener%E6%B3%A8%E8%A7%A3%E5%8E%9F%E7%90%86/" target="_self">
-          RabbitMQ补偿机制与@RabbitListener注解原理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E8%A1%A5%E5%81%BF%E6%9C%BA%E5%88%B6%E4%B8%8E@RabbitListener%E6%B3%A8%E8%A7%A3%E5%8E%9F%E7%90%86/" target="_self">
-          
-          补偿机制RabbitMQ 默认情况下，如果消费者程序出现异常的情况下，会自动实现补偿（重试）机制 即队列服务器发送补偿请求 @RabbitListener原理@RabbitListener 底层使用 AOP 进行拦截  如果程序没有抛出异常，则会自动提交事务 如果程序捕捉到异常信息，会自动实现补偿机制，该消息会缓存到 RabbitMQ服务端中，一直重试到不跑出异常为止  补偿机制一直重复显然是会占
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:00" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/RabbitMQ/">RabbitMQ</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
-          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ实现分布式事务">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
-          RabbitMQ实现分布式事务
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
-          
-          原理采用最终一致性原理 也就是说过程中可能会产生不一致，但是最终会保持一致 要素RabbitMQ解决分布式事务需要保证以下三要素   一、确认生产者一定要将数据发送到 MQ服务器中 采用 MQ 消息确认机制 二、MQ消费者消息能够正确消费消息 采用手动 ACK 模式，同时也要注意重试幂等性问题   三、保证第一个事务先执行 采用补偿机制，创建一个消费者进行监听第一个事务，如果第一个事务没有执行成功
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:00" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/RabbitMQ/">RabbitMQ</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
-          <img src="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg" srcset="/img/loading.gif" lazyload alt="线程的生命周期">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
-          线程的生命周期
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
-          
-          线程的生命周期包含5个阶段，包括：新建、就绪、运行、阻塞、销毁。  新建：就是刚使用new()方法，new出来的线程； 就绪：就是调用的线程的start()方法后，这时候线程处于等待CPU分配资源阶段，谁先抢的CPU资源，谁开始执行; 运行：当就绪的线程被调度并获得CPU资源时，便进入运行状态，run()方法定义了线程的操作和功能; 阻塞：在运行状态的时候，可能因为某些原因导致运行状态的线程变成了
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:00" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95/" target="_self">
-          <img src="https://imgsa.baidu.com/forum/pic/item/a9d3fd1f4134970a9b762c7c94cad1c8a7865d5f.jpg" srcset="/img/loading.gif" lazyload alt="常见方法">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95/" target="_self">
-          常见方法
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95/" target="_self">
-          
-          12本文参考了码友 Nyima 的学习笔记https:&#x2F;&#x2F;nyimac.gitee.io&#x2F;2020&#x2F;06&#x2F;08&#x2F;%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B&#x2F;
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:00" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Java-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">Java 并发编程</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/2/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/4/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
