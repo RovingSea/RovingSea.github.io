@@ -190,98 +190,6 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/" target="_self">
-          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="缓存穿透、击穿、雪崩">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/" target="_self">
-          缓存穿透、击穿、雪崩
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/" target="_self">
-          
-          缓存穿透123key对应的数据在数据源中并不存在，每次针对此key的请求从缓存中获取不到，请求都会压到数据源，从而可能压垮数据源。比如用一个不存在的用户id获取用户信息，不论缓存还是数据库都没有，若黑客利用此漏洞进行攻击可能压垮数据库。   解决方案12341.对空值缓存2.设置白名单3.采用布隆过滤器4.进行实时监控  缓存击穿1key对应的数据存在，但在redis中过期，此时又有大量的并发请求
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:07" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="分布式锁的实现">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          分布式锁的实现
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          
-          满足的条件互斥性1任意时刻，只有一个客户端持有锁  不会发生死锁1即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  解铃还须系铃人1加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。  原子性1加锁和解锁必须具有原子性  步骤一、多个客户端申请获取锁1即执行多个setnx语句  二、获取成功1即执行setnx语句成功后的客户端，其他客户端等待重试
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:07" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E6%8C%81%E4%B9%85%E5%8C%96%E6%9C%BA%E5%88%B6/" target="_self">
           <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="持久化机制">
         </a>
@@ -638,6 +546,98 @@
             <i class="iconfont icon-category"></i>
             
               <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" target="_self">
+          <img src="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg" srcset="/img/loading.gif" lazyload alt="进程与线程的区别">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" target="_self">
+          进程与线程的区别
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" target="_self">
+          
+          进程程序由指令和数据组成，但这些指令要运行，数据要读写，就必须将指令加载至 CPU，数据加载至内存。 在指令运行过程中还需要用到磁盘、网络等设备。 进程就是用来加载指令、管理内存、管理 IO 的。  当一个程序被运行，从磁盘加载这个程序的代码至内存，这时就开启了一个进程。  进程就可以视为程序的一个实例。大部分程序可以同时运行多个实例进程（例如记事本、画图、浏览器 等），也有的程序只能启动一个实例
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:00" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
+          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ消息幂等性问题">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
+          RabbitMQ消息幂等性问题
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
+          
+          什么是幂等性在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同 HTTP方法的幂等性是指一次和多次请求某一个资源应该具有同样的副作用。幂等性属于语义范畴，正如编译器只能帮助检查语法错误一样，HTTP规范也没有办法通过消息格式等语法手段来定义它。 简之：一个请求，不管重复来多少次，结果是不会改变的。 消费者在消费 MQ 中的消息时，MQ 已把消息发送给消费者，消费者在给 M
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:00" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/RabbitMQ/">RabbitMQ</a>
             
           </div>
         

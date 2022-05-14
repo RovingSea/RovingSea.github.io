@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Masker">
+  <meta name="keywords" content="Java">
+  
+    <meta name="description" content="前言在互联网中，我们查询的信息主要包括文章、视频、图片、网站信息等等 根据数据的格式，我们会将数据分为三大类：  结构化数据，通常表现为二维的表结构，例如MySQL、Oracle 中的表结构数据  优点：方便管理，方便查询 缺点：扩张结构较难   非结构化数据，无法用二维表表示的数据，例如服务器日志、通讯记录、工作文档、报表等，这些数据维度管，数据量大，数据的存储、查询成本大，往往需要专业的人员和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch学习">
+<meta property="og:url" content="http://example.com/2022/03/21/Elasticsearch/Elasticsearch%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Masker7&#39;s Blog">
+<meta property="og:description" content="前言在互联网中，我们查询的信息主要包括文章、视频、图片、网站信息等等 根据数据的格式，我们会将数据分为三大类：  结构化数据，通常表现为二维的表结构，例如MySQL、Oracle 中的表结构数据  优点：方便管理，方便查询 缺点：扩张结构较难   非结构化数据，无法用二维表表示的数据，例如服务器日志、通讯记录、工作文档、报表等，这些数据维度管，数据量大，数据的存储、查询成本大，往往需要专业的人员和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img1.baidu.com/it/u=1617302037,1396059476&fm=253&fmt=auto&app=138&f=JPG?w=667&h=500">
+<meta property="article:published_time" content="2022-03-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-14T14:06:26.133Z">
+<meta property="article:author" content="Masker">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img1.baidu.com/it/u=1617302037,1396059476&fm=253&fmt=auto&app=138&f=JPG?w=667&h=500">
+  
+  
+  <title>Elasticsearch学习 - Masker7&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Masker</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Elasticsearch学习">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-21 00:00" pubdate>
+        2022年3月21日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      8.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      70 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Elasticsearch学习</h1>
+            
+            <div class="markdown-body">
+              <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在互联网中，我们查询的信息主要包括文章、视频、图片、网站信息等等</p>
+<p>根据数据的格式，我们会将数据分为三大类：</p>
+<ul>
+<li><p><strong>结构化数据</strong>，通常表现为二维的表结构，例如<code>MySQL</code>、<code>Oracle</code> 中的表结构数据</p>
+<ul>
+<li>优点：方便管理，方便查询</li>
+<li>缺点：扩张结构较难</li>
+</ul>
+</li>
+<li><p><strong>非结构化数据</strong>，无法用二维表表示的数据，例如服务器日志、通讯记录、工作文档、报表等，这些数据维度管，数据量大，数据的存储、查询成本大，往往需要专业的人员和统计模型进行处理，通常会将这些数据保存到 <code>NoSQL</code> 数据库中去，例如 <code>Redis</code> 、 <code>MongoDB</code>，通常是以 <code>key - value</code> 键值对</p>
+<ul>
+<li>优点：查询快</li>
+<li>缺点：由于他们的非特征性和歧义性，会更难理解</li>
+</ul>
+</li>
+<li><p><strong>半结构化数据</strong>，将数据结构和内容混在一起，没有明显的区分，例如存储员工的简历，通常装载在<code>XML</code>、<code>Html</code>等中 ，保存在 <code>MongoDB</code>、<code>Redis</code> 、<code>HBase</code> 中</p>
+<ul>
+<li>优点：能够灵活的扩展</li>
+<li>缺点：查询内容不易</li>
+</ul>
+</li>
+</ul>
+<p>如何快速、准确地查询结构化数据、非结构化数据当中的内容，<code>ElasticSearch</code> 就是为此诞生的</p>
+<h1 id="一、索引"><a href="#一、索引" class="headerlink" title="一、索引"></a>一、索引</h1><p>索引创建之后是<strong>不允许被修改</strong>的，只能被删除</p>
+<h2 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h2><figure class="highlight sql"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs sql">## 查看 es 中的所有索引<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>_cat<span class="hljs-operator">/</span>indices<br><br>## 查看 es 中的所有索引，包含标题<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>_cat<span class="hljs-operator">/</span>indices?v<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql">## 创建索引<br>PUT <span class="hljs-operator">/</span>索引名<br><br>## 创建索引，并设置属性<br>PUT <span class="hljs-operator">/</span>索引名<br>&#123;<br>	&quot;settings&quot;: &#123;<br>		&quot;number_of_shards&quot;: <span class="hljs-number">1</span>,	## 指定主分片的数量<br>		&quot;number_of_replicas&quot;: <span class="hljs-number">0</span>	## 指定副本分片的数量<br>	&#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DELETE</span> <span class="hljs-operator">/</span>索引名<br></code></pre></td></tr></table></figure>
+
+<h1 id="二、映射"><a href="#二、映射" class="headerlink" title="二、映射"></a>二、映射</h1><ul>
+<li>字符串类型：keyword、text</li>
+<li>数字类型：integer、long</li>
+<li>小数类型：float、double</li>
+<li>布尔类型：boolean</li>
+<li>日期类型：date</li>
+</ul>
+<h2 id="创建-1"><a href="#创建-1" class="headerlink" title="创建"></a>创建</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs sql">## 创建商品索引 products 指定 mapping &#123;<br>	id,<br>	title,<br>	price,<br>	created_at,<br>	description<br>&#125;<br>PUT <span class="hljs-operator">/</span>products<br>&#123;<br>	&quot;settings&quot;: &#123;<br>		&quot;number_of_shards&quot;: <span class="hljs-number">1</span>,	## 指定主分片的数量<br>		&quot;number_of_replicas&quot;: <span class="hljs-number">0</span>	## 指定副本分片的数量<br>	&#125;,<br>	&quot;mappings&quot;: &#123;<br>		&quot;properties&quot;: &#123;<br>			&quot;id&quot;: &#123;<br>				&quot;type&quot;: &quot;integer&quot;<br>			&#125;,<br>			&quot;title&quot;: &#123;<br>				&quot;type&quot;: &quot;keyword&quot;<br>			&#125;,<br>			&quot;price&quot;: &#123;<br>				&quot;type&quot;: &quot;double&quot;<br>			&#125;,<br>			&quot;created_at&quot;: &#123;<br>				&quot;type&quot;: &quot;date&quot;<br>			&#125;,<br>			&quot;description&quot;: &#123;<br>				&quot;type&quot;: &quot;text&quot;<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_mapping<br></code></pre></td></tr></table></figure>
+
+<h1 id="三、文档"><a href="#三、文档" class="headerlink" title="三、文档"></a>三、文档</h1><h2 id="创建-2"><a href="#创建-2" class="headerlink" title="创建"></a>创建</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs sql">POST <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>id ## 指定文档 id<br>如：<br><br>POST <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span><span class="hljs-number">1</span><br>&#123;<br>	&quot;title&quot;: &quot;iphone13&quot;,<br>	&quot;price&quot;: <span class="hljs-number">8999.9</span>,<br>	&quot;created_at&quot;: &quot;2021-09-15&quot;,<br>	&quot;description&quot;: &quot;xxxxxxx&quot;<br>&#125;<br><br>POST <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc ## 不指定文档 id，那么内部将会自动分配一个 uuid<br>如：<br><br>POST <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span><span class="hljs-number">1</span><br>&#123;<br>	&quot;title&quot;: &quot;iphone13&quot;,<br>	&quot;price&quot;: <span class="hljs-number">8999.9</span>,<br>	&quot;created_at&quot;: &quot;2021-09-15&quot;,<br>	&quot;description&quot;: &quot;xxxxxxx&quot;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="查询-1"><a href="#查询-1" class="headerlink" title="查询"></a>查询</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>id<br></code></pre></td></tr></table></figure>
+
+<h2 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DELETE</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>id<br></code></pre></td></tr></table></figure>
+
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 第一种方式<br>PUT <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>id<br>如：<br>PUT <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>doc<span class="hljs-operator">/</span><span class="hljs-number">1</span> ## 先删除，再插入。可能会导致原来存有的映射丢失<br>&#123;<br>	&quot;title&quot;: &quot;iphone14&quot;<br>&#125;<br><br># 第二种方式<br>POST <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>id<span class="hljs-operator">/</span>_update<br>&#123;<br>	&quot;doc&quot;: &#123;<br>		<br>	&#125;<br>&#125;<br>如：<br>POST <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span><span class="hljs-number">1</span><span class="hljs-operator">/</span>_update<br>&#123;<br>	&quot;doc&quot;: &#123;		<br>		&quot;title&quot;: &quot;iphone14&quot;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="五、批量操作-bulk"><a href="#五、批量操作-bulk" class="headerlink" title="五、批量操作 _bulk"></a>五、批量操作 _bulk</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 文档批量操作 _bulk<br>POST <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_bulk<br>如：<br>POST <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_bulk<br># 特别注意：<br># 一、批操作不能回车换行<br># 二、不是一个原子性操作，不会因为某一条有误而导致整个批操作失败<br><br># 以下是关于 添加 更新 删除 的批操作<br>&#123;&quot;index&quot;: &#123;&quot;_id&quot;: <span class="hljs-number">2</span>&#125;&#125;<br> &#123;&quot;id&quot;: <span class="hljs-number">2</span>,&quot;title&quot;: &quot;日本豆&quot;,&quot;price&quot;: <span class="hljs-number">1.8</span>,&quot;created_at&quot;: &quot;2012-11-12&quot;,&quot;description&quot;: &quot;好难吃的日本豆！&quot;&#125;<br>&#123;&quot;update&quot;:&#123;&quot;_id&quot;: <span class="hljs-number">3</span>&#125;&#125;<br> &#123;&quot;doc&quot;:&#123;&quot;title&quot;:&quot;小于豆腐&quot;&#125;&#125;<br>&#123;&quot;delete&quot;:&#123;&quot;_id&quot;:<span class="hljs-number">2</span>&#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="六、Query-Domain-Specified-Language-DSL"><a href="#六、Query-Domain-Specified-Language-DSL" class="headerlink" title="六、Query Domain Specified Language(DSL)"></a>六、Query Domain Specified Language(DSL)</h1><p><code>Query DSL</code> 是利用 <code>Rest API</code> 传递 <code>JSON</code> 格式的请求体数据与 <code>ES</code> 进行交互</p>
+<p>这种方式的查询语法让 <code>ES</code> 检索变得更加强大，更加简洁</p>
+<p><strong>语法</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search &#123;Json格式请求体数据&#125;<br>或<br><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search &#123;Json格式请求体数据&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="查询所有-match-all"><a href="#查询所有-match-all" class="headerlink" title="查询所有 [match_all]"></a>查询所有 [match_all]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;match_all&quot;: &#123;&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="关键词查询-term"><a href="#关键词查询-term" class="headerlink" title="关键词查询 [term]"></a>关键词查询 [term]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 注意：term 基于关键词查询<br># 一、查询 keyword 类型时，不会进行分词，所以要使用全部内容进行搜索<br># 二、查询 text 类型时，默认 es 标准分词器对中文单字分词，对英文单词分词<br># 三、查询 <span class="hljs-type">integer</span>、<span class="hljs-keyword">double</span>、<span class="hljs-keyword">double</span>、<span class="hljs-type">date</span> 类型时，不会进行分词<br><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;term&quot;: &#123;<br>			&quot;映射名&quot;: &#123;<br>				&quot;value&quot;: xxxx<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;term&quot;: &#123;<br>			&quot;price&quot;: &#123;<br>				&quot;value&quot;: <span class="hljs-number">49999</span><br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>在 <code>ES</code> 中除了 <code>text</code> 类型会进行分词，其余类型均不会分词</li>
+<li>在 <code>ES</code> 中默认使用标准分词器，即对中文是单字分词，英文是单词分词</li>
+</ul>
+<h2 id="范围查询-range"><a href="#范围查询-range" class="headerlink" title="范围查询 [range]"></a>范围查询 [range]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;range&quot;: &#123;<br>			&quot;映射名&quot;: &#123;<br><br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;range&quot;: &#123;<br>			&quot;price&quot;: &#123;<br>				&quot;gte&quot;: <span class="hljs-number">1400</span>,<br>				&quot;lte&quot;: <span class="hljs-number">9999</span><br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="前缀查询-prefix"><a href="#前缀查询-prefix" class="headerlink" title="前缀查询 [prefix]"></a>前缀查询 [prefix]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;prefix&quot;: &#123;<br>			&quot;映射名&quot;: &#123;<br>				&quot;value&quot;: &quot;xxx&quot;<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;prefix&quot;: &#123;<br>			&quot;title&quot;: &#123;<br>				&quot;value&quot;: &quot;ipho&quot;<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="通配符查询-wildcard"><a href="#通配符查询-wildcard" class="headerlink" title="通配符查询 [wildcard]"></a>通配符查询 [wildcard]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br># ? 用来匹配一个任意字符<br># <span class="hljs-operator">*</span> 用来匹配多个任意字符<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;wildcard&quot;: &#123;<br>			&quot;映射名&quot;: &#123;<br>				&quot;value&quot;: &quot;x*?&quot;<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;wildcard&quot;: &#123;<br>			&quot;description&quot;: &#123;<br>				&quot;value&quot;: &quot;inp*&quot;<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="多-id-查询-ids"><a href="#多-id-查询-ids" class="headerlink" title="多 id 查询 [ids]"></a>多 id 查询 [ids]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;ids&quot;: &#123;<br>			&quot;values&quot;: [<br>            	&quot;id1&quot;,<br>            	&quot;id2&quot;<br>            ]<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;ids&quot;: &#123;<br>			&quot;values&quot;: [&quot;xxxxxx&quot;, &quot;xxxxxxxxxx&quot;]<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="模糊查询-fuzzy"><a href="#模糊查询-fuzzy" class="headerlink" title="模糊查询 [fuzzy]"></a>模糊查询 [fuzzy]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sql"># 注意：最大模糊错误在 <span class="hljs-number">0</span> <span class="hljs-operator">-</span> <span class="hljs-number">2</span> 之间<br><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;fuzzy&quot;: &#123;<br>			&quot;映射名&quot;: &quot;xxxx&quot;<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;fuzzy&quot;: &#123;<br>			&quot;description&quot;: &quot;iphoneoooes&quot;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>搜索关键词长度小于等于 2 不允许存在模糊</li>
+<li>搜索关键词长度 3 - 5 允许存在一次模糊</li>
+<li>搜索关键词长度大于等于 5 允许存在两次模糊</li>
+</ul>
+<h2 id="布尔查询-bool"><a href="#布尔查询-bool" class="headerlink" title="布尔查询 [bool]"></a>布尔查询 [bool]</h2><blockquote>
+<p>用来组合多个条件实现复杂查询</p>
+<p><strong>must</strong>：相当于 &amp;&amp; 同时成立</p>
+<p><strong>should</strong>：相当于 || 成立一个就行</p>
+<p><strong>must_not</strong>：相当于 ！ 不能满足一个</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;bool&quot;: &#123;<br>			&quot;should | must | must_not&quot;: &#123;<br>			<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br># 查询满足 id 为 <span class="hljs-number">1</span> 或 title 含有豆腐的值<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;bool&quot;: &#123;<br>			&quot;should&quot;: [<br>                &#123;<br>                	&quot;ids&quot;: &#123;<br>                		&quot;values&quot;: [<span class="hljs-number">1</span>]<br>                	&#125;<br>                &#125;,<br>                &#123;<br>                	&quot;term&quot;: &#123;<br>                		&quot;title&quot;: &#123;<br>                			&quot;values&quot;: &quot;豆腐&quot;<br>                		&#125;<br>                	&#125;<br>                &#125;<br>            ]<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="多字段查询-multi-match"><a href="#多字段查询-multi-match" class="headerlink" title="多字段查询 [multi_match]"></a>多字段查询 [multi_match]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql"># query 根据字段类型选择是否分词：<br># 如果 fields 中含有不分词，将查询条件作为整体进行查询<br># 如果 fields 中含有分词，将查询条件分词之后进行查询<br><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;multi_match&quot;: &#123;<br>			&quot;query&quot;: &quot;xxxxx&quot;,<br>			&quot;fields&quot;: [&quot;映射名1&quot;, &quot;映射名2&quot;]<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="默认字段分词查询-query-string"><a href="#默认字段分词查询-query-string" class="headerlink" title="默认字段分词查询 [query_string]"></a>默认字段分词查询 [query_string]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sql"># query 根据字段类型选择是否分词：<br># 如果 fields 中含有不分词，将查询条件作为整体进行查询<br># 如果 fields 中含有分词，将查询条件分词之后进行查询<br><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;query_string&quot;: &#123;<br>			&quot;default_field&quot;: &quot;映射名&quot;<br>			&quot;query&quot;: &quot;xxxxxx&quot;<br>		&#125;<br>	&#125;<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;query_string&quot;: &#123;<br>			&quot;default_field&quot;: &quot;description&quot;,<br>			&quot;query&quot;: &quot;屏幕真的很不错&quot;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="返回指定条数-size"><a href="#返回指定条数-size" class="headerlink" title="返回指定条数 [size]"></a>返回指定条数 [size]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		...<br>	&#125;,<br>	&quot;size&quot;: n<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;match_all&quot;: &#123;&#125;<br>	&#125;,<br>	&quot;size&quot;: <span class="hljs-number">5</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="分页查询-from"><a href="#分页查询-from" class="headerlink" title="分页查询 [from]"></a>分页查询 [from]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		...<br>	&#125;,<br>	&quot;from&quot;: 从第几页开始查询<br>	&quot;size&quot;: 每页大小<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;match_all&quot;: &#123;&#125;<br>	&#125;,<br>	&quot;from&quot;: <span class="hljs-number">0</span><br>	&quot;size&quot;: <span class="hljs-number">5</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="指定字段排序-sort"><a href="#指定字段排序-sort" class="headerlink" title="指定字段排序 [sort]"></a>指定字段排序 [sort]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		...<br>	&#125;,<br>	&quot;sort&quot;: [<br>		&#123;<br>			&quot;映射名&quot;: &#123;<br>				&quot;order&quot;: &quot;desc&quot;	## 默认是降序<br>			&#125;<br>		&#125;<br>	]<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		&quot;match_all&quot;: &#123;&#125;<br>	&#125;,<br>	&quot;sort&quot;: [<br>		&#123;<br>			&quot;price&quot;: &#123;<br>				&quot;order&quot;: &quot;desc&quot;<br>			&#125;<br>		&#125;<br>	]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="放回指定字段-source"><a href="#放回指定字段-source" class="headerlink" title="放回指定字段 [_source]"></a>放回指定字段 [_source]</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_doc<span class="hljs-operator">/</span>_search <span class="hljs-operator">|</span> <span class="hljs-keyword">Get</span> <span class="hljs-operator">/</span>索引名<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		...<br>	&#125;,<br>	&quot;_source&quot;: [&quot;映射名1&quot;, &quot;映射名2&quot;, &quot;映射名3&quot;]<br>&#125;<br>如：<br><span class="hljs-keyword">GET</span> <span class="hljs-operator">/</span>products<span class="hljs-operator">/</span>_search<br>&#123;<br>	&quot;query&quot;: &#123;<br>		...<br>	&#125;,<br>	&quot;_source&quot;: [&quot;id&quot;, &quot;title&quot;, &quot;description&quot;]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Elasticsearch/">Elasticsearch</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/24/MongoDB/mongodb%E5%AD%A6%E4%B9%A0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MongoDB学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/04/Netty/Netty%E4%BC%98%E5%8C%96%E5%AD%A6%E4%B9%A0/">
+                        <span class="hidden-mobile">Netty优化学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -18,36 +18,21 @@
   
     <meta name="description" content="一、调度算法的评价指标 1. CPU 利用率 2. 系统吞吐量 3. 周转时间  4. 等待时间 5. 响应时间 6. 总结 二、调度算法1. 先来先服务 FCFS  2. 短作业优先 SJF 非抢占式 抢占式 3. 高响应比优先 HRRN  4. 总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Masker7&#39;s Blog">
+<meta property="og:title" content="进程的调度算法">
 <meta property="og:url" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Masker7&#39;s Blog">
 <meta property="og:description" content="一、调度算法的评价指标 1. CPU 利用率 2. 系统吞吐量 3. 周转时间  4. 等待时间 5. 响应时间 6. 总结 二、调度算法1. 先来先服务 FCFS  2. 短作业优先 SJF 非抢占式 抢占式 3. 高响应比优先 HRRN  4. 总结">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404230911592.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404231107986.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404231216684.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404231717341.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404231806882.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404231905790.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404231934537.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404232018018.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404233209135.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404233446041.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404234530360.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404233653049.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404234057118.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404235026765.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404235152192.png">
-<meta property="og:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404235303408.png">
-<meta property="article:published_time" content="2022-04-04T15:08:22.957Z">
-<meta property="article:modified_time" content="2022-04-04T15:53:19.525Z">
+<meta property="og:image" content="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg">
+<meta property="article:published_time" content="2022-04-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-14T14:13:35.782Z">
 <meta property="article:author" content="Masker">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/....%5Cimage%5Cimage-20220404230911592.png">
+<meta name="twitter:image" content="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg">
   
   
-  <title>Masker7&#39;s Blog</title>
+  <title>进程的调度算法 - Masker7&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -193,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="">
+            <span class="h2" id="subtitle" title="进程的调度算法">
               
             </span>
 
@@ -203,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-04-04 23:08" pubdate>
-        2022年4月4日 晚上
+      <time datetime="2022-04-04 00:00" pubdate>
+        2022年4月4日 凌晨
       </time>
     </span>
   
@@ -260,30 +245,37 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">进程的调度算法</h1>
             
             <div class="markdown-body">
-              <h1 id="一、调度算法的评价指标"><a href="#一、调度算法的评价指标" class="headerlink" title="一、调度算法的评价指标"></a>一、调度算法的评价指标</h1><p><img src="....%5Cimage%5Cimage-20220404230911592.png" srcset="/img/loading.gif" lazyload alt="image-20220404230911592"></p>
-<h2 id="1-CPU-利用率"><a href="#1-CPU-利用率" class="headerlink" title="1. CPU 利用率"></a>1. CPU 利用率</h2><p><img src="....%5Cimage%5Cimage-20220404231107986.png" srcset="/img/loading.gif" lazyload alt="image-20220404231107986"></p>
-<h2 id="2-系统吞吐量"><a href="#2-系统吞吐量" class="headerlink" title="2. 系统吞吐量"></a>2. 系统吞吐量</h2><p><img src="....%5Cimage%5Cimage-20220404231216684.png" srcset="/img/loading.gif" lazyload alt="image-20220404231216684"></p>
-<h2 id="3-周转时间"><a href="#3-周转时间" class="headerlink" title="3. 周转时间"></a>3. 周转时间</h2><p><img src="....%5Cimage%5Cimage-20220404231717341.png" srcset="/img/loading.gif" lazyload alt="image-20220404231717341"></p>
-<p><img src="....%5Cimage%5Cimage-20220404231806882.png" srcset="/img/loading.gif" lazyload alt="image-20220404231806882"></p>
-<h2 id="4-等待时间"><a href="#4-等待时间" class="headerlink" title="4. 等待时间"></a>4. 等待时间</h2><p><img src="....%5Cimage%5Cimage-20220404231905790.png" srcset="/img/loading.gif" lazyload alt="image-20220404231905790"></p>
-<h2 id="5-响应时间"><a href="#5-响应时间" class="headerlink" title="5. 响应时间"></a>5. 响应时间</h2><p><img src="....%5Cimage%5Cimage-20220404231934537.png" srcset="/img/loading.gif" lazyload alt="image-20220404231934537"></p>
-<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p><img src="....%5Cimage%5Cimage-20220404232018018.png" srcset="/img/loading.gif" lazyload alt="image-20220404232018018"></p>
-<h1 id="二、调度算法"><a href="#二、调度算法" class="headerlink" title="二、调度算法"></a>二、调度算法</h1><h2 id="1-先来先服务-FCFS"><a href="#1-先来先服务-FCFS" class="headerlink" title="1. 先来先服务 FCFS"></a>1. 先来先服务 FCFS</h2><p><img src="....%5Cimage%5Cimage-20220404233209135.png" srcset="/img/loading.gif" lazyload alt="image-20220404233209135"></p>
-<p><img src="....%5Cimage%5Cimage-20220404233446041.png" srcset="/img/loading.gif" lazyload alt="image-20220404233446041"></p>
-<h2 id="2-短作业优先-SJF"><a href="#2-短作业优先-SJF" class="headerlink" title="2. 短作业优先 SJF"></a>2. 短作业优先 SJF</h2><p><img src="....%5Cimage%5Cimage-20220404234530360.png" srcset="/img/loading.gif" lazyload alt="image-20220404234530360"></p>
-<h3 id="非抢占式"><a href="#非抢占式" class="headerlink" title="非抢占式"></a>非抢占式</h3><p><img src="....%5Cimage%5Cimage-20220404233653049.png" srcset="/img/loading.gif" lazyload alt="image-20220404233653049"></p>
-<h3 id="抢占式"><a href="#抢占式" class="headerlink" title="抢占式"></a>抢占式</h3><p><img src="....%5Cimage%5Cimage-20220404234057118.png" srcset="/img/loading.gif" lazyload alt="image-20220404234057118"></p>
-<h2 id="3-高响应比优先-HRRN"><a href="#3-高响应比优先-HRRN" class="headerlink" title="3. 高响应比优先 HRRN"></a>3. 高响应比优先 HRRN</h2><p><img src="....%5Cimage%5Cimage-20220404235026765.png" srcset="/img/loading.gif" lazyload alt="image-20220404235026765"></p>
-<p><img src="....%5Cimage%5Cimage-20220404235152192.png" srcset="/img/loading.gif" lazyload alt="image-20220404235152192"></p>
-<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><img src="....%5Cimage%5Cimage-20220404235303408.png" srcset="/img/loading.gif" lazyload alt="image-20220404235303408"></p>
+              <h1 id="一、调度算法的评价指标"><a href="#一、调度算法的评价指标" class="headerlink" title="一、调度算法的评价指标"></a>一、调度算法的评价指标</h1><p><img src="/image/image-20220404230911592.png" srcset="/img/loading.gif" lazyload alt="image-20220404230911592"></p>
+<h2 id="1-CPU-利用率"><a href="#1-CPU-利用率" class="headerlink" title="1. CPU 利用率"></a>1. CPU 利用率</h2><p><img src="/image/image-20220404231107986.png" srcset="/img/loading.gif" lazyload alt="image-20220404231107986"></p>
+<h2 id="2-系统吞吐量"><a href="#2-系统吞吐量" class="headerlink" title="2. 系统吞吐量"></a>2. 系统吞吐量</h2><p><img src="/image/image-20220404231216684.png" srcset="/img/loading.gif" lazyload alt="image-20220404231216684"></p>
+<h2 id="3-周转时间"><a href="#3-周转时间" class="headerlink" title="3. 周转时间"></a>3. 周转时间</h2><p><img src="/image/image-20220404231717341.png" srcset="/img/loading.gif" lazyload alt="image-20220404231717341"></p>
+<p><img src="/image/image-20220404231806882.png" srcset="/img/loading.gif" lazyload alt="image-20220404231806882"></p>
+<h2 id="4-等待时间"><a href="#4-等待时间" class="headerlink" title="4. 等待时间"></a>4. 等待时间</h2><p><img src="/image/image-20220404231905790.png" srcset="/img/loading.gif" lazyload alt="image-20220404231905790"></p>
+<h2 id="5-响应时间"><a href="#5-响应时间" class="headerlink" title="5. 响应时间"></a>5. 响应时间</h2><p><img src="/image/image-20220404231934537.png" srcset="/img/loading.gif" lazyload alt="image-20220404231934537"></p>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p><img src="/image/image-20220404232018018.png" srcset="/img/loading.gif" lazyload alt="image-20220404232018018"></p>
+<h1 id="二、调度算法"><a href="#二、调度算法" class="headerlink" title="二、调度算法"></a>二、调度算法</h1><h2 id="1-先来先服务-FCFS"><a href="#1-先来先服务-FCFS" class="headerlink" title="1. 先来先服务 FCFS"></a>1. 先来先服务 FCFS</h2><p><img src="/image/image-20220404233209135.png" srcset="/img/loading.gif" lazyload alt="image-20220404233209135"></p>
+<p><img src="/image/image-20220404233446041.png" srcset="/img/loading.gif" lazyload alt="image-20220404233446041"></p>
+<h2 id="2-短作业优先-SJF"><a href="#2-短作业优先-SJF" class="headerlink" title="2. 短作业优先 SJF"></a>2. 短作业优先 SJF</h2><p><img src="/image/image-20220404234530360.png" srcset="/img/loading.gif" lazyload alt="image-20220404234530360"></p>
+<h3 id="非抢占式"><a href="#非抢占式" class="headerlink" title="非抢占式"></a>非抢占式</h3><p><img src="/image/image-20220404233653049.png" srcset="/img/loading.gif" lazyload alt="image-20220404233653049"></p>
+<h3 id="抢占式"><a href="#抢占式" class="headerlink" title="抢占式"></a>抢占式</h3><p><img src="/image/image-20220404234057118.png" srcset="/img/loading.gif" lazyload alt="image-20220404234057118"></p>
+<h2 id="3-高响应比优先-HRRN"><a href="#3-高响应比优先-HRRN" class="headerlink" title="3. 高响应比优先 HRRN"></a>3. 高响应比优先 HRRN</h2><p><img src="/image/image-20220404235026765.png" srcset="/img/loading.gif" lazyload alt="image-20220404235026765"></p>
+<p><img src="/image/image-20220404235152192.png" srcset="/img/loading.gif" lazyload alt="image-20220404235152192"></p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><img src="/image/image-20220404235303408.png" srcset="/img/loading.gif" lazyload alt="image-20220404235303408"></p>
 
             </div>
             <hr>
             <div>
               <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+                    
+                  </div>
                 
                 
               </div>
@@ -309,8 +301,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/23/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/AQS%E5%8E%9F%E7%90%86/">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2022/03/24/MongoDB/mongodb%E5%AD%A6%E4%B9%A0/">
+                        <span class="hidden-mobile">MongoDB学习</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
