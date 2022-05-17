@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Masker">
+  <meta name="keywords" content="Java">
+  
+    <meta name="description" content="一、概述创建型模式（Creational Pattern）关注对象的创建过程，在系统开发中应用非常广泛这种模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实力的创建细节，这样会带来如下好处：  无须关心创建对象的细节 降低系统的耦合度 让设计方案更易于修改和扩展  而每一种创建型模式都会基于下列三点：  创建什么（What） 由谁创建（Who） 何时创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建型模式">
+<meta property="og:url" content="http://example.com/2022/05/15/Java%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Masker7&#39;s Blog">
+<meta property="og:description" content="一、概述创建型模式（Creational Pattern）关注对象的创建过程，在系统开发中应用非常广泛这种模式对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离，对用户隐藏了类的实力的创建细节，这样会带来如下好处：  无须关心创建对象的细节 降低系统的耦合度 让设计方案更易于修改和扩展  而每一种创建型模式都会基于下列三点：  创建什么（What） 由谁创建（Who） 何时创">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.png">
+<meta property="article:published_time" content="2022-05-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-17T09:47:37.998Z">
+<meta property="article:author" content="Masker">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/image/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.png">
+  
+  
+  <title>创建型模式 - Masker7&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Masker</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="创建型模式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-15 00:00" pubdate>
+        2022年5月15日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      14k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      115 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">创建型模式</h1>
+            
+            <div class="markdown-body">
+              <p><a name="a11edfd6"></a></p>
+<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>创建型模式（Creational Pattern）关注对象的创建过程，在系统开发中应用非常广泛<br />这种模式对类的实例化过程进行了抽象，能够将软件模块中<strong>对象的创建和对象的使用分离</strong>，对用户隐藏了类的实力的创建细节，这样会带来如下好处：</p>
+<ul>
+<li>无须关心创建对象的细节</li>
+<li>降低系统的耦合度</li>
+<li>让设计方案更易于修改和扩展</li>
+</ul>
+<p>而每一种创建型模式都会基于下列三点：</p>
+<ul>
+<li>创建什么（What）</li>
+<li>由谁创建（Who）</li>
+<li>何时创建（When）</li>
+</ul>
+<p>创建型模式共有六种：</p>
+<table>
+<thead>
+<tr>
+<th><strong>设计原则名称</strong></th>
+<th><strong>定义</strong></th>
+<th><strong>使用频率</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>简单工厂模式<br />（Simple Factory Pattern）</td>
+<td>定义一个工程类，它可以根据参数的不同，返回不同类的实例，被创建的实例通常都具有共同的父类</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>工厂方法模式<br />（Factory Method Pattern）</td>
+<td>定义一个用于创建对象的接口，但是让子类决定将哪一个类实例化。工厂方法模式让一个类的实例化延迟到其子类</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>抽象工厂模式<br />（Abstract Factory Pattern）</td>
+<td>提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们具体的类</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>建造者模式<br />（Builder Pattern）</td>
+<td>将一个复杂对象的构造与它的表示分离，使得同样的构造过程可以创建不同的表示</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>原型模式<br />（Prototype Pattern）</td>
+<td>使用原型实例指定待创建对象的类型，并且通过复制这个原型来创建新的对象</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>单例模式<br />（Singleton Pattern）</td>
+<td>确保一个类只有一个实例，并提供一个全局的访问点来访问这个唯一实例</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+</tbody></table>
+<p><a name="NzaO7"></a></p>
+<h1 id="二、简单工厂模式"><a href="#二、简单工厂模式" class="headerlink" title="二、简单工厂模式"></a>二、简单工厂模式</h1><p>实现一个简单的加减乘除计算器<br><a name="uNIFJ"></a></p>
+<h2 id="1-创建什么"><a href="#1-创建什么" class="headerlink" title="1. 创建什么"></a>1. 创建什么</h2><p><a name="aAgxh"></a></p>
+<h3 id="1-1-Operation"><a href="#1-1-Operation" class="headerlink" title="1.1 Operation"></a>1.1 Operation</h3><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Operation</span> </span>&#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> result;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getResult</span><span class="hljs-params">(<span class="hljs-keyword">double</span> num1, <span class="hljs-keyword">double</span> num2)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="KZuEs"></a></p>
+<h3 id="1-2-Add"><a href="#1-2-Add" class="headerlink" title="1.2 Add"></a>1.2 Add</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Add</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Operation</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getResult</span><span class="hljs-params">(<span class="hljs-keyword">double</span> num1, <span class="hljs-keyword">double</span> num2)</span> </span>&#123;<br>        result = num1 + num2;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="odkV1"></a></p>
+<h3 id="1-3-Sub"><a href="#1-3-Sub" class="headerlink" title="1.3 Sub"></a>1.3 Sub</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Sub</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Operation</span></span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getResult</span><span class="hljs-params">(<span class="hljs-keyword">double</span> num1, <span class="hljs-keyword">double</span> num2)</span> </span>&#123;<br>        result = num1 - num2;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="nWZpj"></a></p>
+<h3 id="1-4-Mul"><a href="#1-4-Mul" class="headerlink" title="1.4 Mul"></a>1.4 Mul</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Mul</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Operation</span></span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getResult</span><span class="hljs-params">(<span class="hljs-keyword">double</span> num1, <span class="hljs-keyword">double</span> num2)</span> </span>&#123;<br>        result = num1 * num2;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="zGWil"></a></p>
+<h3 id="1-5-Div"><a href="#1-5-Div" class="headerlink" title="1.5 Div"></a>1.5 Div</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Div</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Operation</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">getResult</span><span class="hljs-params">(<span class="hljs-keyword">double</span> num1, <span class="hljs-keyword">double</span> num2)</span> </span>&#123;<br>        result = num1 / num2;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="mliO8"></a></p>
+<h2 id="2-由谁创建"><a href="#2-由谁创建" class="headerlink" title="2. 由谁创建"></a>2. 由谁创建</h2><p><a name="k3ocY"></a></p>
+<h3 id="2-1-OperationFactory"><a href="#2-1-OperationFactory" class="headerlink" title="2.1 OperationFactory"></a>2.1 OperationFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OperationFactory</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> Operation operation;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">OperationFactory</span><span class="hljs-params">(Operation operation)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.operation = operation;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Operation <span class="hljs-title">createOperation</span><span class="hljs-params">(String operation)</span> </span>&#123;<br>        <span class="hljs-keyword">switch</span> (operation) &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;+&quot;</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> add();<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;-&quot;</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> sub();<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;*&quot;</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> mul();<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;/&quot;</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> div();<br>            <span class="hljs-keyword">default</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="sIf40"></a></p>
+<h2 id="3-何时创建"><a href="#3-何时创建" class="headerlink" title="3. 何时创建"></a>3. 何时创建</h2><p><a name="dXCsK"></a></p>
+<h3 id="3-1-createOperation方法"><a href="#3-1-createOperation方法" class="headerlink" title="3.1 createOperation方法"></a>3.1 createOperation方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Operation <span class="hljs-title">createOperation</span><span class="hljs-params">(String operation)</span> </span>&#123;<br>    <span class="hljs-keyword">switch</span> (operation) &#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;+&quot;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> add();<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;-&quot;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> sub();<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;*&quot;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> mul();<br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;/&quot;</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> div();<br>        <span class="hljs-keyword">default</span>:<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="kSSQu"></a></p>
+<h2 id="4-客户端代码"><a href="#4-客户端代码" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">Operation operation = OperationFactory.createOperation(<span class="hljs-string">&quot;/&quot;</span>);<br><span class="hljs-keyword">if</span> (operation != <span class="hljs-keyword">null</span>) &#123;                                    <br>    System.out.println(operation.getResult(<span class="hljs-number">3</span>, <span class="hljs-number">0</span>));          <br>&#125; <span class="hljs-keyword">else</span> &#123;                                                    <br>    System.out.println(<span class="hljs-string">&quot;不正常输入！&quot;</span>);                           <br>&#125;                                                           <br></code></pre></td></tr></table></figure>
+<p><a name="FRUOr"></a></p>
+<h2 id="5-优缺点及适用场景"><a href="#5-优缺点及适用场景" class="headerlink" title="5. 优缺点及适用场景"></a>5. 优缺点及适用场景</h2><p><a name="nP2Bs"></a></p>
+<h3 id="5-1-优点"><a href="#5-1-优点" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li><p>无须知道所创建的具体产品的类名，只需要知道对应的参数即可<br><a name="ofdh0"></a></p>
+<h3 id="5-2-缺点"><a href="#5-2-缺点" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>职责过重，工厂类集中了所有产品的创建逻辑</p>
+</li>
+<li><p>增加了系统的复杂度和理解难度</p>
+</li>
+<li><p>系统扩展困难，一旦需要添加新产品就不得不修改工厂逻辑，一定程度上违背了开闭原则<br><a name="aKiTs"></a></p>
+<h3 id="5-3-适用场景"><a href="#5-3-适用场景" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>工厂类负责创建的对象比较少，这样就可以避免工厂方法中的业务逻辑过于复杂</p>
+</li>
+<li><p>客户端只知道工厂类的参数，对如何创建对象并不关心</p>
+</li>
+</ul>
+<p><a name="wmXBX"></a></p>
+<h1 id="三、工厂方法模式"><a href="#三、工厂方法模式" class="headerlink" title="三、工厂方法模式"></a>三、工厂方法模式</h1><p>输出数据图形，曲线图（LineDiagram）创建器生成曲线图，柱形图（ColumnDiagram）创建器生成柱形图<br><a name="tjzog"></a></p>
+<h2 id="1-创建什么-1"><a href="#1-创建什么-1" class="headerlink" title="1. 创建什么"></a>1. 创建什么</h2><p><a name="IkVPc"></a></p>
+<h3 id="1-1-Diagram"><a href="#1-1-Diagram" class="headerlink" title="1.1 Diagram"></a>1.1 Diagram</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Diagram</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">create</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="vYCwn"></a></p>
+<h3 id="1-2-LineDiagram"><a href="#1-2-LineDiagram" class="headerlink" title="1.2 LineDiagram"></a>1.2 LineDiagram</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LineDiagram</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Diagram</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">create</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;生成曲线图&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="K0JjV"></a></p>
+<h3 id="1-3-ColumnDiagram"><a href="#1-3-ColumnDiagram" class="headerlink" title="1.3 ColumnDiagram"></a>1.3 ColumnDiagram</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ColumnDiagram</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Diagram</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">create</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;生成柱形图&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="InbIl"></a></p>
+<h2 id="2-由谁创建-1"><a href="#2-由谁创建-1" class="headerlink" title="2. 由谁创建"></a>2. 由谁创建</h2><p><a name="IxX1t"></a></p>
+<h3 id="2-1-DiagramFactroy"><a href="#2-1-DiagramFactroy" class="headerlink" title="2.1 DiagramFactroy"></a>2.1 DiagramFactroy</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">DiagramFactory</span> </span>&#123;<br>    <span class="hljs-function">Diagram <span class="hljs-title">createDiagram</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="vRe8j"></a></p>
+<h3 id="2-2-LineDiagramFactory"><a href="#2-2-LineDiagramFactory" class="headerlink" title="2.2 LineDiagramFactory"></a>2.2 LineDiagramFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LineDiagramFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DiagramFactory</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Diagram <span class="hljs-title">createDiagram</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> LineDiagram();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="SwRn3"></a></p>
+<h3 id="2-3-ColumnDiagramFactory"><a href="#2-3-ColumnDiagramFactory" class="headerlink" title="2.3 ColumnDiagramFactory"></a>2.3 ColumnDiagramFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ColumnDiagramFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DiagramFactory</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Diagram <span class="hljs-title">createDiagram</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ColumnDiagram();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="t99bF"></a></p>
+<h2 id="3-何时创建-1"><a href="#3-何时创建-1" class="headerlink" title="3. 何时创建"></a>3. 何时创建</h2><p>具体工厂中实现了抽象工厂的<code>createDiagram()</code>方法<br><a name="GehnO"></a></p>
+<h2 id="4-客户端代码-1"><a href="#4-客户端代码-1" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java">DiagramFactory diagramFactory;                                  <br>Diagram diagram;                                                <br><span class="hljs-keyword">try</span> &#123;                                                           <br>    diagramFactory = <span class="hljs-keyword">new</span> LineDiagramFactory(); <span class="hljs-comment">// 可引入配置文件和反射机制实现</span><br>    diagram = diagramFactory.createDiagram();                   <br>    diagram.create();                                           <br>&#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;                                         <br>    e.printStackTrace();                                        <br>&#125;                                                               <br></code></pre></td></tr></table></figure>
+<p><a name="V38kB"></a></p>
+<h2 id="5-优缺点及适用场景-1"><a href="#5-优缺点及适用场景-1" class="headerlink" title="5. 优缺点及适用场景"></a>5. 优缺点及适用场景</h2><p><a name="JgHcI"></a></p>
+<h3 id="5-1-优点-1"><a href="#5-1-优点-1" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li><p>解耦。用户只关心产品对应的工厂，无须关心实现细节，甚至无须知道具体产品的类名</p>
+</li>
+<li><p>可扩展性，完全符合开闭原则。例如添加新产品时，无须修改抽象产品和抽象工厂的方法<br><a name="T4zXs"></a></p>
+<h3 id="5-2-缺点-1"><a href="#5-2-缺点-1" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>复杂度较高。添加新产品时既需要添加新产品的具体类也要添加新工厂的具体类</p>
+</li>
+<li><p>有一定的抽象性和理解难度。因为考虑到可扩展性，引入了抽象层，在客户端代码中也需要通过抽象层进行定义<br><a name="OsS3i"></a></p>
+<h3 id="5-3-适用场景-1"><a href="#5-3-适用场景-1" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>客户端不需要他所需要的对象的类</p>
+</li>
+<li><p>抽象工厂类通过其子类来指定创建哪个对象<br><a name="ki8n1"></a></p>
+<h1 id="四、抽象工厂模式"><a href="#四、抽象工厂模式" class="headerlink" title="四、抽象工厂模式"></a>四、抽象工厂模式</h1><p>某系统为了改进数据库操作的性能，自定义数据为连接对象(Connection)和语句(Statement)对象，可针对不同类型的数据库提供不同的连接对象和语句对象，如提供Oracle或MySQL专用连接类和语句类，而且用户可以通过配置文件等方式根据实际需要动态更换系统数据库。<br><a name="KAoxT"></a></p>
+<h2 id="1-创建什么-2"><a href="#1-创建什么-2" class="headerlink" title="1. 创建什么"></a>1. 创建什么</h2><p>产品族：</p>
+</li>
+<li><p>Mysql 相关</p>
+</li>
+<li><p>Oracle 相关</p>
+</li>
+</ul>
+<p>产品等级结构：</p>
+<ul>
+<li><p>连接对象 Connection</p>
+</li>
+<li><p>语句对象 Statement<br><a name="JTiu2"></a></p>
+<h3 id="1-1-Connection"><a href="#1-1-Connection" class="headerlink" title="1.1 Connection"></a>1.1 Connection</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Connection</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getConnection</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="FmYDF"></a></p>
+<h3 id="1-2-MysqlConnection"><a href="#1-2-MysqlConnection" class="headerlink" title="1.2 MysqlConnection"></a>1.2 MysqlConnection</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MysqlConnection</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Connection</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getConnection</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Mysql连接对象&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="eDt3T"></a></p>
+<h3 id="1-3-OracleConnection"><a href="#1-3-OracleConnection" class="headerlink" title="1.3 OracleConnection"></a>1.3 OracleConnection</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OracleConnection</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Connection</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getConnection</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Oracle连接对象&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="BFYOy"></a></p>
+<h3 id="1-4-Statement"><a href="#1-4-Statement" class="headerlink" title="1.4 Statement"></a>1.4 Statement</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Statement</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getStatement</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="TcJXy"></a></p>
+<h3 id="1-5-MysqlStatement"><a href="#1-5-MysqlStatement" class="headerlink" title="1.5 MysqlStatement"></a>1.5 MysqlStatement</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MysqlStatement</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Statement</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getStatement</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Mysql语句对象&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="g7i5a"></a></p>
+<h3 id="1-6-OracleStatement"><a href="#1-6-OracleStatement" class="headerlink" title="1.6 OracleStatement"></a>1.6 OracleStatement</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OracleStatement</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Statement</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getStatement</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;Oracle语句对象&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="TPvAy"></a></p>
+<h2 id="2-由谁创建-2"><a href="#2-由谁创建-2" class="headerlink" title="2. 由谁创建"></a>2. 由谁创建</h2><p><a name="F3RoA"></a></p>
+<h3 id="2-1-DataBaseFactory"><a href="#2-1-DataBaseFactory" class="headerlink" title="2.1 DataBaseFactory"></a>2.1 DataBaseFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">DataBaseFactory</span> </span>&#123;<br>    <span class="hljs-function">Connection <span class="hljs-title">getConnection</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function">Statement <span class="hljs-title">getStatement</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="PFb4z"></a></p>
+<h3 id="2-2-MysqlDataBaseFactory"><a href="#2-2-MysqlDataBaseFactory" class="headerlink" title="2.2 MysqlDataBaseFactory"></a>2.2 MysqlDataBaseFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MysqlDataBaseFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DataBaseFactory</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Connection <span class="hljs-title">getConnection</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> MysqlConnection();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Statement <span class="hljs-title">getStatement</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> MysqlStatement();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="oWjNY"></a></p>
+<h3 id="2-3-OracleDataBaseFactory"><a href="#2-3-OracleDataBaseFactory" class="headerlink" title="2.3 OracleDataBaseFactory"></a>2.3 OracleDataBaseFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">OracleDataBaseFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DataBaseFactory</span></span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Connection <span class="hljs-title">getConnection</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OracleConnection();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Statement <span class="hljs-title">getStatement</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OracleStatement();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="HkqDO"></a></p>
+<h2 id="3-何时创建-2"><a href="#3-何时创建-2" class="headerlink" title="3. 何时创建"></a>3. 何时创建</h2><p>由确定的工厂创造确定的产品<br><a name="Eiv8Y"></a></p>
+<h2 id="4-客户端代码-2"><a href="#4-客户端代码-2" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">DataBaseFactory dataBaseFactory = <span class="hljs-keyword">new</span> MysqlDataBaseFactory(); <span class="hljs-comment">// 可引入配置文件和反射机制实现</span><br>Connection connection = dataBaseFactory.getConnection();                       <br>Statement statement = dataBaseFactory.getStatement();                          <br>connection.getConnection();                                                    <br>statement.getStatement();                                                      <br></code></pre></td></tr></table></figure>
+<p><a name="IQCYc"></a></p>
+<h2 id="5-优缺点及适用场景-2"><a href="#5-优缺点及适用场景-2" class="headerlink" title="5. 优缺点及适用场景"></a>5. 优缺点及适用场景</h2><p><a name="rnvT8"></a></p>
+<h3 id="5-1-优点-2"><a href="#5-1-优点-2" class="headerlink" title="5.1 优点"></a>5.1 优点</h3></li>
+<li><p>解耦。用户只关心产品对应的工厂，无须关心实现细节，甚至无须知道具体产品的类名</p>
+</li>
+<li><p>可扩展性，完全符合开闭原则。例如添加新的产品族时，无须修改抽象产品和抽象工厂的方法<br><a name="fl6gN"></a></p>
+<h3 id="5-2-缺点-2"><a href="#5-2-缺点-2" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>起初设计时难度较大，需要考虑周全。添加新的产品等级结构时，需要修改抽象工厂的方法，违背了开闭原则。例如在此基础上新增产品等级结构对象 Exception，那么对应的产品族 Mysql、Oracle 均需要新增 MysqlException、OracleException，并且基类 DataBaseFactory 也需要新增方法 getException，同时其子了 MysqlDataBaseFactory、OracleDataBaseFactory 也均需要另外实现 getException 方法<br><a name="nQXU3"></a></p>
+<h3 id="5-3-适用场景-2"><a href="#5-3-适用场景-2" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>用户只关心产品对应的工厂，无须关心实现细节，甚至无须知道具体产品的类名，这是所有类型的工厂模式都是很重要的</p>
+</li>
+<li><p>系统中有一个以上的产品族</p>
+</li>
+<li><p>属于同一个产品族的产品将在一起使用，它们之间可以没有任何关系，但是它们都有共同的约束，例如操作系统下的按钮和文本框，按钮与文本框之间没有直接关系，但是它们都是属于某一个操作系统下的，此时具有一个共同的约束条件，即操作系统的类型</p>
+</li>
+<li><p>产品等级结构稳定</p>
+</li>
+</ul>
+<p><a name="v4qlq"></a></p>
+<h1 id="五、建造者模式"><a href="#五、建造者模式" class="headerlink" title="五、建造者模式"></a>五、建造者模式</h1><p>设计一个游戏角色，它包含性别、脸型等多个部分组成，不同角色的性别、脸型、服装、发型等外部特性都有差异，例如“天使”拥有美丽的面容和披肩的长发；而“恶魔”极其丑陋，留着光头并穿一件刺眼的黑衣</p>
+<p><a name="wLiel"></a></p>
+<h2 id="1-创建什么-3"><a href="#1-创建什么-3" class="headerlink" title="1. 创建什么"></a>1. 创建什么</h2><p><a name="LKpPl"></a></p>
+<h3 id="1-1-Actor"><a href="#1-1-Actor" class="headerlink" title="1.1 Actor"></a>1.1 Actor</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Actor</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> String type;<br><br>    <span class="hljs-keyword">private</span> String sex;<br><br>    <span class="hljs-keyword">private</span> String face;<br><br>    <span class="hljs-keyword">private</span> String costume;<br><br>    <span class="hljs-keyword">private</span> String hairstyle;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getType</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> type;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setType</span><span class="hljs-params">(String type)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.type = type;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getSex</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> sex;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setSex</span><span class="hljs-params">(String sex)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.sex = sex;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getFace</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> face;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setFace</span><span class="hljs-params">(String face)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.face = face;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getCostume</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> costume;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setCostume</span><span class="hljs-params">(String costume)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.costume = costume;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getHairstyle</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> hairstyle;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setHairstyle</span><span class="hljs-params">(String hairstyle)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.hairstyle = hairstyle;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="QjDt0"></a></p>
+<h2 id="2-由谁创建-3"><a href="#2-由谁创建-3" class="headerlink" title="2. 由谁创建"></a>2. 由谁创建</h2><p><a name="lDiQY"></a></p>
+<h3 id="2-1-ActorBuilder"><a href="#2-1-ActorBuilder" class="headerlink" title="2.1 ActorBuilder"></a>2.1 ActorBuilder</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ActorBuilder</span> </span>&#123;<br><br>    <span class="hljs-keyword">protected</span> Actor actor = <span class="hljs-keyword">new</span> Actor();<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildType</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildSex</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildFace</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildCostume</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildHairstyle</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 是否是光头？&lt;br&gt;</span><br><span class="hljs-comment">     * 钩子方法，控制是否执行&#123;<span class="hljs-doctag">@link</span> #buildHairstyle()&#125;</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 默认为 false</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isBareHeaded</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Actor <span class="hljs-title">buildActor</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> actor;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="R1Oy2"></a></p>
+<h3 id="2-2-AngelBuilder"><a href="#2-2-AngelBuilder" class="headerlink" title="2.2 AngelBuilder"></a>2.2 AngelBuilder</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AngelBuilder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ActorBuilder</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildType</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setType(<span class="hljs-string">&quot;天使&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildSex</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setSex(<span class="hljs-string">&quot;女&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildFace</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setFace(<span class="hljs-string">&quot;漂亮脸蛋&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildCostume</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setCostume(<span class="hljs-string">&quot;白裙&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildHairstyle</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setHairstyle(<span class="hljs-string">&quot;披肩长发&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="eRFar"></a></p>
+<h3 id="2-3-DevilBuilder"><a href="#2-3-DevilBuilder" class="headerlink" title="2.3 DevilBuilder"></a>2.3 DevilBuilder</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DevilBuilder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ActorBuilder</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildType</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setType(<span class="hljs-string">&quot;恶魔&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildSex</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setSex(<span class="hljs-string">&quot;男&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildFace</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setFace(<span class="hljs-string">&quot;丑陋脸蛋&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildCostume</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setCostume(<span class="hljs-string">&quot;刺眼黑衣&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildHairstyle</span><span class="hljs-params">()</span> </span>&#123;<br>        actor.setHairstyle(<span class="hljs-string">&quot;光头&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isBareHeaded</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="l9uw5"></a></p>
+<h2 id="3-何时创建-3"><a href="#3-何时创建-3" class="headerlink" title="3. 何时创建"></a>3. 何时创建</h2><p><a name="XgOjM"></a></p>
+<h3 id="3-1-ActorDirector"><a href="#3-1-ActorDirector" class="headerlink" title="3.1 ActorDirector"></a>3.1 ActorDirector</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ActorDirector</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Actor <span class="hljs-title">construct</span><span class="hljs-params">(ActorBuilder ab)</span> </span>&#123;<br>        Actor actor;<br>        ab.buildType();<br>        ab.buildSex();<br>        ab.buildFace();<br>        ab.buildCostume();<br>        <span class="hljs-keyword">if</span> (!ab.isBareHeaded()) &#123;<br>            ab.buildHairstyle();<br>        &#125;<br>        actor = ab.buildActor();<br>        <span class="hljs-keyword">return</span> actor;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="Kr1cO"></a></p>
+<h2 id="4-客户端代码-3"><a href="#4-客户端代码-3" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">Actor actor = <span class="hljs-keyword">new</span> Actor();                                       <br>ActorDirector actorDirector = <span class="hljs-keyword">new</span> ActorDirector();               <br>ActorBuilder angelBuilder = <span class="hljs-keyword">new</span> AngelBuilder(); <span class="hljs-comment">// 可引入配置文件和反射机制实现</span><br>actor = actorDirector.construct(angelBuilder);                   <br></code></pre></td></tr></table></figure>
+<p><a name="JTt2c"></a></p>
+<h2 id="5-优缺点及适用场景-3"><a href="#5-优缺点及适用场景-3" class="headerlink" title="5. 优缺点及适用场景"></a>5. 优缺点及适用场景</h2><p><a name="g3l5n"></a></p>
+<h3 id="5-1-优点-3"><a href="#5-1-优点-3" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li><p>耦合性低。客户端不必知道产品内部的组成细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象</p>
+</li>
+<li><p>扩展方便。每一个具体建造者相对独立，与其他建造者无关。</p>
+</li>
+<li><p>可以精细地控制产品地创建过程。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也方便程序进行控制<br><a name="PYSGV"></a></p>
+<h3 id="5-2-缺点-3"><a href="#5-2-缺点-3" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>有一定的局限性。适用建造者模式通常创建的产品有较多的共同点，其组成部分相似，如果产品间差异性很大，例如很多组成部分都不同，那么就不适合适用</p>
+</li>
+<li><p>增加理解难度和运行成本。如果产品的内部变化复杂，困难会导致需要定义很多具体建造者类来实现，这样会使系统变得庞大<br><a name="eCKvF"></a></p>
+<h3 id="5-3-适用场景-3"><a href="#5-3-适用场景-3" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>需要生成的产品对象有复杂的内部结构，这些产品对象通常包含多个成员变量</p>
+</li>
+<li><p>需要生成的产品对象的属性相互依赖，需要指定其生成的顺序</p>
+</li>
+<li><p>对象的创建过程，独立于创建该对象的内在建造者模式中，通过引入指挥者类，将创建过程封装在指挥者类中，而不在建造者类和客户类中  </p>
+</li>
+<li><p>隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的产品<br><a name="ioJd7"></a></p>
+<h1 id="六、原型模式"><a href="#六、原型模式" class="headerlink" title="六、原型模式"></a>六、原型模式</h1><p>请为某销售管理系统设计并实现一个客户类Customer，在客户类中包含一个名为客户地址的成员变量，客户地址的类型为Address，用浅克隆和深克隆分别实现Customer对象的复制<br><a name="Kn9OS"></a></p>
+<h2 id="深克隆和浅克隆"><a href="#深克隆和浅克隆" class="headerlink" title="深克隆和浅克隆"></a>深克隆和浅克隆</h2><p>浅克隆：</p>
+</li>
+<li><p>基于同一个类型成员变量的地址</p>
+</li>
+<li><p>复制原型对象</p>
+</li>
+<li><p>复制基本类型的值</p>
+</li>
+</ul>
+<p>深克隆：</p>
+<ul>
+<li>复制同一个类型成员变量的地址</li>
+<li>复制原型对象</li>
+<li>复制基本类型的值</li>
+</ul>
+<p><a name="gudvJ"></a></p>
+<h2 id="1-创建什么-4"><a href="#1-创建什么-4" class="headerlink" title="1. 创建什么"></a>1. 创建什么</h2><p><a name="XdbAE"></a></p>
+<h3 id="1-1-Address"><a href="#1-1-Address" class="headerlink" title="1.1 Address"></a>1.1 Address</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Address</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Address</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="EQqVP"></a></p>
+<h2 id="2-由谁创建-4"><a href="#2-由谁创建-4" class="headerlink" title="2. 由谁创建"></a>2. 由谁创建</h2><p><a name="Io2yd"></a></p>
+<h3 id="2-1-Customer"><a href="#2-1-Customer" class="headerlink" title="2.1 Customer"></a>2.1 Customer</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Customer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span>, <span class="hljs-title">Cloneable</span> </span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> Address address;<br>    <br>    <span class="hljs-keyword">private</span> String name;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Address <span class="hljs-title">getAddress</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> address;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAddress</span><span class="hljs-params">(Address address)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.address = address;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> age;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.age = age;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Customer <span class="hljs-title">deepClone</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException </span>&#123;<br>        ByteArrayOutputStream bao = <span class="hljs-keyword">new</span> ByteArrayOutputStream();<br>        ObjectOutputStream oos = <span class="hljs-keyword">new</span> ObjectOutputStream(bao);<br>        oos.writeObject(<span class="hljs-keyword">this</span>);<br>        ByteArrayInputStream bis = <span class="hljs-keyword">new</span> ByteArrayInputStream(bao.toByteArray());<br>        ObjectInputStream ois = <span class="hljs-keyword">new</span> ObjectInputStream(bis);<br>        <span class="hljs-keyword">return</span> (Customer) ois.readObject();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Customer <span class="hljs-title">clone</span><span class="hljs-params">()</span> </span>&#123;<br>        Object object;<br>        <span class="hljs-keyword">try</span> &#123;<br>            object = <span class="hljs-keyword">super</span>.clone();<br>            <span class="hljs-keyword">return</span> (Customer) object;<br>        &#125; <span class="hljs-keyword">catch</span> (CloneNotSupportedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;不支持负责&quot;</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="SN9hi"></a></p>
+<h2 id="3-何时创建-4"><a href="#3-何时创建-4" class="headerlink" title="3. 何时创建"></a>3. 何时创建</h2><p>Customer 的深克隆方法 deepClone 和浅克隆方法 clone<br><a name="a8cu7"></a></p>
+<h2 id="4-客户端代码-4"><a href="#4-客户端代码-4" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">shallow</span><span class="hljs-params">()</span></span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;浅克隆：&quot;</span>);<br>    Customer customerPrototype = <span class="hljs-keyword">new</span> Customer();<br>    customerPrototype.setAddress(<span class="hljs-keyword">new</span> Address(<span class="hljs-string">&quot;北京&quot;</span>));<br>    Customer customerClone = customerPrototype.clone();<br>    <span class="hljs-comment">// 对象比较</span><br>    System.out.println(customerPrototype == customerClone);<br>    System.out.println(customerPrototype.equals(customerClone));<br>    <span class="hljs-comment">// 属性类比较</span><br>    System.out.println(customerPrototype.getAddress() == customerClone.getAddress());<br>    System.out.println(customerPrototype.getAddress().equals(customerClone.getAddress()));<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">deep</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException, ClassNotFoundException </span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;深克隆：&quot;</span>);<br>    Customer customerPrototype = <span class="hljs-keyword">new</span> Customer();<br>    customerPrototype.setAddress(<span class="hljs-keyword">new</span> Address(<span class="hljs-string">&quot;南京&quot;</span>));<br>    Customer customerClone = customerPrototype.deepClone();<br>    <span class="hljs-comment">// 对象比较</span><br>    System.out.println(customerPrototype == customerClone);<br>    System.out.println(customerPrototype.equals(customerClone));<br>    <span class="hljs-comment">// 属性类比较</span><br>    System.out.println(customerPrototype.getAddress() == customerClone.getAddress());<br>    System.out.println(customerPrototype.getAddress().equals(customerClone.getAddress()));<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="hbBdl"></a></p>
+<h2 id="5-优缺点及适用场景-4"><a href="#5-优缺点及适用场景-4" class="headerlink" title="5. 优缺点及适用场景"></a>5. 优缺点及适用场景</h2><p><a name="GaqcK"></a></p>
+<h3 id="5-1-优点-4"><a href="#5-1-优点-4" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li><p>提高效率。使用原型模式创建对象比直接new一个对象在性能上要好的多，因为Object类的clone方法是一个本地方法， 它直接操作内存中的二进制流，特别是复制大对象时，性能的差别非常明显。<br><a name="haRgN"></a></p>
+<h3 id="5-2-缺点-4"><a href="#5-2-缺点-4" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>违背了开闭原则。需要为每个需要克隆的类提供clone方法</p>
+</li>
+<li><p>可能会提高复杂度。当克隆的代码比较复杂，存在多重的嵌套引用，如果要实现深克隆就需要为每一层对象都支持深克隆<br><a name="QglZc"></a></p>
+<h3 id="5-3-适用场景-4"><a href="#5-3-适用场景-4" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>创建新对象成本较大</p>
+</li>
+<li><p>系统要保存对象的状态，而对象的状态变化很小</p>
+</li>
+<li><p>复杂度较低，不存在多重的嵌套引用<br><a name="ckHHI"></a></p>
+<h1 id="七、单例模式"><a href="#七、单例模式" class="headerlink" title="七、单例模式"></a>七、单例模式</h1><p><a name="XCa4w"></a></p>
+<h2 id="1-创建什么-5"><a href="#1-创建什么-5" class="headerlink" title="1. 创建什么"></a>1. 创建什么</h2><p>自己<br><a name="x6cKu"></a></p>
+<h2 id="2-由谁创建-5"><a href="#2-由谁创建-5" class="headerlink" title="2. 由谁创建"></a>2. 由谁创建</h2><p>自己，下列提供三种单例模式<br><a name="JpFU8"></a></p>
+<h3 id="2-1-EagerSingleton"><a href="#2-1-EagerSingleton" class="headerlink" title="2.1 EagerSingleton"></a>2.1 EagerSingleton</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EagerSingleton</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> EagerSingleton instance = <span class="hljs-keyword">new</span> EagerSingleton();<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">EagerSingleton</span><span class="hljs-params">()</span> </span>&#123;&#125;;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> EagerSingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="vj3Gk"></a></p>
+<h3 id="2-2-LazySingleton"><a href="#2-2-LazySingleton" class="headerlink" title="2.2 LazySingleton"></a>2.2 LazySingleton</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LazySingleton</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">static</span> LazySingleton instance = <span class="hljs-keyword">null</span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">LazySingleton</span><span class="hljs-params">()</span> </span>&#123;&#125;;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> LazySingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">synchronized</span> (LazySingleton.class) &#123;<br>                <span class="hljs-keyword">if</span> (instance == <span class="hljs-keyword">null</span>) &#123;<br>                    instance = <span class="hljs-keyword">new</span> LazySingleton();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="L9I0d"></a></p>
+<h3 id="2-3-IoDHSingleton"><a href="#2-3-IoDHSingleton" class="headerlink" title="2.3 IoDHSingleton"></a>2.3 IoDHSingleton</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IoDHSingleton</span> </span>&#123; <span class="hljs-comment">// Initialization on Demand Holder</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">IoDHSingleton</span><span class="hljs-params">()</span> </span>&#123;&#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HolderClass</span> </span>&#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> IoDHSingleton instance = <span class="hljs-keyword">new</span> IoDHSingleton();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IoDHSingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> HolderClass.instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="th4JI"></a></p>
+<h2 id="3-何时创建-5"><a href="#3-何时创建-5" class="headerlink" title="3. 何时创建"></a>3. 何时创建</h2><p>自己<br><a name="Ewo5O"></a></p>
+<h2 id="4-客户端代码-5"><a href="#4-客户端代码-5" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">IoDHSingleton instance = IoDHSingleton.getInstance();<br></code></pre></td></tr></table></figure>
+<p><a name="eZwbr"></a></p>
+<h2 id="5-优缺点及适用场景-5"><a href="#5-优缺点及适用场景-5" class="headerlink" title="5. 优缺点及适用场景"></a>5. 优缺点及适用场景</h2><p><a name="CxGIX"></a></p>
+<h3 id="5-1-优点-5"><a href="#5-1-优点-5" class="headerlink" title="5.1 优点"></a>5.1 优点</h3></li>
+<li><p>提供了唯一实例的受控访问</p>
+</li>
+<li><p>节约资源。因为系统中只存在一个这样的实例<br><a name="YtuyH"></a></p>
+<h3 id="5-2-缺点-5"><a href="#5-2-缺点-5" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>扩展困难。没有抽象层</p>
+</li>
+<li><p>职责过重。因为单例类可能既提供了业务方法，也需要提供创建自己的方法<br><a name="gffJj"></a></p>
+<h3 id="5-3-适用场景-5"><a href="#5-3-适用场景-5" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>系统中只需要一个实例对象</p>
+</li>
+<li><p>客户调用类的单个实例只允许使用一个公共访问点</p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">Java 设计模式</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/14/Java%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/">
+                        <span class="hidden-mobile">面向对象设计原则</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

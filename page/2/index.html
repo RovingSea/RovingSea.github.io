@@ -190,6 +190,52 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/Zookeeper%E5%8E%9F%E7%90%86/%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" target="_self">
+          <img src="https://www.runoob.com/wp-content/uploads/2020/09/fVKeBy0dUyfT5xJX.jpg" srcset="/img/loading.gif" lazyload alt="选举机制">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/Zookeeper%E5%8E%9F%E7%90%86/%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" target="_self">
+          选举机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/Zookeeper%E5%8E%9F%E7%90%86/%E9%80%89%E4%B8%BE%E6%9C%BA%E5%88%B6/" target="_self">
+          
+          启动时选举 从配置文件中读取集群个数1从.cfg文件中读取server的个数，以便在过半时选出leader  交换票1每台服务器把自己的票（myid和zxid）投给参与选举的节点  投票12345将自己手上比较大的票投出去先比较zxid，再比较myid因为zxid代表着事务id，在这台Zookeeper服务器上每当有一个数改变，zxid就会加一，为了保证数据一致，就优先选择zxid直到投票箱的数额
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:18" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Zookeeper%E5%8E%9F%E7%90%86/">Zookeeper原理</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/01/24/Zookeeper%E5%8E%9F%E7%90%86/%E8%B0%88%E8%B0%88%E5%AF%B9Zookeeper%E7%90%86%E8%A7%A3/" target="_self">
           <img src="https://www.runoob.com/wp-content/uploads/2020/09/fVKeBy0dUyfT5xJX.jpg" srcset="/img/loading.gif" lazyload alt="谈谈对Zookeeper的理解">
         </a>
@@ -575,52 +621,6 @@
         <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E9%9B%AA%E5%B4%A9/" target="_self">
           
           缓存穿透123key对应的数据在数据源中并不存在，每次针对此key的请求从缓存中获取不到，请求都会压到数据源，从而可能压垮数据源。比如用一个不存在的用户id获取用户信息，不论缓存还是数据库都没有，若黑客利用此漏洞进行攻击可能压垮数据库。   解决方案12341.对空值缓存2.设置白名单3.采用布隆过滤器4.进行实时监控  缓存击穿1key对应的数据存在，但在redis中过期，此时又有大量的并发请求
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-24 00:07" pubdate>
-              2022-01-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Redis%E5%8E%9F%E7%90%86/">Redis原理</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          <img src="https://www.runoob.com/wp-content/uploads/2014/11/redis.gif" srcset="/img/loading.gif" lazyload alt="分布式锁的实现">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          分布式锁的实现
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/24/Redis%E5%8E%9F%E7%90%86/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          
-          满足的条件互斥性1任意时刻，只有一个客户端持有锁  不会发生死锁1即使有一个客户端在持有锁的期间崩溃而没有主动解锁，也能保证后续其他客户端能加锁。  解铃还须系铃人1加锁和解锁必须是同一个客户端，客户端自己不能把别人加的锁给解了。  原子性1加锁和解锁必须具有原子性  步骤一、多个客户端申请获取锁1即执行多个setnx语句  二、获取成功1即执行setnx语句成功后的客户端，其他客户端等待重试
         </a>
       </p>
 

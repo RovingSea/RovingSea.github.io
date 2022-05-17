@@ -190,6 +190,52 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
+          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ消息幂等性问题">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
+          RabbitMQ消息幂等性问题
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/" target="_self">
+          
+          什么是幂等性在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同 HTTP方法的幂等性是指一次和多次请求某一个资源应该具有同样的副作用。幂等性属于语义范畴，正如编译器只能帮助检查语法错误一样，HTTP规范也没有办法通过消息格式等语法手段来定义它。 简之：一个请求，不管重复来多少次，结果是不会改变的。 消费者在消费 MQ 中的消息时，MQ 已把消息发送给消费者，消费者在给 M
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:00" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/RabbitMQ/">RabbitMQ</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/01/24/RabbitMQ/RabbitMQ%E8%A1%A5%E5%81%BF%E6%9C%BA%E5%88%B6%E4%B8%8E@RabbitListener%E6%B3%A8%E8%A7%A3%E5%8E%9F%E7%90%86/" target="_self">
           <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ补偿机制与@RabbitListener注解原理">
         </a>
@@ -562,52 +608,6 @@
             <i class="iconfont icon-category"></i>
             
               <a href="/categories/JVM/">JVM</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/01/17/Zookeeper%E5%8E%9F%E7%90%86/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          <img src="https://www.runoob.com/wp-content/uploads/2020/09/fVKeBy0dUyfT5xJX.jpg" srcset="/img/loading.gif" lazyload alt="Zk分布式锁的实现">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/01/17/Zookeeper%E5%8E%9F%E7%90%86/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          Zk分布式锁的实现
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/01/17/Zookeeper%E5%8E%9F%E7%90%86/Zk%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_self">
-          
-          第一种方法1类似于Redis的setnx实现机制，但容易引起羊群效应  第二种方法 读写锁1因为读读之间是不需要排他的，所以基于Curator的ReentrantReadWriteLock可以实现读写锁提高性能  原理1231. 写入锁判断自己前面还有没有节点，如果没有就可以获取到锁，如果有就等待前面的节点释放锁。2. 读锁判断自己前面还有没有写入锁的节点，也就是前面的节点是否包含WRIT，如果有
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-17 23:41" pubdate>
-              2022-01-17
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Zookeeper%E5%8E%9F%E7%90%86/">Zookeeper原理</a>
             
           </div>
         
