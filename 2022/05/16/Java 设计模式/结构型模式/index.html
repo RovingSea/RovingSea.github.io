@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/69103691?v=4">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Masker">
+  <meta name="keywords" content="Java">
+  
+    <meta name="description" content="一、概述结构型模式（Structural Pattern）关注如何将现有类或对象组织在一起形成更加强大的结构不同的结构型模式从不同的角度来组合类和对象，他们的尽可能满足各种面向对象设计原则的同时，为类或对象的组合提供一系列巧妙的解决方案  结构型模式可以描述两种不同的东西——类与类的实例（对象）因此结构型模式也被分为两种，分别是类结构型模式和对象结构型模式 类结构型模式关心类的组合，由多个类组合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结构型模式">
+<meta property="og:url" content="http://example.com/2022/05/16/Java%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Masker7&#39;s Blog">
+<meta property="og:description" content="一、概述结构型模式（Structural Pattern）关注如何将现有类或对象组织在一起形成更加强大的结构不同的结构型模式从不同的角度来组合类和对象，他们的尽可能满足各种面向对象设计原则的同时，为类或对象的组合提供一系列巧妙的解决方案  结构型模式可以描述两种不同的东西——类与类的实例（对象）因此结构型模式也被分为两种，分别是类结构型模式和对象结构型模式 类结构型模式关心类的组合，由多个类组合">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/image/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.png">
+<meta property="article:published_time" content="2022-05-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-20T10:25:15.382Z">
+<meta property="article:author" content="Masker">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/image/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.png">
+  
+  
+  <title>结构型模式 - Masker7&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Masker</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="结构型模式">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-16 00:00" pubdate>
+        2022年5月16日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      16k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      133 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">结构型模式</h1>
+            
+            <div class="markdown-body">
+              <p><a name="a11edfd6"></a></p>
+<h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>结构型模式（Structural Pattern）关注<strong>如何将现有类或对象组织在一起形成更加强大的结构</strong><br />不同的结构型模式从不同的角度来组合类和对象，他们的尽可能满足各种面向对象设计原则的同时，为类或对象的组合提供一系列巧妙的解决方案  <br />结构型模式可以描述两种不同的东西——<strong>类与类的实例（对象）</strong><br />因此结构型模式也被分为两种，分别是<strong>类结构型模式</strong>和<strong>对象结构型模式</strong></p>
+<p>类结构型模式关心<strong>类的组合</strong>，由多个类组合成一个强大的系统，一般只存在继承和实现关系</p>
+<p>对象结构型模式中关心<strong>类与对象的组合</strong>，通过关联关系在一个类中定义另外一个类的实例对象，如何通过该对象调用相应的方法</p>
+<p>根据合成复用原则，在系统中尽量使用关联关系来代替继承关系，因此大部分结构型模式都是对象结构型模式</p>
+<p>结构型模式共有七种：</p>
+<table>
+<thead>
+<tr>
+<th><strong>设计原则名称</strong></th>
+<th><strong>定义</strong></th>
+<th><strong>使用频率</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>适配器模式<br />（Adapter Pattern）</td>
+<td>将一个类的接口转换成客户希望的另一个接口。适配器模式让那些不兼容的类可以一起工作</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>桥接模式<br />（Bridge Pattern）</td>
+<td>将抽象部分与它的实现部分解耦，使得两者能够独立变化</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>组合模式<br />（Composite Pattern）</td>
+<td>组合多个对象形成树形结构以表示具有部分-整体关系的层次结构。组合模式让客户端可以统一对待单个对象和组合对象</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>装饰模式<br />（Decorator Pattern）</td>
+<td>动态地给一个对象增加一些额外的职责。就扩展功能而言，装饰模式提供了一种比使用子类更加灵活的代替方案</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>外观模式<br />（Facade Pattern）</td>
+<td>为子系统的一组接口提供一个统一的入口。外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>享元模式<br />（Flyweight Pattern）</td>
+<td>运用共享技术有效地支持大量细粒度对象的复用</td>
+<td>⭐</td>
+</tr>
+<tr>
+<td>代理模式<br />（Proxy Pattern）</td>
+<td>给某一个对象提供一个代理或占位符，并由代理对象来控制原对象的访问</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+</tbody></table>
+<p><a name="NzaO7"></a></p>
+<h1 id="二、适配器模式"><a href="#二、适配器模式" class="headerlink" title="二、适配器模式"></a>二、适配器模式</h1><p>算法适配。 现有一个接口DataOperation定义了排序方法sort(int[])和查找方法search(int[],int)，已知类QuickSort的quickSort(int[])方法实现了快速排序算法，类BinarySearch的binarySearch(int[],int)方法实现了二分查找算法。现使用适配器模式设计一个系统，在不修改源代码的情况下将类QuickSort和类BinarySearch的方法适配到DataOperation接口中<br><a name="ennM2"></a></p>
+<h2 id="1-目标类"><a href="#1-目标类" class="headerlink" title="1. 目标类"></a>1. 目标类</h2><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">DataOperation</span> </span>&#123;<br>    <span class="hljs-keyword">int</span>[] sort(<span class="hljs-keyword">int</span>[] a);<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a,<span class="hljs-keyword">int</span> b)</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="VvxHR"></a></p>
+<h2 id="2-适配者"><a href="#2-适配者" class="headerlink" title="2. 适配者"></a>2. 适配者</h2><p><a name="puq8E"></a></p>
+<h3 id="2-1-BinarySearch"><a href="#2-1-BinarySearch" class="headerlink" title="2.1 BinarySearch"></a>2.1 BinarySearch</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BinarySearch</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">binarySearch</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a,<span class="hljs-keyword">int</span> b)</span></span>&#123;<br>        <span class="hljs-keyword">return</span> Arrays.binarySearch(a, b);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="ULc8S"></a></p>
+<h3 id="2-2-QuickSort"><a href="#2-2-QuickSort" class="headerlink" title="2.2 QuickSort"></a>2.2 QuickSort</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QuickSort</span> </span>&#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] quickSort(<span class="hljs-keyword">int</span>[] a) &#123;<br>        Arrays.sort(a);<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="ASc6V"></a></p>
+<h2 id="3-适配器"><a href="#3-适配器" class="headerlink" title="3. 适配器"></a>3. 适配器</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Adapter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">DataOperation</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> BinarySearch binarySearch;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> QuickSort quickSort;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Adapter</span><span class="hljs-params">()</span> </span>&#123;<br>        binarySearch = <span class="hljs-keyword">new</span> BinarySearch();<br>        quickSort = <span class="hljs-keyword">new</span> QuickSort();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span>[] sort(<span class="hljs-keyword">int</span>[] a) &#123;<br>        <span class="hljs-keyword">return</span> quickSort.quickSort(a);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a, <span class="hljs-keyword">int</span> b)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> binarySearch.binarySearch(a, b);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="RepMf"></a></p>
+<h2 id="4-客户端代码"><a href="#4-客户端代码" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java">Adapter adapter = <span class="hljs-keyword">new</span> Adapter();         <br><span class="hljs-keyword">int</span>[] a = &#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>,<span class="hljs-number">3</span>,<span class="hljs-number">10</span>&#125;;        <br>System.out.println(adapter.search(a, <span class="hljs-number">9</span>));<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i : adapter.sort(a)) &#123;          <br>    System.out.print(i+<span class="hljs-string">&quot; &quot;</span>);             <br>&#125;                                        <br></code></pre></td></tr></table></figure>
+<p><a name="Ad8ch"></a></p>
+<h2 id="5-优缺点和适用场景"><a href="#5-优缺点和适用场景" class="headerlink" title="5. 优缺点和适用场景"></a>5. 优缺点和适用场景</h2><p><a name="Z4XLm"></a></p>
+<h3 id="5-1-优点"><a href="#5-1-优点" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li>将目标类和适配者类解耦，无须修改原有结构</li>
+<li>增加了类的透明性和复用性，具体业务都封装在适配者类中，并且适配者类可以重复适用</li>
+<li>灵活性和扩张性都非常好，只需要灵活更换适配器即可</li>
+</ul>
+<p><a name="QJFjc"></a></p>
+<h3 id="5-2-缺点"><a href="#5-2-缺点" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3><p>由于类适配器模式的缺点较多，根据合成复用原则也适用较少，所以只总结了对象适配器模式的缺点：</p>
+<ul>
+<li><p>实现过程较为复杂，在该模式下如果适配器中需要置换适配者类的方法，那么就需要更改原代码，这样不符合开闭原则，所以需要另外建子类完成，增加系统复杂度<br><a name="GtfPj"></a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><br /></h2><p><a name="YzOKd"></a></p>
+<h3 id="5-3-适用场景"><a href="#5-3-适用场景" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>系统中需要使用一些现有的类，而这些类的接口（例如方法名）不符合系统的需要，甚至没有这些类的源代码</p>
+</li>
+<li><p>想创建一个可以重复使用的类，用于和一些彼此之间没有太大关联的类（包括在将来想引进的类）一起工作</p>
+</li>
+</ul>
+<p><a name="T3N8u"></a></p>
+<h1 id="三、桥接模式"><a href="#三、桥接模式" class="headerlink" title="三、桥接模式"></a>三、桥接模式</h1><p>毛笔和蜡笔是两种常见的文具，它们都归属于画笔。假如需要大、中、小 3 种型号的画笔，能够绘制 12 种不同的颜色，如果使用蜡笔，需要准备 3 × 12 = 36 支，但如果使用毛笔，只需要提供 3 种型号的毛笔，外加一个包含 12 种颜色的调色板，涉及的对象个数仅为 3 + 12 = 15，远小于 36，却能实现与 36 支蜡笔同样的功能。<br />请使用桥接模式实现毛笔绘制的系统结构</p>
+<p><a name="VFeao"></a></p>
+<h2 id="1-抽象类"><a href="#1-抽象类" class="headerlink" title="1. 抽象类"></a>1. 抽象类</h2><p><a name="FlZA3"></a></p>
+<h3 id="1-1-WritingBrush"><a href="#1-1-WritingBrush" class="headerlink" title="1.1 WritingBrush"></a>1.1 WritingBrush</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WritingBrush</span> </span>&#123;<br><br>    <span class="hljs-keyword">protected</span> Color color;<br><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> String <span class="hljs-title">draw</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Color <span class="hljs-title">getColor</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> color;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setColor</span><span class="hljs-params">(Color color)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.color = color;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="thqr6"></a></p>
+<h2 id="2-具体抽象类"><a href="#2-具体抽象类" class="headerlink" title="2. 具体抽象类"></a>2. 具体抽象类</h2><p><a name="THsLR"></a></p>
+<h3 id="2-1-BigWritingBrush"><a href="#2-1-BigWritingBrush" class="headerlink" title="2.1 BigWritingBrush"></a>2.1 BigWritingBrush</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BigWritingBrush</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WritingBrush</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> String <span class="hljs-title">draw</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;使用大号毛笔，染上&quot;</span> + color.coloured() + <span class="hljs-string">&quot;后绘画&quot;</span>;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><a name="hOIGD"></a></p>
+<h3 id="2-2-MidWritingBrush"><a href="#2-2-MidWritingBrush" class="headerlink" title="2.2 MidWritingBrush"></a>2.2 MidWritingBrush</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MidWritingBrush</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">WritingBrush</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> String <span class="hljs-title">draw</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;使用中号毛笔，染上&quot;</span> + color.coloured() + <span class="hljs-string">&quot;后绘画&quot;</span>;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p><a name="XRVu6"></a></p>
+<h2 id="3-实现类接口"><a href="#3-实现类接口" class="headerlink" title="3. 实现类接口"></a>3. 实现类接口</h2><p><a name="Tj4Ln"></a></p>
+<h3 id="3-1-Color"><a href="#3-1-Color" class="headerlink" title="3.1 Color"></a>3.1 Color</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Color</span> </span>&#123;<br>    <span class="hljs-function">String <span class="hljs-title">coloured</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="F7O0k"></a></p>
+<h2 id="4-具体实现类"><a href="#4-具体实现类" class="headerlink" title="4. 具体实现类"></a>4. 具体实现类</h2><p><a name="YYlXP"></a></p>
+<h3 id="4-1-Red"><a href="#4-1-Red" class="headerlink" title="4.1 Red"></a>4.1 Red</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Red</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Color</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">coloured</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;红色&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="aCuMF"></a></p>
+<h3 id="4-2-Green"><a href="#4-2-Green" class="headerlink" title="4.2 Green"></a>4.2 Green</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Green</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Color</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">coloured</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;绿色&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a name="ts7NV"></a></p>
+<h2 id="5-客户端代码"><a href="#5-客户端代码" class="headerlink" title="5. 客户端代码"></a>5. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        WritingBrush bigWritingBrush = <span class="hljs-keyword">new</span> BigWritingBrush();<br><br>        Color red = <span class="hljs-keyword">new</span> Red();<br>        Color green = <span class="hljs-keyword">new</span> Green();<br><br>        bigWritingBrush.setColor(red);<br>        System.out.println(bigWritingBrush.draw());<br><br>        bigWritingBrush.setColor(green);<br>        System.out.println(bigWritingBrush.draw());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="FqvMx"></a></p>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><p><a name="ohaDf"></a></p>
+<h2 id="6-优缺点和适用场景"><a href="#6-优缺点和适用场景" class="headerlink" title="6. 优缺点和适用场景"></a>6. 优缺点和适用场景</h2><p><a name="v3fOY"></a></p>
+<h3 id="6-1-优点"><a href="#6-1-优点" class="headerlink" title="6.1 优点"></a>6.1 优点</h3><ul>
+<li><p>解耦。分离抽象接口及其实现部分</p>
+</li>
+<li><p>取代多层继承方案。更贴和合成复用原则</p>
+</li>
+<li><p>提高可扩展性。在抽象和接口两个维度中进行维护时均不需要修改任何一个维度，符合开闭原则<br><a name="SNB4l"></a></p>
+<h3 id="6-2-缺点"><a href="#6-2-缺点" class="headerlink" title="6.2 缺点"></a>6.2 缺点</h3></li>
+<li><p>增加系统的理解和设计难度</p>
+</li>
+<li><p>需要正确地识别出抽象和实现两个维度<br><a name="CCqED"></a></p>
+<h3 id="6-3-适用场景"><a href="#6-3-适用场景" class="headerlink" title="6.3 适用场景"></a>6.3 适用场景</h3></li>
+<li><p>如果一个系统需要在抽象化和具体化之间增加更多的灵活性，避免在两个层次之间建立静态的继承关系，通过调节模式可以使他们在抽象层建立一个关联关系</p>
+</li>
+<li><p>抽象部分和实现部分可以用继承的方式独立扩张，而不互相影响，在程序运行时，可以动态地加一个抽象化子类的对象，和一个实现化子类的对象进行组合，即系统需要对抽象化对象和实现化对象进行动态耦合</p>
+</li>
+<li><p>一个类存在两个或多个独立变化的维度，且这两个或多个维度都需要独立进行扩张 </p>
+</li>
+<li><p> 对于那些不希望使用继承或因为多层继承导致系统类的个数急剧增加的系统，桥接模式尤为使用 </p>
+</li>
+</ul>
+<p><a name="CIAWB"></a></p>
+<h1 id="四、组合模式"><a href="#四、组合模式" class="headerlink" title="四、组合模式"></a>四、组合模式</h1><p>某软件公司要开发一个杀毒软件，该软件既可以对某个文件夹（Folder）杀毒，也可以对某个指定的文件（File）杀毒。该软件还可以根据各类文件的特点为不同类型的文件提供不同德杀毒方式，例如图像文件（ImageFile）和文本文件（TextFile）的杀毒方式就有所差异。<br />使用组合模式来设计该杀毒软件的整体框架</p>
+<p>以下采用的是安全组合模式，还有一种透明组合模式，但安全性不高，存在无意义的方法</p>
+<p><a name="Nl0bg"></a></p>
+<h2 id="1-抽象构件"><a href="#1-抽象构件" class="headerlink" title="1. 抽象构件"></a>1. 抽象构件</h2><p><a name="oU6ht"></a></p>
+<h3 id="1-1-KillVirus"><a href="#1-1-KillVirus" class="headerlink" title="1.1 KillVirus"></a>1.1 KillVirus</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">KillVirus</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">killVirus</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="mZ6Bk"></a></p>
+<h3 id="1-2-AbstractFile"><a href="#1-2-AbstractFile" class="headerlink" title="1.2 AbstractFile"></a>1.2 AbstractFile</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractFile</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">KillVirus</span> </span>&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="hQUkn"></a></p>
+<h2 id="2-叶子构件"><a href="#2-叶子构件" class="headerlink" title="2. 叶子构件"></a>2. 叶子构件</h2><p><a name="KHUFf"></a></p>
+<h3 id="2-1-File"><a href="#2-1-File" class="headerlink" title="2.1 File"></a>2.1 File</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">File</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFile</span> </span>&#123;<br><br>    <span class="hljs-keyword">protected</span> String name;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">File</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">killVirus</span><span class="hljs-params">()</span> </span>&#123;<br><br>    &#125;<br><br>    <span class="hljs-comment">// 文件特有的方法，而文件夹没有，比如修改扩展名</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="CgH5V"></a></p>
+<h3 id="2-2-ImageFile"><a href="#2-2-ImageFile" class="headerlink" title="2.2 ImageFile"></a>2.2 ImageFile</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ImageFile</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">File</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ImageFile</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>(name);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">killVirus</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;- - - - 对图片文件&#x27;&quot;</span> + name + <span class="hljs-string">&quot;&#x27;进行杀毒&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="Fwd6X"></a></p>
+<h3 id="2-3-TextFile"><a href="#2-3-TextFile" class="headerlink" title="2.3 TextFile"></a>2.3 TextFile</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextFile</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">File</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">TextFile</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>(name);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">killVirus</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;- - - - 对文本文件&#x27;&quot;</span> + name + <span class="hljs-string">&quot;&#x27;进行杀毒&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a name="ym0Ny"></a></p>
+<h2 id="3-容器构件"><a href="#3-容器构件" class="headerlink" title="3. 容器构件"></a>3. 容器构件</h2><p><a name="EXEcN"></a></p>
+<h3 id="3-1-Folder"><a href="#3-1-Folder" class="headerlink" title="3.1 Folder"></a>3.1 Folder</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Folder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFile</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> ArrayList&lt;AbstractFile&gt; files = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br><br>    <span class="hljs-keyword">private</span> String name;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Folder</span><span class="hljs-params">(String name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(AbstractFile file)</span> </span>&#123;<br>        files.add(file);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(AbstractFile file)</span> </span>&#123;<br>        files.remove(file);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">killVirus</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;* * * * 对文件夹&#x27;&quot;</span> + name + <span class="hljs-string">&quot;&#x27;进行杀毒&quot;</span>);<br>        <span class="hljs-keyword">for</span> (AbstractFile file : files) &#123;<br>            file.killVirus();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="X8sVN"></a></p>
+<h2 id="4-客户端代码-1"><a href="#4-客户端代码-1" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Folder folder1, folder2;<br><br>        File file1, file2, file3, file4;<br><br>        file1 = <span class="hljs-keyword">new</span> ImageFile(<span class="hljs-string">&quot;小龙女.jpg&quot;</span>);<br>        file2 = <span class="hljs-keyword">new</span> ImageFile(<span class="hljs-string">&quot;张无忌.png&quot;</span>);<br>        file3 = <span class="hljs-keyword">new</span> TextFile(<span class="hljs-string">&quot;葵花宝典.doc&quot;</span>);<br>        file4 = <span class="hljs-keyword">new</span> TextFile(<span class="hljs-string">&quot;九阳真经.txt&quot;</span>);<br><br>        folder1 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;图片文件夹&quot;</span>);<br>        folder2 = <span class="hljs-keyword">new</span> Folder(<span class="hljs-string">&quot;文本文件夹&quot;</span>);<br><br>        folder1.add(file1);<br>        folder1.add(file2);<br><br>        folder2.add(file3);<br>        folder2.add(file4);<br><br>        folder1.add(folder2);<br><br>        folder1.killVirus();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="Ao3lI"></a></p>
+<h2 id="5-优缺点和适用场景-1"><a href="#5-优缺点和适用场景-1" class="headerlink" title="5. 优缺点和适用场景"></a>5. 优缺点和适用场景</h2><p><a name="eG9qg"></a></p>
+<h3 id="5-1-优点-1"><a href="#5-1-优点-1" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li><p>为树形结构的面向对象实现提供了一种灵活的解决方案，通过对叶子对象和容器对象的递归组合可以形成复杂的树形结构，但对树形结构的控制却非常简单<br><a name="utM2K"></a></p>
+<h3 id="5-2-缺点-1"><a href="#5-2-缺点-1" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>很难对容器中的构建类进行类型限制。比如上述例子中想针对一个文件夹只存图片文件，因为容器类和叶子类它们都源于同一个抽象层，所以较难实现<br><a name="iE29w"></a></p>
+<h3 id="5-3-适用场景-1"><a href="#5-3-适用场景-1" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>在具有整体和部分的层次结构中希望通过一种方式忽略整体与部分的差异，并且客户端可以一致地对待它们</p>
+</li>
+<li><p>在一个使用面向对象语言开发的系统中需要处理一个树形结构</p>
+</li>
+<li><p>在一个系统中能够分离出叶子对象和容器对象，而且它们的类型不固定，需要增加一些新的类型</p>
+</li>
+</ul>
+<p><a name="kDObt"></a></p>
+<h1 id="五、装饰模式"><a href="#五、装饰模式" class="headerlink" title="五、装饰模式"></a>五、装饰模式</h1><p>某构件库提供了大量的基本构建，如窗体、文本框、列表框等，由于在使用该构建库时用户经常要求定制一些特殊的显示效果，如带滚动条的窗体、带黑色边框的文本框、既带滚动条又带黑色边框的列表框等，因此经常需要对该构件库进行扩展以增强其功能<br />请使用装饰模式来设计该图形节面构件库</p>
+<p><a name="lrrvl"></a></p>
+<h2 id="1-抽象构建"><a href="#1-抽象构建" class="headerlink" title="1. 抽象构建"></a>1. 抽象构建</h2><p><a name="GlGdM"></a></p>
+<h3 id="1-1-Component"><a href="#1-1-Component" class="headerlink" title="1.1 Component"></a>1.1 Component</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Component</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="KICMZ"></a></p>
+<h2 id="2-具体构件"><a href="#2-具体构件" class="headerlink" title="2. 具体构件"></a>2. 具体构件</h2><p><a name="ubo5L"></a></p>
+<h3 id="2-1-TextBox"><a href="#2-1-TextBox" class="headerlink" title="2.1 TextBox"></a>2.1 TextBox</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextBox</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;显示文本框&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="ln67L"></a></p>
+<h3 id="2-2-Window"><a href="#2-2-Window" class="headerlink" title="2.2 Window"></a>2.2 Window</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Window</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;显示窗体&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a name="igBAq"></a></p>
+<h2 id="3-抽象装饰类"><a href="#3-抽象装饰类" class="headerlink" title="3. 抽象装饰类"></a>3. 抽象装饰类</h2><p><a name="k2azr"></a></p>
+<h3 id="3-1-ComponentDecorator"><a href="#3-1-ComponentDecorator" class="headerlink" title="3.1 ComponentDecorator"></a>3.1 ComponentDecorator</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ComponentDecorator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> Component component;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ComponentDecorator</span><span class="hljs-params">(Component component)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.component = component;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        component.display();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a name="mnTPN"></a></p>
+<h2 id="4-具体装饰类"><a href="#4-具体装饰类" class="headerlink" title="4. 具体装饰类"></a>4. 具体装饰类</h2><p><a name="RloHj"></a></p>
+<h3 id="4-1-BlackBorderDecorator"><a href="#4-1-BlackBorderDecorator" class="headerlink" title="4.1 BlackBorderDecorator"></a>4.1 BlackBorderDecorator</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlackBorderDecorator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ComponentDecorator</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">BlackBorderDecorator</span><span class="hljs-params">(Component component)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>(component);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        setBlackBorder();<br>        <span class="hljs-keyword">super</span>.display();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setBlackBorder</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;增加黑边框&quot;</span>);<br>    &#125;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="mEZj1"></a></p>
+<h3 id="4-2-ScrollBarDecorator"><a href="#4-2-ScrollBarDecorator" class="headerlink" title="4.2 ScrollBarDecorator"></a>4.2 ScrollBarDecorator</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ScrollBarDecorator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ComponentDecorator</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ScrollBarDecorator</span><span class="hljs-params">(Component component)</span> </span>&#123;<br>        <span class="hljs-keyword">super</span>(component);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>&#123;<br>        setScrollBar();<br>        <span class="hljs-keyword">super</span>.display();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setScrollBar</span><span class="hljs-params">()</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;增加滚动条&quot;</span>);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="rxN8G"></a></p>
+<h2 id="5-客户端代码-1"><a href="#5-客户端代码-1" class="headerlink" title="5. 客户端代码"></a>5. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Component textBox, window;<br>        textBox = <span class="hljs-keyword">new</span> TextBox();<br>        window = <span class="hljs-keyword">new</span> Window();<br><br>        textBox.display();<br>        window.display();<br><br>        ComponentDecorator blackBorderDeco, scrollBarDeco;<br>        blackBorderDeco = <span class="hljs-keyword">new</span> BlackBorderDecorator(textBox);<br>        scrollBarDeco = <span class="hljs-keyword">new</span> ScrollBarDecorator(window);<br><br>        blackBorderDeco.display();<br>        scrollBarDeco.display();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a name="KfvZ1"></a></p>
+<h2 id="6-优缺点和适用场景-1"><a href="#6-优缺点和适用场景-1" class="headerlink" title="6. 优缺点和适用场景"></a>6. 优缺点和适用场景</h2><p><a name="RLMw7"></a></p>
+<h3 id="6-1-优点-1"><a href="#6-1-优点-1" class="headerlink" title="6.1 优点"></a>6.1 优点</h3><ul>
+<li><p>对于扩展一个对象的功能，装饰模式比继承更加灵活，不会导致类的个数急剧增加</p>
+</li>
+<li><p>可以通过一种动态的方式来扩展一个对象的功能，通过配置文件可以在运行时选择不同的具体装饰类，从而实现不同的行为  </p>
+</li>
+<li><p>可以对一个对象进行多次装饰，通过使用不同的具体装饰类以及这些装饰类的排列组合，可以创造出很多不同行为的组合，得到功能强大的对象  </p>
+</li>
+<li><p>具体构建类与具体装饰类可以独立变化，用户可以根据需要增加新的具体构建类和具体装饰类，原有类库代码无需改变，符合开闭原则<br><a name="B6ULK"></a></p>
+<h3 id="6-2-缺点-1"><a href="#6-2-缺点-1" class="headerlink" title="6.2 缺点"></a>6.2 缺点</h3></li>
+<li><p>在一定程度上会影响程序的性能。因为适用装饰模式时会产生很多小对象，势必会占用更多的系统资源</p>
+</li>
+<li><p>系统较为复杂。虽然提供了一种比继承更加灵活、机动的解决方案，但同时也意味着更容易出错，排错更加困难<br><a name="WpWlD"></a></p>
+<h3 id="6-3-适用场景-1"><a href="#6-3-适用场景-1" class="headerlink" title="6.3 适用场景"></a>6.3 适用场景</h3></li>
+<li><p>在不影响其他对象的情况下以动态、透明的方式给单个对象添加职责</p>
+</li>
+<li><p>当不能采用继承的方式对系统进行扩展或者采用继承不利于系统扩展和维护时</p>
+</li>
+</ul>
+<p>而不能采用继承的方式主要有两种情况：<br />第一类：系统存在大量的独立的扩展，为支持每一种扩展或者扩展之间的组合将产生大量的子类，使得子类数目爆炸增长<br />第二类：该类被定义为不能继承类例如被 final 字段修饰</p>
+<p><a name="WzqIh"></a></p>
+<h1 id="六、外观模式"><a href="#六、外观模式" class="headerlink" title="六、外观模式"></a>六、外观模式</h1><p>在电脑主机中只需要按下主机的开机按钮，即可调用其他硬件设备的启动方法，如内存的自检(check)、CPU的运行(run)、硬盘的读取(read)、操作系统的载入(load)等，如果某一过程发生错误则电脑启动失败<br />使用外观模式模拟该过程</p>
+<p><a name="cymVf"></a></p>
+<h2 id="1-外观角色"><a href="#1-外观角色" class="headerlink" title="1. 外观角色"></a>1. 外观角色</h2><p><a name="o1mGd"></a></p>
+<h3 id="1-1-Boot"><a href="#1-1-Boot" class="headerlink" title="1.1 Boot"></a>1.1 Boot</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Boot</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> flag = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">private</span> Lock lock = <span class="hljs-keyword">new</span> ReentrantLock();<br><br>    <span class="hljs-keyword">private</span> Check check = <span class="hljs-keyword">new</span> Check();<br>    <span class="hljs-keyword">private</span> Load load = <span class="hljs-keyword">new</span> Load();<br>    <span class="hljs-keyword">private</span> Read read = <span class="hljs-keyword">new</span> Read();<br>    <span class="hljs-keyword">private</span> Run run = <span class="hljs-keyword">new</span> Run();<br><br>    <span class="hljs-keyword">private</span> Condition checkCondition = lock.newCondition();<br>    <span class="hljs-keyword">private</span> Condition loadCondition = lock.newCondition();<br>    <span class="hljs-keyword">private</span> Condition readCondition = lock.newCondition();<br>    <span class="hljs-keyword">private</span> Condition runCondition = lock.newCondition();<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">check</span><span class="hljs-params">()</span></span>&#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (flag != <span class="hljs-number">1</span>)&#123;<br>                checkCondition.await();<br>            &#125;<br>            check.check();<br>            flag = <span class="hljs-number">2</span>;<br>            loadCondition.signal();<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;内存检测失败！&quot;</span>);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">load</span><span class="hljs-params">()</span></span>&#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (flag != <span class="hljs-number">2</span>)&#123;<br>                loadCondition.await();<br>            &#125;<br>            load.load();<br>            flag = <span class="hljs-number">3</span>;<br>            readCondition.signal();<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;载入操作系统失败！&quot;</span>);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">read</span><span class="hljs-params">()</span></span>&#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (flag != <span class="hljs-number">3</span>)&#123;<br>                readCondition.await();<br>            &#125;<br>            read.read();<br>            flag = <span class="hljs-number">4</span>;<br>            runCondition.signal();<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;读取硬盘失败！&quot;</span>);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>&#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (flag != <span class="hljs-number">4</span>)&#123;<br>                runCondition.await();<br>            &#125;<br>            run.run();<br>            flag = <span class="hljs-number">0</span>;<br>            System.out.println(<span class="hljs-string">&quot;启动成功！&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;运行CPU！&quot;</span>);<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">boot</span><span class="hljs-params">()</span></span>&#123;<br>        check();<br>        load();<br>        read();<br>        run();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="XdqlU"></a></p>
+<h2 id="2-子系统角色"><a href="#2-子系统角色" class="headerlink" title="2. 子系统角色"></a>2. 子系统角色</h2><p><a name="kQNWb"></a></p>
+<h3 id="2-1-Check"><a href="#2-1-Check" class="headerlink" title="2.1 Check"></a>2.1 Check</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Check</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">check</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;正在对内存检测&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">1000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;内存检测失败！&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="t37Ke"></a></p>
+<h3 id="2-2-Load"><a href="#2-2-Load" class="headerlink" title="2.2 Load"></a>2.2 Load</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Load</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">load</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;正在载入操作系统&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">1000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;载入操作系统失败！&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="UoQgR"></a></p>
+<h3 id="2-3-Read"><a href="#2-3-Read" class="headerlink" title="2.3 Read"></a>2.3 Read</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Read</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">read</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;正在读取硬盘&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">1000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;读取硬盘失败！&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="KTOJC"></a></p>
+<h3 id="2-4-Run"><a href="#2-4-Run" class="headerlink" title="2.4 Run"></a>2.4 Run</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Run</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;正在运行CPU&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">1000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;运行CPU失败！&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="Y43SG"></a></p>
+<h2 id="3-客户端代码"><a href="#3-客户端代码" class="headerlink" title="3. 客户端代码"></a>3. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    Boot boot = <span class="hljs-keyword">new</span> Boot();<br>    boot.boot();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="NuzKq"></a></p>
+<h2 id="4-优缺点和适用场景"><a href="#4-优缺点和适用场景" class="headerlink" title="4. 优缺点和适用场景"></a>4. 优缺点和适用场景</h2><p><a name="TZpOe"></a></p>
+<h3 id="4-1-优点"><a href="#4-1-优点" class="headerlink" title="4.1 优点"></a>4.1 优点</h3><ul>
+<li><p>对客户端屏蔽了子系统组件</p>
+</li>
+<li><p>实现了子系统和客户端之间的松耦合关系</p>
+</li>
+<li><p>子系统对象的修改不会影响到其他子系统对象<br><a name="U2077"></a></p>
+<h3 id="4-2-缺点"><a href="#4-2-缺点" class="headerlink" title="4.2 缺点"></a>4.2 缺点</h3></li>
+<li><p>不能限制客户端直接适用子系统类</p>
+</li>
+<li><p>如果设计不当，增加新的子系统类困难需要修改外观类的源代码<br><a name="Sm2rP"></a></p>
+<h3 id="4-3-适用场景"><a href="#4-3-适用场景" class="headerlink" title="4.3 适用场景"></a>4.3 适用场景</h3></li>
+<li><p>当需要访问一系列复杂的子系统时，需要提供一个简单的入口、</p>
+</li>
+<li><p>客户端与多个子系统之间存在很大的依赖性，需要减低客户端和子系统之间的耦合度</p>
+</li>
+</ul>
+<p><a name="JCPmQ"></a></p>
+<h1 id="七、享元模式"><a href="#七、享元模式" class="headerlink" title="七、享元模式"></a>七、享元模式</h1><p>开发一个围棋软件，但围棋棋盘中包含大量的黑子和白子，它们的形状、大小一模一样，只是出现的位置不同而已。如果将每一个棋子作为一个独立的对象存储在内存中，将导致该围棋软件在运行时所需要的内存空间较大，那么如何降低运行代价、提供系统性能是需要解决的一个问题<br />为了解决该问题，适用享元模式设计该围棋软件的系统架构</p>
+<p><a name="MOGAE"></a></p>
+<h2 id="1-抽象享元类"><a href="#1-抽象享元类" class="headerlink" title="1. 抽象享元类"></a>1. 抽象享元类</h2><p><a name="bO5zl"></a></p>
+<h3 id="1-1-GoChessPiece"><a href="#1-1-GoChessPiece" class="headerlink" title="1.1 GoChessPiece"></a>1.1 GoChessPiece</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GoChessPiece</span> </span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> String <span class="hljs-title">getColor</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">(Coordinates coordinates)</span> </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;棋子颜色：&quot;</span> + getColor() + <span class="hljs-string">&quot;棋子位置：&quot;</span> + coordinates.getX() + <span class="hljs-string">&quot;,&quot;</span> + coordinates.getY());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="j7srL"></a></p>
+<h2 id="2-具体享元类"><a href="#2-具体享元类" class="headerlink" title="2. 具体享元类"></a>2. 具体享元类</h2><p><a name="CNyqG"></a></p>
+<h3 id="2-1-BlackGoChessPiece"><a href="#2-1-BlackGoChessPiece" class="headerlink" title="2.1 BlackGoChessPiece"></a>2.1 BlackGoChessPiece</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlackGoChessPiece</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GoChessPiece</span> </span>&#123;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getColor</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;黑色&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="yECws"></a></p>
+<h3 id="2-2-WhiteGoChessPiece"><a href="#2-2-WhiteGoChessPiece" class="headerlink" title="2.2 WhiteGoChessPiece"></a>2.2 WhiteGoChessPiece</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WhiteGoChessPiece</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">GoChessPiece</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getColor</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;白色&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="XjRTb"></a></p>
+<h2 id="3-享元工厂类"><a href="#3-享元工厂类" class="headerlink" title="3. 享元工厂类"></a>3. 享元工厂类</h2><p><a name="amWjd"></a></p>
+<h3 id="3-1-GoChessPieceFactory"><a href="#3-1-GoChessPieceFactory" class="headerlink" title="3.1 GoChessPieceFactory"></a>3.1 GoChessPieceFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GoChessPieceFactory</span> </span>&#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * IoDH单例模式</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">GoChessPieceFactory</span><span class="hljs-params">()</span> </span>&#123;&#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HolderClass</span> </span>&#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> GoChessPieceFactory instance = <span class="hljs-keyword">new</span> GoChessPieceFactory();<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> GoChessPieceFactory <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> HolderClass.instance;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 享元池</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ConcurrentHashMap&lt;String, GoChessPiece&gt; flyweightPool;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        flyweightPool = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();<br>        GoChessPiece black, white;<br>        black = <span class="hljs-keyword">new</span> BlackGoChessPiece();<br>        white = <span class="hljs-keyword">new</span> WhiteGoChessPiece();<br><br>        flyweightPool.put(<span class="hljs-string">&quot;b&quot;</span>, black);<br>        flyweightPool.put(<span class="hljs-string">&quot;w&quot;</span>, white);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> GoChessPiece <span class="hljs-title">getGoChessPiece</span><span class="hljs-params">(String color)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> flyweightPool.get(color);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="CMIHF"></a></p>
+<h2 id="4-客户端代码-2"><a href="#4-客户端代码-2" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        GoChessPiece black1, black2, black3, white1, white2;<br><br>        black1 = GoChessPieceFactory.getGoChessPiece(<span class="hljs-string">&quot;b&quot;</span>);<br>        black2 = GoChessPieceFactory.getGoChessPiece(<span class="hljs-string">&quot;b&quot;</span>);<br>        black3 = GoChessPieceFactory.getGoChessPiece(<span class="hljs-string">&quot;b&quot;</span>);<br><br>        white1 = GoChessPieceFactory.getGoChessPiece(<span class="hljs-string">&quot;w&quot;</span>);<br>        white2 = GoChessPieceFactory.getGoChessPiece(<span class="hljs-string">&quot;w&quot;</span>);<br><br>        black1.display(<span class="hljs-keyword">new</span> Coordinates(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>));<br>        black2.display(<span class="hljs-keyword">new</span> Coordinates(<span class="hljs-number">2</span>,<span class="hljs-number">3</span>));<br>        black3.display(<span class="hljs-keyword">new</span> Coordinates(<span class="hljs-number">3</span>,<span class="hljs-number">4</span>));<br><br>        white1.display(<span class="hljs-keyword">new</span> Coordinates(<span class="hljs-number">5</span>, <span class="hljs-number">4</span>));<br>        white2.display(<span class="hljs-keyword">new</span> Coordinates(<span class="hljs-number">4</span>, <span class="hljs-number">5</span>));<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="tleHj"></a></p>
+<h2 id="5-优缺点和适用场景-2"><a href="#5-优缺点和适用场景-2" class="headerlink" title="5. 优缺点和适用场景"></a>5. 优缺点和适用场景</h2><p><a name="P0XZe"></a></p>
+<h3 id="5-1-优点-2"><a href="#5-1-优点-2" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li><p>减少内存中的对象数量</p>
+</li>
+<li><p>耦合低，享元对象可以在不同的环境下适用<br><a name="MZaQd"></a></p>
+<h3 id="5-2-缺点-2"><a href="#5-2-缺点-2" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>提高系统复杂度<br><a name="XmnwE"></a></p>
+<h3 id="5-3-适用场景-2"><a href="#5-3-适用场景-2" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>一个系统中有大量相同或者相似的对象，造成内存的大量耗费</p>
+</li>
+<li><p>需要使用一个享元池存储需要被频繁适用的享元对象</p>
+</li>
+</ul>
+<p><a name="G2Ekt"></a></p>
+<h1 id="八、代理模式"><a href="#八、代理模式" class="headerlink" title="八、代理模式"></a>八、代理模式</h1><p>在某应用软件中需要记录业务方法的调用日志，在不修改现有业务类的基础上为每一个类提供一个日志记录代理类，在中输出日志，如在业务方法method()调用之前输出“方法method()被调用，调用时间为2012-10-10 10：10：10”</p>
+<p><a name="Kjery"></a></p>
+<h2 id="1-抽象主题角色"><a href="#1-抽象主题角色" class="headerlink" title="1. 抽象主题角色"></a>1. 抽象主题角色</h2><p><a name="MYWyz"></a></p>
+<h3 id="1-1-UserService"><a href="#1-1-UserService" class="headerlink" title="1.1 UserService"></a>1.1 UserService</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">select</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">del</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">()</span></span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="odxDq"></a></p>
+<h2 id="2-代理主题角色"><a href="#2-代理主题角色" class="headerlink" title="2. 代理主题角色"></a>2. 代理主题角色</h2><p><a name="uSTgW"></a></p>
+<h3 id="2-1-UserServiceProxy"><a href="#2-1-UserServiceProxy" class="headerlink" title="2.1 UserServiceProxy"></a>2.1 UserServiceProxy</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserServiceProxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">InvocationHandler</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> Object target;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserServiceProxy</span><span class="hljs-params">(Object target)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.target = target;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setTarget</span><span class="hljs-params">(Object target)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.target = target;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">getProxy</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> Proxy.newProxyInstance(<span class="hljs-keyword">this</span>.getClass().getClassLoader(),<br>                target.getClass().getInterfaces(), <span class="hljs-keyword">this</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable </span>&#123;<br>        log(method.getName());<br>        method.invoke(target, args);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">log</span><span class="hljs-params">(String methodName)</span> </span>&#123;<br>        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern(<span class="hljs-string">&quot;yyyy-MM-dd HH:mm:ss:SSS&quot;</span>)) + <span class="hljs-string">&quot;调用了&quot;</span> + methodName);<br>    &#125;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a name="Lh2pT"></a></p>
+<h2 id="3-真实主题角色"><a href="#3-真实主题角色" class="headerlink" title="3. 真实主题角色"></a>3. 真实主题角色</h2><p><a name="x7G9I"></a></p>
+<h3 id="3-1-UserServiceImpl"><a href="#3-1-UserServiceImpl" class="headerlink" title="3.1 UserServiceImpl"></a>3.1 UserServiceImpl</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserServiceImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">UserService</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">select</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;执行查询用户&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">del</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;执行删除用户&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;执行修改用户&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;执行插入用户&quot;</span>);<br>    &#125;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="VmglO"></a></p>
+<h2 id="4-客户端代码-3"><a href="#4-客户端代码-3" class="headerlink" title="4. 客户端代码"></a>4. 客户端代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    UserService userService = <span class="hljs-keyword">new</span> UserServiceImpl();<br>    UserServiceProxy userServiceProxy = <span class="hljs-keyword">new</span> UserServiceProxy(userService);<br>    UserService proxy = (UserService) userServiceProxy.getProxy();<br>    proxy.select();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a name="qZaxT"></a></p>
+<h2 id="5-优缺点和适用场景-3"><a href="#5-优缺点和适用场景-3" class="headerlink" title="5. 优缺点和适用场景"></a>5. 优缺点和适用场景</h2><p><a name="x3IFX"></a></p>
+<h3 id="5-1-优点-3"><a href="#5-1-优点-3" class="headerlink" title="5.1 优点"></a>5.1 优点</h3><ul>
+<li><p>能够协调使用调用者和被调用者，降低了系统耦合度</p>
+</li>
+<li><p>具有较好的灵活性和扩展性，可以进行 AOP</p>
+</li>
+<li><p>此外，不同类型的代理模式具有独特的优点，具体请君网上查找<br><a name="mZ6M3"></a></p>
+<h3 id="5-2-缺点-3"><a href="#5-2-缺点-3" class="headerlink" title="5.2 缺点"></a>5.2 缺点</h3></li>
+<li><p>需要进行额外的工作，并且较为复杂<br><a name="W4FXX"></a></p>
+<h3 id="5-3-适用场景-3"><a href="#5-3-适用场景-3" class="headerlink" title="5.3 适用场景"></a>5.3 适用场景</h3></li>
+<li><p>AOP等等</p>
+</li>
+<li><p>好多😀，例如远程代理、缓冲代理、权限代理、智能引用代理</p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">Java 设计模式</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/05/15/Java%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+                        <span class="hidden-mobile">创建型模式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
