@@ -13,26 +13,26 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Masker">
+  <meta name="author" content="RovingSea">
   <meta name="keywords" content="Java">
   
     <meta name="description" content="什么是幂等性在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同 HTTP方法的幂等性是指一次和多次请求某一个资源应该具有同样的副作用。幂等性属于语义范畴，正如编译器只能帮助检查语法错误一样，HTTP规范也没有办法通过消息格式等语法手段来定义它。 简之：一个请求，不管重复来多少次，结果是不会改变的。 消费者在消费 MQ 中的消息时，MQ 已把消息发送给消费者，消费者在给 M">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RabbitMQ消息幂等性问题">
 <meta property="og:url" content="http://example.com/2022/01/24/RabbitMQ/RabbitMQ%E6%B6%88%E6%81%AF%E5%B9%82%E7%AD%89%E6%80%A7%E9%97%AE%E9%A2%98/index.html">
-<meta property="og:site_name" content="Masker7&#39;s Blog">
+<meta property="og:site_name" content="RovingSea&#39;s Blog">
 <meta property="og:description" content="什么是幂等性在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同 HTTP方法的幂等性是指一次和多次请求某一个资源应该具有同样的副作用。幂等性属于语义范畴，正如编译器只能帮助检查语法错误一样，HTTP规范也没有办法通过消息格式等语法手段来定义它。 简之：一个请求，不管重复来多少次，结果是不会改变的。 消费者在消费 MQ 中的消息时，MQ 已把消息发送给消费者，消费者在给 M">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.rabbitmq.com/img/logo-rabbitmq.svg">
 <meta property="article:published_time" content="2022-01-23T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-02-08T11:49:05.327Z">
-<meta property="article:author" content="Masker">
+<meta property="article:author" content="RovingSea">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.rabbitmq.com/img/logo-rabbitmq.svg">
   
   
-  <title>RabbitMQ消息幂等性问题 - Masker7&#39;s Blog</title>
+  <title>RabbitMQ消息幂等性问题 - RovingSea&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -81,7 +81,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Masker</strong>
+      <strong>RovingSea</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"

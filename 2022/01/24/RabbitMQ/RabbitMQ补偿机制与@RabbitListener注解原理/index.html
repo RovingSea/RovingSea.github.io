@@ -13,26 +13,26 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="author" content="Masker">
+  <meta name="author" content="RovingSea">
   <meta name="keywords" content="Java">
   
     <meta name="description" content="补偿机制RabbitMQ 默认情况下，如果消费者程序出现异常的情况下，会自动实现补偿（重试）机制 即队列服务器发送补偿请求 @RabbitListener原理@RabbitListener 底层使用 AOP 进行拦截  如果程序没有抛出异常，则会自动提交事务 如果程序捕捉到异常信息，会自动实现补偿机制，该消息会缓存到 RabbitMQ服务端中，一直重试到不跑出异常为止  补偿机制一直重复显然是会占">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RabbitMQ补偿机制与@RabbitListener注解原理">
 <meta property="og:url" content="http://example.com/2022/01/24/RabbitMQ/RabbitMQ%E8%A1%A5%E5%81%BF%E6%9C%BA%E5%88%B6%E4%B8%8E@RabbitListener%E6%B3%A8%E8%A7%A3%E5%8E%9F%E7%90%86/index.html">
-<meta property="og:site_name" content="Masker7&#39;s Blog">
+<meta property="og:site_name" content="RovingSea&#39;s Blog">
 <meta property="og:description" content="补偿机制RabbitMQ 默认情况下，如果消费者程序出现异常的情况下，会自动实现补偿（重试）机制 即队列服务器发送补偿请求 @RabbitListener原理@RabbitListener 底层使用 AOP 进行拦截  如果程序没有抛出异常，则会自动提交事务 如果程序捕捉到异常信息，会自动实现补偿机制，该消息会缓存到 RabbitMQ服务端中，一直重试到不跑出异常为止  补偿机制一直重复显然是会占">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.rabbitmq.com/img/logo-rabbitmq.svg">
 <meta property="article:published_time" content="2022-01-23T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-02-08T11:49:31.941Z">
-<meta property="article:author" content="Masker">
+<meta property="article:author" content="RovingSea">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.rabbitmq.com/img/logo-rabbitmq.svg">
   
   
-  <title>RabbitMQ补偿机制与@RabbitListener注解原理 - Masker7&#39;s Blog</title>
+  <title>RabbitMQ补偿机制与@RabbitListener注解原理 - RovingSea&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -81,7 +81,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Masker</strong>
+      <strong>RovingSea</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
