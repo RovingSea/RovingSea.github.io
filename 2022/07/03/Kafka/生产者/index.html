@@ -16,20 +16,20 @@
   <meta name="author" content="RovingSea">
   <meta name="keywords" content="Java">
   
-    <meta name="description" content="一、消息发送1. 发送原理在消息发送的过程中，涉及两个线程  main 线程  ​    创建双端队列 RecordAccumulator（默认大小 32 M），并将消息发送到 RecordAccumulator   sender线程  ​    不断地从 RecordAccumulator 中拉取消息发送到 Kafka Broker  ISR &#x3D; 集群 - Leader 也就是为和 Leader">
+    <meta name="description" content="一、消息发送 1. 发送原理在消息发送的过程中，涉及两个线程  main 线程  ​    创建双端队列 RecordAccumulator（默认大小 32 M），并将消息发送到 RecordAccumulator   sender线程  ​    不断地从 RecordAccumulator 中拉取消息发送到 Kafka Broker  ISR &#x3D; 与 leader 保持正常通讯的节点 也就是为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka生产者">
 <meta property="og:url" content="http://example.com/2022/07/03/Kafka/%E7%94%9F%E4%BA%A7%E8%80%85/index.html">
 <meta property="og:site_name" content="RovingSea&#39;s Blog">
-<meta property="og:description" content="一、消息发送1. 发送原理在消息发送的过程中，涉及两个线程  main 线程  ​    创建双端队列 RecordAccumulator（默认大小 32 M），并将消息发送到 RecordAccumulator   sender线程  ​    不断地从 RecordAccumulator 中拉取消息发送到 Kafka Broker  ISR &#x3D; 集群 - Leader 也就是为和 Leader">
+<meta property="og:description" content="一、消息发送 1. 发送原理在消息发送的过程中，涉及两个线程  main 线程  ​    创建双端队列 RecordAccumulator（默认大小 32 M），并将消息发送到 RecordAccumulator   sender线程  ​    不断地从 RecordAccumulator 中拉取消息发送到 Kafka Broker  ISR &#x3D; 与 leader 保持正常通讯的节点 也就是为">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kafka.apachecn.org/images/logo.png">
+<meta property="og:image" content="http://example.com/image/kafka%E5%AE%98%E7%BD%91%E5%9B%BE%E7%89%87.png">
 <meta property="article:published_time" content="2022-07-03T09:15:43.817Z">
-<meta property="article:modified_time" content="2022-07-03T15:51:04.144Z">
+<meta property="article:modified_time" content="2022-09-12T06:59:39.903Z">
 <meta property="article:author" content="RovingSea">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kafka.apachecn.org/images/logo.png">
+<meta name="twitter:image" content="http://example.com/image/kafka%E5%AE%98%E7%BD%91%E5%9B%BE%E7%89%87.png">
   
   
   <title>Kafka生产者 - RovingSea&#39;s Blog</title>
@@ -248,7 +248,8 @@
             <h1 style="display: none">Kafka生产者</h1>
             
             <div class="markdown-body">
-              <h1 id="一、消息发送"><a href="#一、消息发送" class="headerlink" title="一、消息发送"></a>一、消息发送</h1><h2 id="1-发送原理"><a href="#1-发送原理" class="headerlink" title="1. 发送原理"></a>1. 发送原理</h2><p>在消息发送的过程中，涉及两个线程</p>
+              <h1 id="一、消息发送"><a href="#一、消息发送" class="headerlink" title="一、消息发送"></a>一、消息发送</h1><p><img src="/image/image-20220912142739437-16629640633421.png" srcset="/img/loading.gif" lazyload alt="kafka图片"></p>
+<h2 id="1-发送原理"><a href="#1-发送原理" class="headerlink" title="1. 发送原理"></a>1. 发送原理</h2><p>在消息发送的过程中，涉及两个线程</p>
 <ul>
 <li><code>main</code> 线程</li>
 </ul>
@@ -258,7 +259,7 @@
 </ul>
 <p>​    不断地从 <code>RecordAccumulator</code> 中拉取消息发送到 <code>Kafka Broker</code></p>
 <p><img src="/image/image-20220703203532125.png" srcset="/img/loading.gif" lazyload alt="kafka生产者发送流程图"></p>
-<p><code>ISR</code> = 集群 - Leader</p>
+<p><code>ISR</code> = 与 leader 保持正常通讯的节点</p>
 <p>也就是为和 <code>Leader</code> 保持同步数据的所有副本集合</p>
 <h2 id="2-异步发送-API"><a href="#2-异步发送-API" class="headerlink" title="2. 异步发送 API"></a>2. 异步发送 API</h2><figure class="highlight java"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Producer</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        <span class="hljs-comment">// 1. 创建 kafka 生产者的配置对象</span><br>        Properties properties = <span class="hljs-keyword">new</span> Properties();<br>        <span class="hljs-comment">// 2. 给 kafka 配置对象添加配置信息：bootstrap.server</span><br>        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, <span class="hljs-string">&quot;ip:port&quot;</span>);<br>        <span class="hljs-comment">// 3. key, value 序列化</span><br>        properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,<br>                <span class="hljs-string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span>);<br>        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,<br>                <span class="hljs-string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span>);<br>        <span class="hljs-comment">// 4. 创建 kafka 生产者对象</span><br>        KafkaProducer&lt;String, String&gt; kafkaProducer = <span class="hljs-keyword">new</span> KafkaProducer&lt;&gt;(properties);<br>        <span class="hljs-comment">// 5. 调用 send 方法，进行测试</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++) &#123;<br>            kafkaProducer.send(<span class="hljs-keyword">new</span> ProducerRecord&lt;&gt;(<span class="hljs-string">&quot;first&quot;</span>, <span class="hljs-string">&quot;rovingsea&quot;</span> + i));<br>        &#125;<br>        <span class="hljs-comment">// 6. 关闭资源</span><br>        kafkaProducer.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -344,6 +345,12 @@
                 <div class="post-prevnext">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2022/07/04/Kafka/Broker/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Kafka Broker</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

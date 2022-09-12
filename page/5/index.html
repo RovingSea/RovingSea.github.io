@@ -190,6 +190,98 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+          <img src="https://www.rabbitmq.com/img/logo-rabbitmq.svg" srcset="/img/loading.gif" lazyload alt="RabbitMQ实现分布式事务">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+          RabbitMQ实现分布式事务
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/RabbitMQ/RabbitMQ%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_self">
+          
+          原理采用最终一致性原理 也就是说过程中可能会产生不一致，但是最终会保持一致 要素RabbitMQ解决分布式事务需要保证以下三要素   一、确认生产者一定要将数据发送到 MQ服务器中 采用 MQ 消息确认机制 二、MQ消费者消息能够正确消费消息 采用手动 ACK 模式，同时也要注意重试幂等性问题   三、保证第一个事务先执行 采用补偿机制，创建一个消费者进行监听第一个事务，如果第一个事务没有执行成功
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:00" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/RabbitMQ/">RabbitMQ</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
+          <img src="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg" srcset="/img/loading.gif" lazyload alt="线程的生命周期">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
+          线程的生命周期
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/24/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" target="_self">
+          
+          线程的生命周期包含5个阶段，包括：新建、就绪、运行、阻塞、销毁。  新建：就是刚使用new()方法，new出来的线程； 就绪：就是调用的线程的start()方法后，这时候线程处于等待CPU分配资源阶段，谁先抢的CPU资源，谁开始执行; 运行：当就绪的线程被调度并获得CPU资源时，便进入运行状态，run()方法定义了线程的操作和功能; 阻塞：在运行状态的时候，可能因为某些原因导致运行状态的线程变成了
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-24 00:00" pubdate>
+              2022-01-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/01/24/Java%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95/" target="_self">
           <img src="https://imgsa.baidu.com/forum/pic/item/a9d3fd1f4134970a9b762c7c94cad1c8a7865d5f.jpg" srcset="/img/loading.gif" lazyload alt="常见方法">
         </a>
@@ -524,103 +616,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/05/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" target="_self">
-          <img src="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg" srcset="/img/loading.gif" lazyload alt="进程管理">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" target="_self">
-          进程管理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/22/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" target="_self">
-          
-          一、进程的组成、组织、特征1. 定义 2. 组成  3. 组织 4. 特征 5. 总结 二、进程的状态与转换1. 状态  2. 转换 3. 总结 三、进程控制1. 概念 简而言之，就是上图中的绿色箭头部分 2. 实现   3. 总结 四、进程通信1. 概念 2. 方式一 - 共享存储 3. 方式二 - 管道通信 4. 方式三 - 消息传递 5. 总结
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-22 00:00" pubdate>
-              2021-05-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2021/05/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" target="_self">
-          <img src="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg" srcset="/img/loading.gif" lazyload alt="操作系统概述">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021/05/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" target="_self">
-          操作系统概述
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021/05/21/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" target="_self">
-          
-          一、概念  二、特征        三、运行机制1. 指令就是处理器（CPU）能识别、执行的最基本命令  2. 处理器状态 3. 程序 4. 总结 操作系统中的哪些功能应该由内核程序实现呢？ 四、体系结构 1. 内核   五、中断和异常1. 中断    2. 总结 六、系统调用1. 分类 2. 与库函数的区别 3. 调用细节 4. 总结
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-05-21 00:00" pubdate>
-              2021-05-21
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/4/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="page-number current">5</span>
+      <a class="extend prev" rel="prev" href="/page/4/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/6/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

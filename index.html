@@ -190,8 +190,100 @@
     
     
       <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/05/Kafka/%E6%B6%88%E8%B4%B9%E8%80%85/" target="_self">
+          <img src="/image/kafka%E5%AE%98%E7%BD%91%E5%9B%BE%E7%89%87.png" srcset="/img/loading.gif" lazyload alt="Kafka 消费者">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/05/Kafka/%E6%B6%88%E8%B4%B9%E8%80%85/" target="_self">
+          Kafka 消费者
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/05/Kafka/%E6%B6%88%E8%B4%B9%E8%80%85/" target="_self">
+          
+          消费方式 工作流程总体流程  消费者组流程消费者组：由多个 consumer （允许1个）组成，其条件是所有消费者的 groupid 相同，因为默认情况下定义消费者时都需要输入 groupid，即便不输入 kafka 内部也会分配一个 groupid  消费者组内的每个消费者负责消费不同分区的数据，一个分区只能由一个组内的一个消费者消费 消费者之间互不影响。所有的消费者都属于某个消费者组，即消费者
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-05 00:00" pubdate>
+              2022-07-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Kafka/">Kafka</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/07/04/Kafka/Broker/" target="_self">
+          <img src="/image/kafka%E5%AE%98%E7%BD%91%E5%9B%BE%E7%89%87.png" srcset="/img/loading.gif" lazyload alt="Kafka Broker">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/07/04/Kafka/Broker/" target="_self">
+          Kafka Broker
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/07/04/Kafka/Broker/" target="_self">
+          
+          工作流程 副本基本信息（1）Kafka 副本作用：提高数据可靠性。 （2）Kafka 默认副本 1 个，生产环境一般配置为 2 个，保证数据可靠性；太多副本会 增加磁盘存储空间，增加网络上数据传输，降低效率。 （3）Kafka 中副本分为：Leader 和 Follower。Kafka 生产者只会把数据发往 Leader， 然后 Follower 找 Leader 进行同步数据。  （4）Kafk
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-04 00:00" pubdate>
+              2022-07-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Kafka/">Kafka</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
         <a href="/2022/07/03/Kafka/%E7%94%9F%E4%BA%A7%E8%80%85/" target="_self">
-          <img src="https://kafka.apachecn.org/images/logo.png" srcset="/img/loading.gif" lazyload alt="Kafka生产者">
+          <img src="/image/kafka%E5%AE%98%E7%BD%91%E5%9B%BE%E7%89%87.png" srcset="/img/loading.gif" lazyload alt="Kafka生产者">
         </a>
       </div>
     
@@ -206,7 +298,7 @@
       <p class="index-excerpt">
         <a href="/2022/07/03/Kafka/%E7%94%9F%E4%BA%A7%E8%80%85/" target="_self">
           
-          一、消息发送1. 发送原理在消息发送的过程中，涉及两个线程  main 线程  ​    创建双端队列 RecordAccumulator（默认大小 32 M），并将消息发送到 RecordAccumulator   sender线程  ​    不断地从 RecordAccumulator 中拉取消息发送到 Kafka Broker  ISR &#x3D; 集群 - Leader 也就是为和 Leader
+          一、消息发送 1. 发送原理在消息发送的过程中，涉及两个线程  main 线程  ​    创建双端队列 RecordAccumulator（默认大小 32 M），并将消息发送到 RecordAccumulator   sender线程  ​    不断地从 RecordAccumulator 中拉取消息发送到 Kafka Broker  ISR &#x3D; 与 leader 保持正常通讯的节点 也就是为
         </a>
       </p>
 
@@ -554,103 +646,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" target="_self">
-          <img src="https://img1.mydrivers.com/img/20220204/s_61b6f4d42e494d5cbee7eaed6cd35395.jpg" srcset="/img/loading.gif" lazyload alt="进程的调度算法">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" target="_self">
-          进程的调度算法
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/04/04/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95/" target="_self">
-          
-          一、调度算法的评价指标 1. CPU 利用率 2. 系统吞吐量 3. 周转时间  4. 等待时间 5. 响应时间 6. 总结 二、调度算法1. 先来先服务 FCFS  2. 短作业优先 SJF 非抢占式 抢占式 3. 高响应比优先 HRRN  4. 总结
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-04-04 00:00" pubdate>
-              2022-04-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/2022/03/24/MongoDB/mongodb%E5%AD%A6%E4%B9%A0/" target="_self">
-          <img src="https://img0.baidu.com/it/u=2830714526,296406142&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=592&amp;h=500" srcset="/img/loading.gif" lazyload alt="MongoDB学习">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2022/03/24/MongoDB/mongodb%E5%AD%A6%E4%B9%A0/" target="_self">
-          MongoDB学习
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2022/03/24/MongoDB/mongodb%E5%AD%A6%E4%B9%A0/" target="_self">
-          
-          一、CURD1. 增加单条文档123456789db.collection.insert() &amp;#123;	&lt;document&gt;&amp;#125;第一种用法：db.user.insert(&amp;#123;    name: &quot;wu&quot;,    age: 20&amp;#125;);  多条文档123456789101112131415db.collection.insert() &amp;#1
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-03-24 00:00" pubdate>
-              2022-03-24
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/MongoDB/">MongoDB</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/#board">5</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
