@@ -24,7 +24,7 @@
 <meta property="og:description" content="索引什么数据结构B+树  MySQL的索引失效有哪些场景？ 不符合最左匹配原则 在索引上使用计算、函数、类型的转换 使用了不等于 使用了 is null 或 is not null 使用了 like 字符串不加单引号  InnoDB引擎为什么使用B+树？（1）B+树空间利用率更高，可减少I&#x2F;O次数 一般来说，索引本身也很大，不可能全部存储在内存中，因此索引往往以索引文件的形式存储的磁盘上。这样的话">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="1900-12-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-18T15:18:14.199Z">
+<meta property="article:modified_time" content="2022-09-18T16:49:28.357Z">
 <meta property="article:author" content="RovingSea">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
@@ -197,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.6k 字
+      2.8k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23 分钟
+      24 分钟
     </span>
   
 
@@ -285,6 +285,9 @@
 <p>四、优化器会根据一些成本的计算，去决定具体走哪个索引，或者连表的顺序，最终生成执行计划</p>
 <p>五、执行器通过执行计划去调用存储引擎层的 API 接口</p>
 <p>六、存储引擎层，它是一个可插拔的设计，不同的存储引擎会去实现一套统一的 API 接口，<br>因此可以自由的去更换我们的存储引擎，上层是无感知的</p>
+<h2 id="redolog、undolog、binlog"><a href="#redolog、undolog、binlog" class="headerlink" title="redolog、undolog、binlog"></a>redolog、undolog、binlog</h2><p>redoLog：属于物理日志，事务中修改的任何数据，将最新的数据备份存储的位置，被称为重做日志</p>
+<p>undoLog：数据库事务开始之前，会将要修改的记录存放到undo日志里，当事务回滚时或数据库崩溃时，可以利用undo日志撤销未提交事务对数据库产生的影响</p>
+<p>binLog：属于innodb，binlog是属于mysql server自带功能，帮助实现数据恢复达到主从数据一致性</p>
 <h1 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h1><h2 id="MySQL的调优看过吗？有调优经验吗？"><a href="#MySQL的调优看过吗？有调优经验吗？" class="headerlink" title="MySQL的调优看过吗？有调优经验吗？"></a>MySQL的<strong>调优</strong>看过吗？有调优经验吗？</h2><p>确保命中索引，在复合索引的条件下符合最左匹配原则<br>分页优化：先通过覆盖索引查找，再使用join连接查询</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> A <span class="hljs-keyword">where</span> id <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> B) <br># 相当于：	A <span class="hljs-operator">&gt;</span> B<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> B) &#123; <span class="hljs-operator">/</span><span class="hljs-operator">/</span>B的数据量少，所以循环次数少。<br>   <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> A <span class="hljs-keyword">where</span> A.id <span class="hljs-operator">=</span> B.id<br>&#125;<br><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> A <span class="hljs-keyword">where</span> <span class="hljs-keyword">exists</span> (<span class="hljs-keyword">select</span> <span class="hljs-number">1</span> <span class="hljs-keyword">from</span> B <span class="hljs-keyword">where</span> B.id <span class="hljs-operator">=</span> A.id)  <span class="hljs-literal">true</span> <span class="hljs-operator">/</span> <span class="hljs-literal">false</span><br># 等价于 B <span class="hljs-operator">&gt;</span> A<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> A) &#123;<br>   <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> B <span class="hljs-keyword">where</span> B.id <span class="hljs-operator">=</span> A.id<br>&#125;<br></code></pre></td></tr></table></figure>
 
