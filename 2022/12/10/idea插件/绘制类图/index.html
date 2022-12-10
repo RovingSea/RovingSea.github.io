@@ -16,23 +16,23 @@
   <meta name="author" content="RovingSea">
   <meta name="keywords" content="Java">
   
-    <meta name="description" content="消费方式 工作流程总体流程  消费者组流程消费者组：由多个 consumer （允许1个）组成，其条件是所有消费者的 groupid 相同，因为默认情况下定义消费者时都需要输入 groupid，即便不输入 kafka 内部也会分配一个 groupid  消费者组内的每个消费者负责消费不同分区的数据，一个分区只能由一个组内的一个消费者消费 消费者之间互不影响。所有的消费者都属于某个消费者组，即消费者">
+    <meta name="description" content="安装插件 PlantUML Integration PlantUML Parser  下载在 IDEA -&gt; Settings -&gt; Plugins -&gt; Marketplace 搜索即可 配件 graphviz-dot  PlantUML Parser 依赖 PlantUML 插件 (PlantUML 不仅仅是一个插件，官网还提供了一个独立的 Java 程序（jar 包），我们">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kafka 消费者">
-<meta property="og:url" content="http://example.com/2022/07/05/Kafka/%E6%B6%88%E8%B4%B9%E8%80%85/index.html">
+<meta property="og:title" content="绘制类图">
+<meta property="og:url" content="http://example.com/2022/12/10/idea%E6%8F%92%E4%BB%B6/%E7%BB%98%E5%88%B6%E7%B1%BB%E5%9B%BE/index.html">
 <meta property="og:site_name" content="RovingSea&#39;s Blog">
-<meta property="og:description" content="消费方式 工作流程总体流程  消费者组流程消费者组：由多个 consumer （允许1个）组成，其条件是所有消费者的 groupid 相同，因为默认情况下定义消费者时都需要输入 groupid，即便不输入 kafka 内部也会分配一个 groupid  消费者组内的每个消费者负责消费不同分区的数据，一个分区只能由一个组内的一个消费者消费 消费者之间互不影响。所有的消费者都属于某个消费者组，即消费者">
+<meta property="og:description" content="安装插件 PlantUML Integration PlantUML Parser  下载在 IDEA -&gt; Settings -&gt; Plugins -&gt; Marketplace 搜索即可 配件 graphviz-dot  PlantUML Parser 依赖 PlantUML 插件 (PlantUML 不仅仅是一个插件，官网还提供了一个独立的 Java 程序（jar 包），我们">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/image/kafka%E5%AE%98%E7%BD%91%E5%9B%BE%E7%89%87.png">
-<meta property="article:published_time" content="2022-07-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-12T15:32:50.533Z">
+<meta property="og:image" content="https://www.jetbrains.com/idea/img/20223_New_UI_main_page.png">
+<meta property="article:published_time" content="2022-12-10T13:36:34.367Z">
+<meta property="article:modified_time" content="2022-12-10T13:40:00.917Z">
 <meta property="article:author" content="RovingSea">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/image/kafka%E5%AE%98%E7%BD%91%E5%9B%BE%E7%89%87.png">
+<meta name="twitter:image" content="https://www.jetbrains.com/idea/img/20223_New_UI_main_page.png">
   
   
-  <title>Kafka 消费者 - RovingSea&#39;s Blog</title>
+  <title>绘制类图 - RovingSea&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -178,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Kafka 消费者">
+            <span class="h2" id="subtitle" title="绘制类图">
               
             </span>
 
@@ -188,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-07-05 00:00" pubdate>
-        2022年7月5日 凌晨
+      <time datetime="2022-12-10 21:36" pubdate>
+        2022年12月10日 晚上
       </time>
     </span>
   
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      344 字
+      648 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3 分钟
+      6 分钟
     </span>
   
 
@@ -245,21 +245,41 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Kafka 消费者</h1>
+            <h1 style="display: none">绘制类图</h1>
             
             <div class="markdown-body">
-              <h1 id="消费方式"><a href="#消费方式" class="headerlink" title="消费方式"></a>消费方式</h1><p><img src="/image/image-20220912224415360-16629938638531.png" srcset="/img/loading.gif" lazyload alt="kafka 消费方式"></p>
-<h1 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h1><h2 id="总体流程"><a href="#总体流程" class="headerlink" title="总体流程"></a>总体流程</h2><p> <img src="/image/image-20220912224819282.png" srcset="/img/loading.gif" lazyload alt="kafka 消费者工作流程"></p>
-<h2 id="消费者组流程"><a href="#消费者组流程" class="headerlink" title="消费者组流程"></a>消费者组流程</h2><p>消费者组：由多个 consumer （允许1个）组成，其条件是所有消费者的 groupid 相同，因为默认情况下定义消费者时都需要输入 groupid，即便不输入 kafka 内部也会分配一个 groupid</p>
-<ul>
-<li><strong>消费者组内的每个消费者负责消费不同分区的数据，一个分区只能由一个组内的一个消费者消费</strong></li>
-<li><strong>消费者之间互不影响。</strong>所有的消费者都属于某个消费者组，即消费者组是逻辑上的一个订阅者</li>
-<li>如果消费者组中有更多的消费者，超过了主题分区的数量，那么<strong>多出来的一部分消费者就会闲置，不会接收任何消息</strong></li>
+              <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><ul>
+<li>PlantUML Integration</li>
+<li>PlantUML Parser</li>
 </ul>
-<h3 id="初始化流程"><a href="#初始化流程" class="headerlink" title="初始化流程"></a>初始化流程</h3><p>corrdinator：辅助实现消费者组的初始化和分区的分配</p>
-<p>选择方式为：groupid 的 hashcode 值 % 50 （__consumer_offsets 的分区数量，默认是 50）</p>
-<p><img src="/image/image-20220912231454015.png" srcset="/img/loading.gif" lazyload alt="kafka 消费者初始化流程"></p>
-<h3 id="工作流程-1"><a href="#工作流程-1" class="headerlink" title="工作流程"></a>工作流程</h3><p><img src="/image/image-20220912233135480.png" srcset="/img/loading.gif" lazyload alt="kafka 消费者工作流程"></p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>在 IDEA -&gt; Settings -&gt; Plugins -&gt; Marketplace 搜索即可</p>
+<h2 id="配件"><a href="#配件" class="headerlink" title="配件"></a>配件</h2><ul>
+<li>graphviz-dot</li>
+</ul>
+<p>PlantUML Parser 依赖 PlantUML 插件 (PlantUML 不仅仅是一个插件，官网还提供了一个独立的 Java 程序（jar 包），我们还可以通过这个独立程序来绘制 UML 图)，PlantUML 依赖 graphviz-dot 软件包，所以，我们首先需要安装 graphviz-dot。</p>
+<h3 id="下载-1"><a href="#下载-1" class="headerlink" title="下载"></a>下载</h3><h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><p><strong>Ubuntu</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> graphviz<br></code></pre></td></tr></table></figure>
+
+<p><strong>Fedora</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo yum <span class="hljs-keyword">install</span> graphviz<br></code></pre></td></tr></table></figure>
+
+<p><strong>Debian</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo apt <span class="hljs-keyword">install</span> graphviz<br></code></pre></td></tr></table></figure>
+
+<p><strong>CentOS</strong></p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo yum <span class="hljs-keyword">install</span> graphviz<br></code></pre></td></tr></table></figure>
+
+<h4 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h4><p><a target="_blank" rel="noopener" href="https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/5.0.1/windows_10_msbuild_Release_graphviz-5.0.1-win32.zip"><strong>32位ZIP格式</strong></a></p>
+<p><a target="_blank" rel="noopener" href="https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/5.0.1/windows_10_cmake_Release_graphviz-install-5.0.1-win32.exe"><strong>32位EXE格式</strong></a></p>
+<p><a target="_blank" rel="noopener" href="https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/5.0.1/windows_10_cmake_Release_graphviz-install-5.0.1-win64.exe"><strong>64位EXE格式</strong></a></p>
+<h4 id="MAC"><a href="#MAC" class="headerlink" title="MAC"></a>MAC</h4><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>graphviz<br></code></pre></td></tr></table></figure>
+
+<h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>在 IDEA -&gt; Settings 中搜索 PlantUML 后（一般在 Languages &amp; Frameworks 目录下），找到 Graphviz dot executable，指定 graphviz-dot 的路径</p>
+<p>如：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">D:<span class="hljs-regexp">/opt/</span>Graphviz<span class="hljs-regexp">/bin/</span>dot.exe<br></code></pre></td></tr></table></figure>
+
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>此时在 IDEA 中我们右键类就可以发现有选项 PlantUML Parser，点击即可。</p>
+<p><strong>但是自动生成的类图并没有组合、聚合等连线</strong>，要想使用其中的语法见文章——<a href=""><strong>UML类图和相关PUML语法</strong></a></p>
 
             </div>
             <hr>
@@ -269,7 +289,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Kafka/">Kafka</a>
+                      <a class="hover-with-bg" href="/categories/Idea-%E6%8F%92%E4%BB%B6/">Idea 插件</a>
                     
                   </div>
                 
@@ -287,18 +307,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/12/10/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/UML%E7%B1%BB%E5%9B%BE%E5%92%8C%E7%9B%B8%E5%85%B3PUML%E8%AF%AD%E6%B3%95/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">软件设计</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/07/04/Kafka/Broker/">
-                        <span class="hidden-mobile">Kafka Broker</span>
+                      <a href="/2022/12/10/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1/UML%E7%B1%BB%E5%9B%BE%E5%92%8C%E7%9B%B8%E5%85%B3PUML%E8%AF%AD%E6%B3%95/">
+                        <span class="hidden-mobile">软件设计</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
